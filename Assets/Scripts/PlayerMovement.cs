@@ -25,7 +25,8 @@ public class PlayerMovement : MonoBehaviour
 
     void MoveCharacter(Vector3 input)
     {
-        transform.position += input * moveSpeed * Time.deltaTime;
+        Vector3 movement = input.normalized * moveSpeed * Time.deltaTime;
+        transform.position += movement;
     }
     
     void UpdateAnimation(Vector3 input)
