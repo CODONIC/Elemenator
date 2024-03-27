@@ -3,37 +3,44 @@ using UnityEngine.UI;
 
 public class AttackButton : MonoBehaviour
 {
-    private Button button;
+    public GameObject attackButton;
 
     void Start()
     {
-        button = GetComponent<Button>();
-        if (button == null)
+        if (attackButton == null)
         {
-            Debug.LogError("Button component not found!");
-            enabled = false; // Disable the script if button component is missing
+            Debug.LogError("Attack button reference not set!");
+            enabled = false; // Disable the script if button reference is missing
         }
         else
         {
-            button.gameObject.SetActive(true); // Ensure the button is active
+            attackButton.SetActive(true); // Ensure the button is initially inactive
         }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Portal")) // Check if the collider belongs to the portal
+        if (other.CompareTag("NPC") || other.CompareTag("Portal")) // Check if the collider belongs to an NPC or a portal
         {
-            // Hide the attack button when the player enters the portal's trigger zone
-            button.gameObject.SetActive(false);
+            // Show the attack button when the player enters the collider's trigger zone
+            ToggleAttackButton(false);
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Portal")) // Check if the collider belongs to the portal
+        if (other.CompareTag("NPC") || other.CompareTag("Portal")) // Check if the collider belongs to an NPC or a portal
         {
-            // Show the attack button when the player exits the portal's trigger zone
-            button.gameObject.SetActive(true);
+            // Hide the attack button when the player exits the collider's trigger zone
+            ToggleAttackButton(true);
+        }
+    }
+
+    void ToggleAttackButton(bool active)
+    {
+        if (attackButton != null)
+        {
+            attackButton.SetActive(active);
         }
     }
 }

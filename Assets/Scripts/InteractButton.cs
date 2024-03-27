@@ -3,44 +3,36 @@ using UnityEngine.UI;
 
 public class InteractButton : MonoBehaviour
 {
-    private Button button;
-    private Collider2D nearbyCollider; // Collider of the nearby NPC or interactable object
+    public GameObject interactButton;
 
     void Start()
     {
-        button = GetComponent<Button>();
-        if (button == null)
+        if (interactButton == null)
         {
-            Debug.LogError("Button component not found!");
-            enabled = false; // Disable the script if button component is missing
+            Debug.LogError("Interact button reference not set!");
+            enabled = false; // Disable the script if button reference is missing
         }
         else
         {
-            // Initially, hide the interact button
-            button.gameObject.SetActive(false);
+            interactButton.SetActive(false); // Ensure the button is initially inactive
         }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Check if the collider belongs to an NPC or interactable object
-        if (other.CompareTag("NPC") || other.CompareTag("Interactable"))
+        if (other.CompareTag("NPC") || other.CompareTag("Interactable")) // Check if the collider belongs to an NPC or a portal
         {
-            nearbyCollider = other;
-
-            // Show the interact button
-            button.gameObject.SetActive(true);
+            // Show the interact button when the player enters the collider's trigger zone
+            interactButton.SetActive(true);
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        // Check if the collider belongs to the nearby collider
-        if (other == nearbyCollider)
+        if (other.CompareTag("NPC") || other.CompareTag("Interactable")) // Check if the collider belongs to an NPC or a portal
         {
-            // Hide the interact button
-            button.gameObject.SetActive(false);
-            nearbyCollider = null;
+            // Hide the interact button when the player exits the collider's trigger zone
+            interactButton.SetActive(false);
         }
     }
 }

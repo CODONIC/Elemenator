@@ -219,9 +219,9 @@ RectTransform:
   - {fileID: 1834089116}
   - {fileID: 1264794233}
   - {fileID: 431264980}
+  - {fileID: 912571669}
   - {fileID: 1729428955}
   - {fileID: 1283855702}
-  - {fileID: 912571669}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -23621,7 +23621,7 @@ GameObject:
   - component: {fileID: 431264981}
   m_Layer: 5
   m_Name: 'Teleport Button '
-  m_TagString: InteractButton
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24080,7 +24080,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.55, y: 40.23, z: -10}
+  m_LocalPosition: {x: -1.88, y: 10.47, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25705,14 +25705,13 @@ GameObject:
   - component: {fileID: 912571673}
   - component: {fileID: 912571672}
   - component: {fileID: 912571671}
-  - component: {fileID: 912571670}
   m_Layer: 5
   m_Name: Interact Button
   m_TagString: InteractButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &912571669
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25726,25 +25725,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 112379737}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -246.38837, y: 155.49597}
   m_SizeDelta: {x: 153.8466, y: 155.1681}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &912571670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 912571668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edef5cfc13f0bab4b8a2902cfd126b17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &912571671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25789,9 +25776,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1729428959}
-        m_TargetAssemblyTypeName: AttackFunction, Assembly-CSharp
-        m_MethodName: OnButtonClick
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: NPCInteraction, Assembly-CSharp
+        m_MethodName: ContinueDialogue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -25821,7 +25808,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2be40bc7a22393d479e87906dcd013db, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f500545be6768874bbb349f0ec259e84, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -26874,6 +26861,8 @@ GameObject:
   - component: {fileID: 1127378619}
   - component: {fileID: 1127378618}
   - component: {fileID: 1127378617}
+  - component: {fileID: 1127378623}
+  - component: {fileID: 1127378622}
   - component: {fileID: 1127378616}
   - component: {fileID: 1127378615}
   - component: {fileID: 1127378621}
@@ -27059,6 +27048,32 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.43532014, y: 0.60760736}
   m_EdgeRadius: 0
+--- !u!114 &1127378622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127378614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edef5cfc13f0bab4b8a2902cfd126b17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactButton: {fileID: 912571668}
+--- !u!114 &1127378623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127378614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feb5f828427464344a2f63daa6ef2152, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackButton: {fileID: 1729428954}
 --- !u!1 &1153937880
 GameObject:
   m_ObjectHideFlags: 0
@@ -31217,7 +31232,7 @@ RectTransform:
   - {fileID: 447155108}
   - {fileID: 1397777292}
   m_Father: {fileID: 112379737}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -35801,7 +35816,7 @@ GameObject:
   - component: {fileID: 1729428956}
   m_Layer: 5
   m_Name: Attack Button
-  m_TagString: InteractButton
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35819,7 +35834,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 112379737}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -35932,7 +35947,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe91c8ce32ad854e9e624adfe7d6138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npc: {fileID: 0}
 --- !u!224 &1834089116 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2929252283123773938, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
@@ -37433,7 +37447,7 @@ GameObject:
   - component: {fileID: 1853683633}
   - component: {fileID: 1853683635}
   - component: {fileID: 1853683632}
-  - component: {fileID: 1853683631}
+  - component: {fileID: 1853683636}
   m_Layer: 0
   m_Name: NPC
   m_TagString: NPC
@@ -37441,32 +37455,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!61 &1853683631
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1853683630}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.003886938, y: -0.014209926}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.5, y: 1}
-    newSize: {x: 0.5, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.75653756, y: 0.8721118}
-  m_EdgeRadius: 0
 --- !u!70 &1853683632
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -37569,7 +37557,33 @@ MonoBehaviour:
   - Welcome to The Hub!
   wordSpeed: 0.06
   playerIsClose: 0
-  touchButton: {fileID: 1729428956}
+  touchButton: {fileID: 912571671}
+--- !u!61 &1853683636
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1853683630}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.008769557, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.5, y: 1}
+    newSize: {x: 0.5, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.7455479, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &1861903705
 GameObject:
   m_ObjectHideFlags: 0
