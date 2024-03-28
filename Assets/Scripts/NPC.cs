@@ -6,7 +6,11 @@ public class NPC : MonoBehaviour
 {
     public GameObject dialoguePanel;
     public Text dialogueText;
+    public Image npcImage; // Reference to NPC Image component
+    public Text npcNameText; // Reference to NPC Name text component
     public string[] dialogue;
+    public Sprite npcSprite; // NPC Image sprite
+    public string npcName; // NPC Name
     private int index;
 
     public float wordSpeed = 0.001f; // Adjust this value to control the speed of the typing animation
@@ -55,6 +59,10 @@ public class NPC : MonoBehaviour
         index = 0;
         // Clear previous dialogue
         dialogueText.text = "";
+        // Set NPC image
+        npcImage.sprite = npcSprite;
+        // Set NPC name
+        npcNameText.text = npcName;
         // Show dialogue panel
         dialoguePanel.SetActive(true);
         // Start typing coroutine for new dialogue
@@ -73,7 +81,6 @@ public class NPC : MonoBehaviour
             StopCoroutine(typingCoroutine);
         }
     }
-     
 
     IEnumerator Typing()
     {
