@@ -1,40 +1,30 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public float startingHealth = 100f; // Initial health value
-    private float currentHealth;        // Current health value
+    public int maxHealth = 100;
+    public int currentHealth;
 
-    public HealthBar healthBar;         // Reference to the health bar script
+    public HealthBar healthBar;
 
     void Start()
     {
-        currentHealth = startingHealth; // Set current health to starting health
-        if (healthBar != null)
-        {
-            healthBar.UpdateHealth(currentHealth); // Update health bar with current health
-        }
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
     }
 
-    // Method to apply damage to the player
-    public void TakeDamage(float damageAmount)
+    // This method will be called when the button is pressed
+    public void TakeDamageButton()
     {
-        currentHealth -= damageAmount; // Reduce current health by damage amount
-        if (healthBar != null)
-        {
-            healthBar.UpdateHealth(currentHealth); // Update health bar with new health
-        }
-        // Check if player is dead
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
+        TakeDamage(20);
     }
 
-    // Method to handle player death
-    void Die()
+    void TakeDamage(int damage)
     {
-        // Implement player death behavior here
-        Debug.Log("Player died!");
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
     }
 }
