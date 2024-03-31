@@ -3,12 +3,31 @@ using System.Collections;
 
 public class WeaponParent : MonoBehaviour
 {
-    public Animator animator;
+    public Animator leftGauntletAnimator;
+    public Animator rightGauntletAnimator;
     public float delay = 0.3f;
     private bool attackBlocked;
+    private bool isLeftGauntletAttacking;
 
     // Reference to the joystick
     public Joystick joystick;
+
+    private Vector3 initialScaleLeft; // Store the initial scale of the left gauntlet
+    private Vector3 initialScaleRight; // Store the initial scale of the right gauntlet
+
+    private void Start()
+    {
+        // Ensure both gauntlets start with their initial rotation
+        leftGauntletAnimator.transform.rotation = Quaternion.identity;
+        rightGauntletAnimator.transform.rotation = Quaternion.identity;
+
+        // Store the initial scale of the gauntlets
+        initialScaleLeft = leftGauntletAnimator.transform.localScale;
+        initialScaleRight = rightGauntletAnimator.transform.localScale;
+
+        // Start with left gauntlet attacking
+        isLeftGauntletAttacking = true;
+    }
 
     // Update is called once per frame
     void Update()
@@ -21,7 +40,15 @@ public class WeaponParent : MonoBehaviour
     {
         if (attackBlocked)
             return;
-        animator.SetTrigger("Attack");
+
+        if (isLeftGauntletAttacking)
+            leftGauntletAnimator.SetTrigger("Attack");
+        else
+            rightGauntletAnimator.SetTrigger("Attack");
+
+        // Toggle between left and right gauntlet attack
+        isLeftGauntletAttacking = !isLeftGauntletAttacking;
+
         attackBlocked = true;
         StartCoroutine(DelayAttack());
     }
@@ -52,42 +79,31 @@ public class WeaponParent : MonoBehaviour
             // Calculate the angle between the weapon's forward direction and the joystick input direction
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-            // Calculate the desired rotation based on the angle
-            Quaternion desiredRotation;
-
-            // Check if the player is moving left
+            // Set the rotation of the left gauntlet
             if (direction.x < 0)
             {
                 // If moving left, flip the rotation by adding 180 degrees
-                desiredRotation = Quaternion.Euler(0f, 0f, angle + 180f);
-
-                // Flip the weapon horizontally
-                transform.localScale = new Vector3(-1f, 1f, 1f);
+                leftGauntletAnimator.transform.localRotation = Quaternion.Euler(0f, 0f, angle + 180f);
+                leftGauntletAnimator.transform.localScale = new Vector3(-initialScaleLeft.x, initialScaleLeft.y, initialScaleLeft.z); // Flip horizontally if moving left
             }
             else
             {
-                // Otherwise, use the normal rotation
-                desiredRotation = Quaternion.Euler(0f, 0f, angle);
-
-                // Ensure the weapon is facing right
-                transform.localScale = new Vector3(1f, 1f, 1f);
+                leftGauntletAnimator.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
+                leftGauntletAnimator.transform.localScale = initialScaleLeft; // Restore the initial scale
             }
 
-            // Smoothly interpolate the weapon's rotation towards the desired rotation
-            transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * rotationSpeed);
-
-            if (transform.eulerAngles.z > 0 && transform.eulerAngles.z < 180)
+            // Set the rotation of the right gauntlet
+            if (direction.x < 0)
             {
-                // Handle sorting order based on rotation angle
-                Debug.Log("Sorting Order Decremented");
+                // If moving left, flip the rotation by adding 180 degrees
+                rightGauntletAnimator.transform.localRotation = Quaternion.Euler(0f, 0f, angle + 180f);
+                rightGauntletAnimator.transform.localScale = new Vector3(-initialScaleRight.x, initialScaleRight.y, initialScaleRight.z); // Flip horizontally if moving left
             }
             else
             {
-                // Handle sorting order based on rotation angle
-                Debug.Log("Sorting Order Incremented");
+                rightGauntletAnimator.transform.localRotation = Quaternion.Euler(0f, 0f, angle);
+                rightGauntletAnimator.transform.localScale = initialScaleRight; // Restore the initial scale
             }
         }
     }
-
-
 }
