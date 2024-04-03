@@ -1,4 +1,4 @@
-Description
+---Description---
 Eleme-nator offers an immersive 2D RPG Rogue-like experience, uniquely blending hack & slash action with chemistry education, all on your mobile device. Dive into a world where chemistry comes to life through gamified learning, offering students an engaging platform to understand complex concepts such as the periodic table and its chemical reactions.
 
 Embark on an epic journey through a rich story mode, where players unravel the mysteries of the world of chemistry while battling through dynamic gameplay challenges. Or pave your own adventure through dungeons with infinite replayability, each playthrough offers new opportunities to experiment, learn, and conquer the elements.
