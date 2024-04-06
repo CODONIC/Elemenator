@@ -742,7 +742,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: -1.7330322, y: -6.5417004}
   m_SizeDelta: {x: 10.9606, y: 13.0835}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -842,7 +842,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 0.22352943, g: 0.9803922, b: 0.2627451, a: 1}
     m_HighlightedColor: {r: 0.22352943, g: 0.9803922, b: 0.2627451, a: 1}
@@ -870,7 +870,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1612,4 +1612,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LoadingScreen: {fileID: 1184859541}
-  LoadingBarFill: {fileID: 932274947}
+  LoadingBarFill: {fileID: 935084581}

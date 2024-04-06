@@ -21,7 +21,7 @@ public class PlayerCollision : MonoBehaviour
         if (other.CompareTag("NPC"))
         {
             Debug.Log("Player collided with NPC!");
-            // Add any additional logic here, such as interacting with the NPC
+            
         }
     }
 }

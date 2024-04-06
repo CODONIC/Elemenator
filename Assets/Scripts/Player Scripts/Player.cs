@@ -16,13 +16,9 @@ public class Player : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
     }
 
-    // This method will be called when the button is pressed
-    public void TakeDamageButton()
-    {
-        TakeDamage(20);
-    }
-
-    void TakeDamage(int damage)
+    
+    
+    public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);

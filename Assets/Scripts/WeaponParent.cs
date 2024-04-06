@@ -15,6 +15,9 @@ public class WeaponParent : MonoBehaviour
     private Vector3 initialScaleLeft; // Store the initial scale of the left gauntlet
     private Vector3 initialScaleRight; // Store the initial scale of the right gauntlet
 
+    public float rotationSpeed = 5f;
+    public float autoTargetRange = 10f; // Range within which enemies will be targeted automatically
+
     private void Start()
     {
         // Ensure both gauntlets start with their initial rotation
@@ -34,6 +37,9 @@ public class WeaponParent : MonoBehaviour
     {
         // Call the method to handle weapon rotation based on joystick input
         HandleWeaponRotation();
+
+        // Auto-target enemies
+        AutoTargetEnemies();
     }
 
     public void Attack()
@@ -58,8 +64,6 @@ public class WeaponParent : MonoBehaviour
         yield return new WaitForSeconds(delay);
         attackBlocked = false;
     }
-
-    public float rotationSpeed = 5f;
 
     private void HandleWeaponRotation()
     {
@@ -106,4 +110,62 @@ public class WeaponParent : MonoBehaviour
             }
         }
     }
+
+    private void AutoTargetEnemies()
+    {
+        // Find all GameObjects with the tag "Enemy"
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        // Check if there are any enemies
+        if (enemies.Length == 0)
+            return;
+
+        // Find the nearest enemy within auto-target range
+        GameObject nearestEnemy = null;
+        float nearestDistance = Mathf.Infinity;
+        foreach (GameObject enemy in enemies)
+        {
+            float distance = Vector3.Distance(transform.position, enemy.transform.position);
+            if (distance <= autoTargetRange && distance < nearestDistance)
+            {
+                nearestEnemy = enemy;
+                nearestDistance = distance;
+            }
+        }
+
+        // If a nearest enemy is found, calculate direction and angle towards it
+        if (nearestEnemy != null)
+        {
+            Vector3 direction = (nearestEnemy.transform.position - transform.position).normalized;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+            // Set the rotation of the gauntlets towards the enemy
+            if (direction.x < 0)
+            {
+                // If moving left, flip the rotation by adding 180 degrees
+                leftGauntletAnimator.transform.rotation = Quaternion.Euler(0f, 0f, angle + 180f);
+                leftGauntletAnimator.transform.localScale = new Vector3(-initialScaleLeft.x, initialScaleLeft.y, initialScaleLeft.z); // Flip horizontally if moving left
+
+                rightGauntletAnimator.transform.rotation = Quaternion.Euler(0f, 0f, angle + 180f);
+                rightGauntletAnimator.transform.localScale = new Vector3(-initialScaleRight.x, initialScaleRight.y, initialScaleRight.z); // Flip horizontally if moving left
+            }
+            else
+            {
+                leftGauntletAnimator.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+                leftGauntletAnimator.transform.localScale = initialScaleLeft; // Restore the initial scale
+
+                rightGauntletAnimator.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+                rightGauntletAnimator.transform.localScale = initialScaleRight; // Restore the initial scale
+            }
+        }
+        else
+        {
+            // No enemy found, revert to using joystick input for rotation
+            HandleWeaponRotation();
+        }
+    }
+
+
+
+
 }

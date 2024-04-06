@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class LoadingScene : MonoBehaviour
 {
     public GameObject LoadingScreen;
-    public Image LoadingBarFill;
+    public Slider LoadingBarFill;
     // Start is called before the first frame update
     public void LoadScene(int sceneId)
     {
@@ -21,7 +21,7 @@ public class LoadingScene : MonoBehaviour
         {
             float progressvalue = Mathf.Clamp01(operation.progress / 0.9f );
 
-            LoadingBarFill.fillAmount = progressvalue;
+            LoadingBarFill.value = progressvalue;
             yield return null;
         }
     }
