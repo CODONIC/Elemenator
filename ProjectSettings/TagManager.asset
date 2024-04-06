@@ -9,6 +9,7 @@ TagManager:
   - InteractButton
   - Portal
   - Slime
+  - Enemy
   layers:
   - Default
   - TransparentFX

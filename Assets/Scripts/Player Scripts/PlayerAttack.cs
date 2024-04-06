@@ -7,7 +7,7 @@ public class PlayerAttack : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         // Check if the collided object is the slime
-        if (other.CompareTag("Slime"))
+        if (other.CompareTag("Enemy"))
         {
             // Retrieve the slime's SlimeController component
             SlimeController slimeController = other.GetComponent<SlimeController>();
