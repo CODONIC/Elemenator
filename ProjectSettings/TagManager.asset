@@ -8,6 +8,8 @@ TagManager:
   - NPC
   - InteractButton
   - Portal
+  - Slime
+  - Enemy
   layers:
   - Default
   - TransparentFX
