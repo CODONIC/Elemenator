@@ -3,6 +3,9 @@ using System.Collections;
 
 public class SlimeController : MonoBehaviour
 {
+    public GameObject elementPrefab; // Reference to the element prefab to drop
+    public float dropChance = 0.5f; // Probability of dropping an element (0 to 1)
+
     public float moveSpeed = 3f;
     public int health = 50;
     public int damage = 10;
@@ -151,6 +154,12 @@ public class SlimeController : MonoBehaviour
         if (animator != null)
         {
             animator.SetBool("IsDead", true); // Assuming you have a bool parameter named "IsDead" in your animator controller
+        }
+
+        if (Random.value <= dropChance)
+        {
+            // Instantiate the element prefab at the enemy's position
+            Instantiate(elementPrefab, transform.position, Quaternion.identity);
         }
 
         // Destroy the game object after the animation duration
