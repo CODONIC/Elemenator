@@ -18,6 +18,9 @@ public class SlimeController : MonoBehaviour
     public bool canMove; // Flag to control whether the slime can move
     private Collider2D detectionCollider; // Reference to the detection range collider
 
+    private bool isHitAnimationPlaying = false; // Flag to track if hit animation is playing
+    private bool isJumpAnimationPaused = false; // Flag to track if jump animation is paused
+
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -95,6 +98,17 @@ public class SlimeController : MonoBehaviour
     }
 
 
+
+    void TriggerHitAnimation(bool isHit)
+    {
+        // Trigger hit animation if available
+        Animator Hitanimator = GetComponent<Animator>();
+        if (Hitanimator != null)
+        {
+            Hitanimator.SetBool("IsHit", isHit); // Assuming you have a bool parameter named "IsHit" in your animator controller
+        }
+    }
+
     void TriggerJumpAnimation(bool isJumping)
     {
         // Trigger jump animation if available
@@ -109,24 +123,74 @@ public class SlimeController : MonoBehaviour
     {
         if (other.CompareTag("PlayerHitBox"))
         {
-            // Stop moving and stop jumping animation
             Debug.Log("Player hit detected. Stopping movement.");
             canMove = false;
             TriggerJumpAnimation(false);
 
-            // Start delay coroutine
+            // Start delay coroutine before resuming movement
             StartCoroutine(DelayBeforeChase());
 
-            // Damage the player
-            Player playerController = other.GetComponentInParent<Player>();
-            if (playerController != null)
+            // Damage the player only if the slime is actively chasing
+            if (canMove)
             {
-                playerController.TakeDamage(damage);
+                Player playerController = other.GetComponentInParent<Player>();
+                if (playerController != null)
+                {
+                    playerController.TakeDamage(damage);
+                }
             }
-
-            // Start delay coroutine
-            StartCoroutine(DelayBeforeChase());
         }
+        else if (other.CompareTag("PlayerWeapon") && !isHitAnimationPlaying)
+        {
+            Debug.Log("Player weapon hit detected. Triggering hit animation.");
+            TriggerHitAnimation(true);
+            isHitAnimationPlaying = true;
+            // Reset hit animation after a delay
+            StartCoroutine(ResetHitAnimation());
+        }
+        else if (other.CompareTag("PlayerHitBox") && other.GetType() == typeof(CapsuleCollider2D))
+        {
+            // Damage the player only if it collides with the capsule collider of the slime
+            
+                Player playerController = other.GetComponent<Player>();
+                if (playerController != null)
+                {
+                    playerController.TakeDamage(damage);
+                }
+            
+        }
+    }
+
+
+    IEnumerator ResetHitAnimation()
+    {
+        yield return new WaitForSeconds(0.5f); // Adjust this delay as needed
+        TriggerHitAnimation(false);
+        isHitAnimationPlaying = false;
+        ResumeJumpAnimation();
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("PlayerWeapon"))
+        {
+            Debug.Log("Player weapon exit detected. Stopping hit animation.");
+            TriggerHitAnimation(false);
+            isHitAnimationPlaying = false;
+            ResumeJumpAnimation();
+        }
+    }
+
+    void PauseJumpAnimation()
+    {
+        isJumpAnimationPaused = true;
+        TriggerJumpAnimation(false);
+    }
+
+    void ResumeJumpAnimation()
+    {
+        isJumpAnimationPaused = false;
+        TriggerJumpAnimation(true);
     }
 
     IEnumerator DelayBeforeChase()
@@ -138,6 +202,10 @@ public class SlimeController : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
+        if (health < 0)
+        {
+            TriggerHitAnimation(true);
+        }
         if (health <= 0)
         {
             Die();
