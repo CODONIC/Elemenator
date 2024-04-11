@@ -10,6 +10,9 @@ TagManager:
   - Portal
   - Slime
   - Enemy
+  - PlayerHitBox
+  - PlayerWeapon
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -18,7 +21,7 @@ TagManager:
   - Water
   - UI
   - NPC
-  - 
+  - GameOver
   - 
   - 
   - 
