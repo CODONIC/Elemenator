@@ -7,7 +7,7 @@ public class SlimeController : MonoBehaviour
     public float dropChance = 0.5f; // Probability of dropping an element (0 to 1)
 
     public float moveSpeed = 3f;
-    public int health = 50;
+    public float health = 50f; // Changed to float
     public int damage = 10;
     public float attackRange = 1.5f;
     public float detectionRange = 5f;
@@ -157,8 +157,8 @@ public class SlimeController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-       
-         if (other.CompareTag("PlayerWeapon") && !isHitAnimationPlaying)
+
+        if (other.CompareTag("PlayerWeapon") && !isHitAnimationPlaying)
         {
             Debug.Log("Player weapon hit detected. Triggering hit animation.");
             TriggerHitAnimation(true);
@@ -170,7 +170,7 @@ public class SlimeController : MonoBehaviour
             // Reset hit animation after a delay
             StartCoroutine(ResetHitAnimation());
         }
-       
+
     }
 
 
@@ -194,7 +194,7 @@ public class SlimeController : MonoBehaviour
         }
     }
 
-  
+
 
     void ResumeJumpAnimation()
     {
@@ -208,7 +208,7 @@ public class SlimeController : MonoBehaviour
         canMove = true; // Enable movement again
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage) // Changed parameter type to float
     {
         health -= damage;
         if (health < 0)
@@ -245,6 +245,17 @@ public class SlimeController : MonoBehaviour
 
         // Destroy the game object after the animation duration
         StartCoroutine(DestroyAfterAnimation());
+    }
+
+    public void ApplyKnockback(Vector2 direction, float force)
+    {
+        // Apply force in the given direction
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero; // Reset velocity to prevent interference
+            rb.AddForce(direction * force, ForceMode2D.Impulse);
+        }
     }
 
     IEnumerator DestroyAfterAnimation()
