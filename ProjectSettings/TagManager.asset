@@ -12,6 +12,7 @@ TagManager:
   - Enemy
   - PlayerHitBox
   - PlayerWeapon
+  - Wall
   layers:
   - Default
   - TransparentFX

@@ -51,52 +51,68 @@ public class SlimeController : MonoBehaviour
         }
     }
 
+    private float delayTimer = 0f;
+    private bool isDelayingMovement = false;
+
     void Update()
     {
         if (health > 0 && target != null)
         {
-            float distanceToPlayer = Vector2.Distance(transform.position, target.position);
-
-            // Check if the player is within detection range
-            if (distanceToPlayer <= detectionRange)
+            if (!isDelayingMovement)
             {
-                // Player is within range, allow movement
-                canMove = true;
+                float distanceToPlayer = Vector2.Distance(transform.position, target.position);
 
-                // Enable the health bar
-                if (slimeHealthContainer != null)
+                // Check if the player is within detection range
+                if (distanceToPlayer <= detectionRange)
                 {
-                    slimeHealthContainer.SetActive(true);
+                    // Player is within range, allow movement
+                    canMove = true;
+
+                    // Enable the health bar
+                    if (slimeHealthContainer != null)
+                    {
+                        slimeHealthContainer.SetActive(true);
+                    }
+
+                    // Move towards the player
+                    Vector2 direction = (target.position - transform.position).normalized;
+                    transform.Translate(direction * moveSpeed * Time.deltaTime);
+
+                    // Trigger jump animation
+                    TriggerJumpAnimation(true);
+
+                    // Attack if in range
+                    if (distanceToPlayer <= attackRange)
+                    {
+                        // Implement attack logic here
+                    }
                 }
-
-                // Move towards the player
-                Vector2 direction = (target.position - transform.position).normalized;
-                transform.Translate(direction * moveSpeed * Time.deltaTime);
-
-                // Trigger jump animation
-                TriggerJumpAnimation(true);
-
-                // Attack if in range
-                if (distanceToPlayer <= attackRange)
+                else
                 {
-                    // Implement attack logic here
+                    // Player is out of range, stop moving and stop jumping animation
+                    canMove = false;
+                    TriggerJumpAnimation(false);
+
+                    // Disable the health bar
+                    if (slimeHealthContainer != null)
+                    {
+                        slimeHealthContainer.SetActive(false);
+                    }
                 }
             }
             else
             {
-                // Player is out of range, stop moving and stop jumping animation
-                canMove = false;
-                TriggerJumpAnimation(false);
-
-                // Disable the health bar
-                if (slimeHealthContainer != null)
+                // Slime is delaying movement
+                delayTimer -= Time.deltaTime;
+                if (delayTimer <= 0)
                 {
-                    slimeHealthContainer.SetActive(false);
+                    // Delay time is over, resume movement
+                    isDelayingMovement = false;
+                    canMove = true;
                 }
             }
         }
     }
-
 
 
     void TriggerHitAnimation(bool isHit)
@@ -119,47 +135,44 @@ public class SlimeController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (other.CompareTag("PlayerHitBox"))
+        if (collision.collider.CompareTag("Player"))
         {
-            Debug.Log("Player hit detected. Stopping movement.");
-            canMove = false;
-            TriggerJumpAnimation(false);
+            // Get the player controller from the collided object
+            Player playerController = collision.collider.GetComponentInParent<Player>();
 
-            // Start delay coroutine before resuming movement
-            StartCoroutine(DelayBeforeChase());
-
-            // Damage the player only if the slime is actively chasing
-            if (canMove)
+            // Check if the player controller exists
+            if (playerController != null)
             {
-                Player playerController = other.GetComponentInParent<Player>();
-                if (playerController != null)
-                {
-                    playerController.TakeDamage(damage);
-                }
+                // Apply damage to the player
+                playerController.TakeDamage(damage);
+
+                canMove = false;
+                StartDelayBeforeChase();
             }
         }
-        else if (other.CompareTag("PlayerWeapon") && !isHitAnimationPlaying)
+    }
+
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+       
+         if (other.CompareTag("PlayerWeapon") && !isHitAnimationPlaying)
         {
             Debug.Log("Player weapon hit detected. Triggering hit animation.");
             TriggerHitAnimation(true);
             isHitAnimationPlaying = true;
+            // Stop movement and start the delay before chase
+            canMove = false;
+            StartDelayBeforeChase();
+
             // Reset hit animation after a delay
             StartCoroutine(ResetHitAnimation());
         }
-        else if (other.CompareTag("PlayerHitBox") && other.GetType() == typeof(CapsuleCollider2D))
-        {
-            // Damage the player only if it collides with the capsule collider of the slime
-            
-                Player playerController = other.GetComponent<Player>();
-                if (playerController != null)
-                {
-                    playerController.TakeDamage(damage);
-                }
-            
-        }
+       
     }
+
 
 
     IEnumerator ResetHitAnimation()
@@ -181,11 +194,7 @@ public class SlimeController : MonoBehaviour
         }
     }
 
-    void PauseJumpAnimation()
-    {
-        isJumpAnimationPaused = true;
-        TriggerJumpAnimation(false);
-    }
+  
 
     void ResumeJumpAnimation()
     {
@@ -211,7 +220,11 @@ public class SlimeController : MonoBehaviour
             Die();
         }
     }
-
+    void StartDelayBeforeChase()
+    {
+        isDelayingMovement = true;
+        delayTimer = delayAfterCollision; // Set the delay time to 3 seconds
+    }
     void Die()
     {
         // Stop movement immediately
