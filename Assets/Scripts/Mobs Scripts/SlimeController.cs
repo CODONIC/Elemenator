@@ -19,8 +19,7 @@ public class SlimeController : MonoBehaviour
     private Collider2D detectionCollider; // Reference to the detection range collider
 
     private bool isHitAnimationPlaying = false; // Flag to track if hit animation is playing
-    private bool isJumpAnimationPaused = false; // Flag to track if jump animation is paused
-
+    
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -198,7 +197,7 @@ public class SlimeController : MonoBehaviour
 
     void ResumeJumpAnimation()
     {
-        isJumpAnimationPaused = false;
+       
         TriggerJumpAnimation(true);
     }
 

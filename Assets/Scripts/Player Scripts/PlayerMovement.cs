@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,19 +11,59 @@ public class PlayerMovement : MonoBehaviour
    
     private Animator animator;
 
+    private void Awake()
+    {
+        // Initialize references on scene load
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Ensure references are initialized after scene load
+        FindJoystick();
+        FindAnimator();
+    }
+
     void Start()
     {
-        animator = GetComponent<Animator>();
+        // Find and assign the Animator component
+        FindAnimator();
     }
 
     void Update()
     {
-        Vector3 joystickInput = new Vector3(joystick.Horizontal, joystick.Vertical, 0f);
+        // Ensure joystick reference is not null before using it
+        if (joystick != null)
+        {
+            Vector3 joystickInput = new Vector3(joystick.Horizontal, joystick.Vertical, 0f);
 
-        MoveCharacter(joystickInput);
-        UpdateAnimation(joystickInput);
+            MoveCharacter(joystickInput);
+            UpdateAnimation(joystickInput);
+        }
+        else
+        {
+            Debug.LogWarning("Joystick reference is null. Ensure it's properly assigned in the Inspector.");
+        }
+    }
+    private void FindJoystick()
+    {
+        // Find and assign the FixedJoystick component
+        joystick = FindObjectOfType<FixedJoystick>();
+        if (joystick == null)
+        {
+            Debug.LogError("FixedJoystick reference not found in the scene!");
+        }
     }
 
+    private void FindAnimator()
+    {
+        // Find and assign the Animator component
+        animator = GetComponent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogError("Animator component not found on the player GameObject!");
+        }
+    }
     public Vector3 GetFacingDirection()
     {
         // Get the rotation of the player's sprite

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class AttackButton : MonoBehaviour
 {
@@ -7,14 +8,31 @@ public class AttackButton : MonoBehaviour
 
     void Start()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded; // Subscribe to the scene loaded event
+        FindAttackButton(); // Call this method to find the attack button in the current scene
+    }
+
+    void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded; // Unsubscribe from the scene loaded event
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        FindAttackButton(); // Call this method to find the attack button whenever a new scene is loaded
+    }
+
+    void FindAttackButton()
+    {
+        attackButton = GameObject.Find("Attack Button"); // Replace "AttackButton" with the actual name of your attack button game object
         if (attackButton == null)
         {
-            Debug.LogError("Attack button reference not set!");
+            Debug.LogError("Attack button reference not found in the scene!");
             enabled = false; // Disable the script if button reference is missing
         }
         else
         {
-            attackButton.SetActive(true); // Ensure the button is initially inactive
+            attackButton.SetActive(true); // Ensure the button is initially active
         }
     }
 

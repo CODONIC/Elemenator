@@ -13,6 +13,8 @@ TagManager:
   - PlayerHitBox
   - PlayerWeapon
   - Wall
+  - GameOverScreen
+  - GameOverPanel
   layers:
   - Default
   - TransparentFX

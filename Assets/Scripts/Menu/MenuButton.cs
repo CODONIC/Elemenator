@@ -57,7 +57,9 @@ public class MenuButton : MonoBehaviour
     // Method to go to the Main Menu scene
     public void GoToMainMenu()
     {
+        SaveGame();
         SceneManager.LoadScene("Main Menu");
+        
         Time.timeScale = 1f;
     }
 
@@ -78,8 +80,10 @@ public class MenuButton : MonoBehaviour
             // Ensure player component is not null
             if (player != null)
             {
-                // Call SaveGame method from SaveManager and pass the current player health
-                SaveManager.Instance.SaveGame(player.currentHealth);
+                
+                // Save player's health after taking damage
+                SaveManager.Instance.SaveGame(player.currentHealth, transform.position);
+
             }
             else
             {

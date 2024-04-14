@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
@@ -16,10 +17,42 @@ public class Player : MonoBehaviour
     public HealthBar healthBar;
     public GameObject gameOverScreen;
 
+    private void Awake()
+    {
+        // Ensure the Player GameObject persists between scenes
+        DontDestroyOnLoad(gameObject);
+
+        // Initialize references on scene load
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Ensure references are initialized after scene load
+        // Example: GetComponent<PlayerHealth>().Initialize();
+        // Ensure references are initialized after scene load
+        healthBar = FindObjectOfType<HealthBar>();
+        if (healthBar == null)
+        {
+            Debug.LogError("HealthBar reference not found in the scene!");
+        }
+
+        gameOverScreen = GameObject.Find("GameOverPanel");
+        if (gameOverScreen == null)
+        {
+            Debug.LogError("GameOverScreen reference not found in the scene!");
+        }
+        else
+        {
+            gameOverScreen.SetActive(false); // Ensure the game over screen is initially inactive
+        }
+    }
+
     void Start()
     {
-        // Load player's health from saved data
-        currentHealth = SaveManager.Instance.LoadGame();
+        // Load player's health and position from saved data
+        PlayerData playerData = SaveManager.Instance.LoadGame();
+        currentHealth = playerData.health;
         healthBar.SetMaxHealth(maxHealth);
         healthBar.SetHealth(currentHealth);
 
@@ -39,6 +72,7 @@ public class Player : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            currentHealth = 0;
             Die();
         }
         else
@@ -46,8 +80,9 @@ public class Player : MonoBehaviour
             // Start the flash effect coroutine
             StartCoroutine(FlashSprite());
         }
-        // Save player's health after taking damage
-        SaveManager.Instance.SaveGame(currentHealth);
+       
+        
+
     }
 
     IEnumerator FlashSprite()
