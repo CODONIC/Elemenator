@@ -55,13 +55,30 @@ public class MenuButton : MonoBehaviour
     }
 
     // Method to go to the Main Menu scene
+    // Method to go to the Main Menu scene
+    // Method to go to the Main Menu scene
     public void GoToMainMenu()
     {
         SaveGame();
+
+        // Find the player GameObject by tag
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
+        // Check if playerObject is not null
+        if (playerObject != null)
+        {
+            // Destroy the player GameObject
+            Destroy(playerObject);
+        }
+
+        // Load the Main Menu scene
         SceneManager.LoadScene("Main Menu");
-        
+
+        // Resume the game when the Main Menu is loaded
         Time.timeScale = 1f;
     }
+
+
 
     // Method to save the game state using SaveManager
     // Method to save the game state using SaveManager

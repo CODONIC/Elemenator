@@ -25,6 +25,11 @@ public class Player : MonoBehaviour
         // Initialize references on scene load
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
+    private void OnDestroy()
+    {
+        // Unsubscribe from the sceneLoaded event to prevent memory leaks
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {

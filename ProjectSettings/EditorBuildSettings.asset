@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NEXT LEVEL.unity
     guid: 59bc63df353860a429ef76ed485afc0c
+  - enabled: 1
+    path: Assets/Scenes/Laboratory 2-1.unity
+    guid: a5de99e36365913488c997553c445fff
   m_configObjects: {}

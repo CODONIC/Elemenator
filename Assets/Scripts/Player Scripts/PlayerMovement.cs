@@ -45,6 +45,11 @@ public class PlayerMovement : MonoBehaviour
             Debug.LogWarning("Joystick reference is null. Ensure it's properly assigned in the Inspector.");
         }
     }
+    private void OnDestroy()
+    {
+        // Unsubscribe from the sceneLoaded event to prevent memory leaks
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
     private void FindJoystick()
     {
         // Find and assign the FixedJoystick component

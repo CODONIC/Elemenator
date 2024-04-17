@@ -9,4 +9,5 @@ public class Element : ScriptableObject
     public string symbol;
     public int quantity;
     public float electronegativity; // Electronegativity of the element
+    public string description;
 }
