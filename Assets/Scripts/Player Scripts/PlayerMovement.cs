@@ -7,9 +7,10 @@ public class PlayerMovement : MonoBehaviour
 {
     public FixedJoystick joystick;
     public float moveSpeed = 5f; // Adjust this value to control the speed
+    public string enemyTag = "Enemy"; // Tag of the enemy game objects
 
-   
     private Animator animator;
+    private GameObject nearestEnemy;
 
     private void Awake()
     {
@@ -39,17 +40,22 @@ public class PlayerMovement : MonoBehaviour
 
             MoveCharacter(joystickInput);
             UpdateAnimation(joystickInput);
+
+            // Find the nearest enemy and update facing direction
+            UpdateFacingDirection();
         }
         else
         {
             Debug.LogWarning("Joystick reference is null. Ensure it's properly assigned in the Inspector.");
         }
     }
+
     private void OnDestroy()
     {
         // Unsubscribe from the sceneLoaded event to prevent memory leaks
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
+
     private void FindJoystick()
     {
         // Find and assign the FixedJoystick component
@@ -69,43 +75,20 @@ public class PlayerMovement : MonoBehaviour
             Debug.LogError("Animator component not found on the player GameObject!");
         }
     }
+
     public Vector3 GetFacingDirection()
     {
-        // Get the rotation of the player's sprite
-        Quaternion rotation = transform.rotation;
-
-        // Calculate the facing direction based on the sprite's rotation
-        Vector3 facingDirection = Vector3.up; // Default facing direction is up (0, 1, 0)
-
-        // Determine the angle between the forward direction and each cardinal direction
-        float angleUp = Vector3.Angle(transform.up, Vector3.up);
-        float angleRight = Vector3.Angle(transform.right, Vector3.up);
-        float angleDown = Vector3.Angle(-transform.up, Vector3.up);
-        float angleLeft = Vector3.Angle(-transform.right, Vector3.up);
-
-        // Find the direction closest to the current rotation
-        float minAngle = Mathf.Min(angleUp, angleRight, angleDown, angleLeft);
-        if (minAngle == angleUp)
+        // Calculate the facing direction towards the nearest enemy
+        if (nearestEnemy != null)
         {
-            // Facing up
-            facingDirection = Vector3.up;
+            Vector3 direction = (nearestEnemy.transform.position - transform.position).normalized;
+            return direction;
         }
-        else if (minAngle == angleRight)
+        else
         {
-            // Facing right
-            facingDirection = Vector3.right;
+            // If no nearest enemy is found, default facing direction is up
+            return Vector3.up;
         }
-        else if (minAngle == angleDown)
-        {
-            // Facing down
-            facingDirection = Vector3.down;
-        }
-        else if (minAngle == angleLeft)
-        {
-            // Facing left
-            facingDirection = Vector3.left;
-        }
-        return facingDirection;
     }
 
     public void MoveCharacter(Vector3 input)
@@ -113,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 movement = input.normalized * moveSpeed * Time.deltaTime;
         transform.position += movement;
     }
-    
+
     void UpdateAnimation(Vector3 input)
     {
         if (input != Vector3.zero)
@@ -128,5 +111,56 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-   
+    void UpdateFacingDirection()
+    {
+        // Find all game objects with the specified tag
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+
+        // If there are enemies, find the nearest one
+        if (enemies.Length > 0)
+        {
+            float nearestDistance = Mathf.Infinity;
+            foreach (GameObject enemy in enemies)
+            {
+                float distance = Vector3.Distance(transform.position, enemy.transform.position);
+                if (distance < nearestDistance)
+                {
+                    nearestDistance = distance;
+                    nearestEnemy = enemy;
+                }
+            }
+
+            // Get the facing direction towards the nearest enemy
+            Vector3 facingDirection = GetFacingDirection();
+
+            // Flip the sprite based on the facing direction
+            if (facingDirection.x < 0) // Enemy is on the left
+            {
+                FlipSprite(true);
+            }
+            else if (facingDirection.x > 0) // Enemy is on the right
+            {
+                FlipSprite(false);
+            }
+        }
+    }
+
+    void FlipSprite(bool faceLeft)
+    {
+        // Get the current local scale
+        Vector3 scale = transform.localScale;
+
+        // Flip the sprite horizontally based on the faceLeft parameter
+        if (faceLeft)
+        {
+            scale.x = Mathf.Abs(scale.x) * -1f;
+        }
+        else
+        {
+            scale.x = Mathf.Abs(scale.x);
+        }
+
+        // Apply the new local scale
+        transform.localScale = scale;
+    }
 }
