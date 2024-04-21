@@ -29295,7 +29295,7 @@ MonoBehaviour:
   playerMovement: {fileID: 1127378618}
   dodgeSpeed: 100
   dodgeDuration: 0.5
-  dodgeCooldown: 1
+  dodgeCooldown: 0.5
 --- !u!222 &1110407091
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -29428,6 +29428,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystick: {fileID: 1834089117}
   moveSpeed: 5
+  enemyTag: Enemy
+  autoTargetRange: 10
 --- !u!212 &1127378619
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -34240,8 +34242,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 5.2, y: 15.7}
-  m_SizeDelta: {x: -89.7396, y: -68}
+  m_AnchoredPosition: {x: -0.0000076293945, y: 7}
+  m_SizeDelta: {x: -41.5276, y: -68}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1326343653
 MonoBehaviour:
@@ -34263,7 +34265,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: 0.5
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
@@ -34326,7 +34328,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -10.875732, y: 0, z: -1.1431189, w: -24.470222}
+  m_margin: {x: -1.442976, y: 0, z: -1.1431189, w: -24.470222}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

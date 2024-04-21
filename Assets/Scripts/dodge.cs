@@ -7,7 +7,7 @@ public class dodge : MonoBehaviour
     public PlayerMovement playerMovement; // Reference to the PlayerMovement script
     public float dodgeSpeed = 200f; // Increase this value to make the dodge faster
     public float dodgeDuration = 1.5f; // Adjust this value to control the duration of the dodge
-    public float dodgeCooldown = 1f; // Cooldown duration between dodges
+    public float dodgeCooldown = 0.5f; // Cooldown duration between dodges
 
     private bool isDodging = false;
     private bool isOnCooldown = false;
