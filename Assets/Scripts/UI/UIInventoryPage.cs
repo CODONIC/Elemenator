@@ -11,6 +11,9 @@ namespace Inventory.UI
         private UIInventoryItem itemPrefab;
 
         [SerializeField]
+        private GameObject trashContent;
+
+        [SerializeField]
         private RectTransform contentPanel;
 
         [SerializeField]
@@ -19,14 +22,21 @@ namespace Inventory.UI
         [SerializeField]
         private MouseFollower mouseFollower;
 
+        [SerializeField] private GameObject confirmationDialogPanel;
+
+
         List<UIInventoryItem> listofUIItems = new List<UIInventoryItem>();
 
         private int currentlyDraggedItemIndex = -1;
+
+        private int selectedItemIndex = -1;
 
         public event Action<int> OnDescriptionRequested,
             OnItemActionRequested,
             OnStartDragging;
         public event Action<int, int> OnSwapItems;
+
+        public event Action<int> OnItemDeleted;
 
         private void Awake()
         {
@@ -41,6 +51,7 @@ namespace Inventory.UI
             {
                 UIInventoryItem uiItem = Instantiate(itemPrefab, Vector3.zero, Quaternion.identity);
                 uiItem.transform.SetParent(contentPanel);
+                uiItem.SetItemIndex(i);
                 listofUIItems.Add(uiItem);
                 uiItem.OnItemClicked += HandleItemSelection;
                 uiItem.OnItemBeginDrag += HandleBeginDrag;
@@ -109,13 +120,27 @@ namespace Inventory.UI
             int index = listofUIItems.IndexOf(inventoryItemUI);
             if (index == -1)
                 return;
-            OnDescriptionRequested?.Invoke(index);
+
+            // Deselect the previously selected item
+            if (selectedItemIndex != -1)
+                listofUIItems[selectedItemIndex].Deselect();
+
+            selectedItemIndex = index;
+
+            // Select the currently clicked item
+            inventoryItemUI.Select();
+
+            OnDescriptionRequested?.Invoke(selectedItemIndex);
         }
 
         public void Show()
         {
             gameObject.SetActive(true);
             itemDescription.ResetDescription();
+
+            // Activate Trash Content game object
+            if (trashContent != null)
+                trashContent.SetActive(true);
 
             ResetSelection();
             Time.timeScale = 0;
@@ -138,6 +163,10 @@ namespace Inventory.UI
         public void Hide()
         {
             gameObject.SetActive(false);
+
+            // Deactivate Trash Content game object
+            if (trashContent != null)
+                trashContent.SetActive(false);
             ResetDraggedItem();
             Time.timeScale = 1;
         }
@@ -157,5 +186,38 @@ namespace Inventory.UI
                 item.Deselect();
             }
         }
+
+        public void DeleteSelectedItem()
+        {
+            if (selectedItemIndex != -1)
+            {
+                // Show confirmation dialog
+                ShowConfirmationDialog(selectedItemIndex);
+            }
+        }
+
+        private void ShowConfirmationDialog(int itemIndex)
+        {
+            // Activate the confirmation dialog panel
+            confirmationDialogPanel.SetActive(true);
+
+            // Assuming you have a confirmation dialog UI panel with "Yes" and "No" buttons.
+            // Attach "Yes" button to ConfirmDeletion and "No" button to CancelDeletion methods.
+        }
+
+        public void ConfirmDeletion()
+        {
+            OnItemDeleted?.Invoke(selectedItemIndex);
+            listofUIItems[selectedItemIndex].ResetData();
+            selectedItemIndex = -1;
+            confirmationDialogPanel.SetActive(false); // Deactivate the confirmation dialog panel after confirmation
+        }
+
+        public void CancelDeletion()
+        {
+            confirmationDialogPanel.SetActive(false); // Deactivate the confirmation dialog panel if cancelled
+        }
+
+
     }
 }

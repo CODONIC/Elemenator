@@ -52,6 +52,7 @@ namespace Inventory
             inventoryUI.OnSwapItems += HandleSwapItems;
             inventoryUI.OnStartDragging += HandleDragging;
             inventoryUI.OnItemActionRequested += HandleItemActionRequest;
+            inventoryUI.OnItemDeleted += HandleDeleteSelectedItem;
         }
 
         private void HandleItemActionRequest(int itemIndex)
@@ -101,6 +102,18 @@ namespace Inventory
             else
             {
                 inventoryUI.Hide();
+            }
+        }
+
+        public void HandleDeleteSelectedItem(int itemIndex)
+        {
+            if (itemIndex != -1)
+            {
+                InventoryItem selectedItem = inventoryData.GetItemAt(itemIndex);
+                if (!selectedItem.IsEmpty)
+                {
+                    inventoryData.RemoveItem(selectedItem.item, selectedItem.quantity);
+                }
             }
         }
     }

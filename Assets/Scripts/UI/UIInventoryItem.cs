@@ -25,6 +25,13 @@ namespace Inventory.UI
 
         private bool empty = true;
 
+        private int itemIndex = -1;
+
+        public void SetItemIndex(int index)
+        {
+            itemIndex = index;
+        }
+
         public void Awake()
         {
             ResetData();
@@ -64,6 +71,7 @@ namespace Inventory.UI
             }
             else
             {
+                // Invoke item click event
                 OnItemClicked?.Invoke(this);
             }
         }

@@ -1403,17 +1403,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 4128075396776430921, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
+  trashContent: {fileID: 0}
   contentPanel: {fileID: 5449315274895466573}
   itemDescription: {fileID: 4202396952338176160}
   mouseFollower: {fileID: 0}
-  image: {fileID: 21300000, guid: e60c2673a8524b64cb6d1e7145a4620c, type: 3}
-  image2: {fileID: 21300000, guid: fd8ed816336d6d44eb5f74bd5b8e567d, type: 3}
-  quantity: 1
-  title: Hydrogen
-  description: It is the lightest element and, at standard conditions, is a gas of
-    diatomic molecules with the formula H 2, sometimes called dihydrogen, but more
-    commonly called hydrogen gas, molecular hydrogen or simply hydrogen. It is colorless,
-    odorless, tasteless, non-toxic, and highly combustible.
+  confirmationDialogPanel: {fileID: 0}
 --- !u!114 &5449315274947622865
 MonoBehaviour:
   m_ObjectHideFlags: 0

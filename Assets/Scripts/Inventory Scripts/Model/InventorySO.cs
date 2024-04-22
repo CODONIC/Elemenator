@@ -71,7 +71,28 @@ namespace Inventory.Model
                => inventoryItems.Where(item => item.IsEmpty).Any() == false;
 
 
-   
+        public void RemoveItem(ItemSO item, int quantity)
+        {
+            for (int i = 0; i < inventoryItems.Count; i++)
+            {
+                if (inventoryItems[i].item == item)
+                {
+                    if (quantity >= inventoryItems[i].quantity)
+                    {
+                        // Remove the entire stack
+                        inventoryItems[i] = InventoryItem.GetEmptyItem();
+                        quantity -= inventoryItems[i].quantity;
+                    }
+                    else
+                    {
+                        // Reduce the quantity of the stack
+                        inventoryItems[i] = inventoryItems[i].ChangeQuantity(inventoryItems[i].quantity - quantity);
+                        break;
+                    }
+                }
+            }
+            InformAboutChange();
+        }
         private int AddStackableItem(ItemSO item, int quantity)
         {
             for (int i = 0; i < inventoryItems.Count; i++)
