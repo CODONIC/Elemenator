@@ -13,12 +13,6 @@ MonoBehaviour:
   m_Name: PlayerInventory
   m_EditorClassIdentifier: 
   inventoryItems:
-  - quantity: 7
-    item: {fileID: 11400000, guid: 31e6e0aad1b81d64e96b7d5249cc6415, type: 2}
-  - quantity: 99
-    item: {fileID: 11400000, guid: fd67733694b26a340a601ad96562a1fd, type: 2}
-  - quantity: 4
-    item: {fileID: 11400000, guid: fd67733694b26a340a601ad96562a1fd, type: 2}
   - quantity: 0
     item: {fileID: 0}
   - quantity: 0
@@ -33,4 +27,10 @@ MonoBehaviour:
     item: {fileID: 0}
   - quantity: 0
     item: {fileID: 0}
-  <Size>k__BackingField: 10
+  - quantity: 0
+    item: {fileID: 0}
+  - quantity: 0
+    item: {fileID: 0}
+  - quantity: 0
+    item: {fileID: 0}
+  <Size>k__BackingField: 24

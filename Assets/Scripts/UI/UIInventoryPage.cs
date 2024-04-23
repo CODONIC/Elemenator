@@ -210,6 +210,7 @@ namespace Inventory.UI
             OnItemDeleted?.Invoke(selectedItemIndex);
             listofUIItems[selectedItemIndex].ResetData();
             selectedItemIndex = -1;
+            itemDescription.ResetDescription();
             confirmationDialogPanel.SetActive(false); // Deactivate the confirmation dialog panel after confirmation
         }
 

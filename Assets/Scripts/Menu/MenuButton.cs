@@ -1,3 +1,4 @@
+using Inventory.Model;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,6 +7,8 @@ public class MenuButton : MonoBehaviour
     // Reference to the game panel
     public GameObject gamePanel;
 
+    // Reference to the player's inventory
+    [SerializeField] private InventorySO inventoryData;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,8 +58,6 @@ public class MenuButton : MonoBehaviour
     }
 
     // Method to go to the Main Menu scene
-    // Method to go to the Main Menu scene
-    // Method to go to the Main Menu scene
     public void GoToMainMenu()
     {
         SaveGame();
@@ -78,29 +79,22 @@ public class MenuButton : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-
-
-    // Method to save the game state using SaveManager
-    // Method to save the game state using SaveManager
     // Method to save the game state using SaveManager
     public void SaveGame()
     {
-        // Find the player GameObject by tag
+        // Save player's health and position
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-
-        // Ensure playerObject is not null
         if (playerObject != null)
         {
-            // Get the Player component from the player GameObject
             Player player = playerObject.GetComponent<Player>();
-
-            // Ensure player component is not null
             if (player != null)
             {
-                
-                // Save player's health after taking damage
-                SaveManager.Instance.SaveGame(player.currentHealth, transform.position);
+                // Get player's health and position
+                int playerHealth = player.currentHealth;
+                Vector3 playerPosition = player.transform.position;
 
+                // Save player's health and position
+                SaveManager.Instance.SaveGame(playerHealth, playerPosition, inventoryData.inventoryItems);
             }
             else
             {
@@ -114,6 +108,4 @@ public class MenuButton : MonoBehaviour
     }
 
     // Method to delete specific player preference
-
-
 }
