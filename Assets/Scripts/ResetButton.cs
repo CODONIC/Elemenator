@@ -7,5 +7,12 @@ public class ResetButton : MonoBehaviour
     {
         SaveManager.Instance.DeletePlayerPreference("PlayerHealth");
         Debug.Log("Player health preference deleted!");
+         SaveManager.Instance.DeletePlayerPreference("PlayerPositionX");
+        SaveManager.Instance.DeletePlayerPreference("PlayerPositionY");
+        SaveManager.Instance.DeletePlayerPreference("PlayerPositionZ");
+        Debug.Log("Player position preferences deleted!");
+        // Clear the inventory items
+        SaveManager.Instance.ClearInventory();
+        Debug.Log("Inventory cleared!");
     }
 }

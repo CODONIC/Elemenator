@@ -32,15 +32,17 @@ public class SaveManager : MonoBehaviour
         PlayerPrefs.SetFloat("PlayerPositionY", playerPosition.y);
         PlayerPrefs.SetFloat("PlayerPositionZ", playerPosition.z);
 
-        // Save inventory data
-        for (int i = 0; i < inventoryItems.Count; i++)
+      // Save inventory data
+    for (int i = 0; i < inventoryItems.Count; i++)
+    {
+        // Save non-empty inventory slots
+        if (!inventoryItems[i].IsEmpty)
         {
-            // Serialize inventory item data and save it using PlayerPrefs or another method
-            string key = "InventoryItem_" + i;
-            string value = JsonUtility.ToJson(inventoryItems[i]);
-            PlayerPrefs.SetString(key, value);
+            // Save item ID and quantity
+            PlayerPrefs.SetInt("InventoryItem_" + i + "_ID", inventoryItems[i].item.ID);
+            PlayerPrefs.SetInt("InventoryItem_" + i + "_Quantity", inventoryItems[i].quantity);
         }
-
+    }
         PlayerPrefs.Save();
         Debug.Log("Game Saved!");
     }
@@ -56,27 +58,46 @@ public class SaveManager : MonoBehaviour
 
         // Load inventory items
         List<InventoryItem> inventoryItems = new List<InventoryItem>();
-        int index = 0;
-        while (true)
+        for (int i = 0; i < maxInventorySlots; i++) // maxInventorySlots is the maximum number of inventory slots
+    {
+        // Check if there is saved data for this inventory slot
+        if (PlayerPrefs.HasKey("InventoryItem_" + i + "_ID"))
         {
-            string key = "InventoryItem_" + index;
-            if (PlayerPrefs.HasKey(key))
+            int itemID = PlayerPrefs.GetInt("InventoryItem_" + i + "_ID");
+            int quantity = PlayerPrefs.GetInt("InventoryItem_" + i + "_Quantity");
+
+            // Find the ItemSO with the matching ID
+            ItemSO item = FindItemByID(itemID);
+
+            // Add the item to the inventory
+            if (item != null)
             {
-                string json = PlayerPrefs.GetString(key);
-                InventoryItem item = JsonUtility.FromJson<InventoryItem>(json);
-                inventoryItems.Add(item);
-                index++;
+                inventoryItems.Add(new InventoryItem(item, quantity));
             }
             else
             {
-                break;
+                Debug.LogWarning("Item with ID " + itemID + " not found!");
             }
         }
+    }
 
         Debug.Log("Game Loaded!");
         return new PlayerData(playerHealth, playerPosition, inventoryItems);
     }
 
+ public void ClearInventory()
+    {
+        InventorySO inventorySO = Resources.Load<InventorySO>("InventorySO"); // Load the InventorySO scriptable object
+        if (inventorySO != null)
+        {
+            inventorySO.Clear(); // Call the Clear method of the InventorySO scriptable object
+            Debug.Log("Inventory cleared!");
+        }
+        else
+        {
+            Debug.LogError("InventorySO not found!");
+        }
+    }
 
     public void DeletePlayerPreference(string key)
     {

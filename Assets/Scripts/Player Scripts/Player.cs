@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Inventory.Model;
+
 
 public class Player : MonoBehaviour
 {
@@ -16,6 +18,9 @@ public class Player : MonoBehaviour
 
     public HealthBar healthBar;
     public GameObject gameOverScreen;
+
+  private InventorySO playerInventory;
+    
 
     private void Awake()
     {
@@ -61,12 +66,62 @@ public class Player : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
         healthBar.SetHealth(currentHealth);
 
+        // Load player's location
+    transform.position = playerData.position;
+
+    // Initialize player inventory if not already initialized
+        if (playerInventory == null)
+        {
+            playerInventory = ScriptableObject.CreateInstance<InventorySO>();
+            playerInventory.Initialize();
+        }
+
+        // Load inventory items
+        LoadInventory(playerData.inventoryItems);
+
         // Get the SpriteRenderer component attached to the player object
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         // Store the original color of the sprite
         originalColor = spriteRenderer.color;
     }
+
+   private void LoadInventory(List<InventoryItem> inventoryItems)
+{
+    if (playerInventory != null)
+    {
+        playerInventory.Clear(); // Clear the inventory before loading new items
+
+        if (inventoryItems != null)
+        {
+            foreach (var item in inventoryItems)
+            {
+                // Check if the item is not empty before adding it
+                if (!item.IsEmpty && item.item != null)
+                {
+                    playerInventory.AddItem(item);
+                }
+                else
+                {
+                    // Skip loading empty slots
+                    Debug.LogWarning("Empty inventory slot found, skipping...");
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Inventory items list is null!");
+        }
+    }
+    else
+    {
+        Debug.LogError("Player inventory is not initialized!");
+    }
+}
+
+
+
+
 
     public void TakeDamage(int damage)
     {

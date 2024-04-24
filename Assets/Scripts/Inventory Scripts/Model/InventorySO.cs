@@ -93,6 +93,13 @@ namespace Inventory.Model
             }
             InformAboutChange();
         }
+
+        public void Clear()
+        {
+            inventoryItems.Clear();
+            Initialize(); // Reinitialize the inventory after clearing
+            InformAboutChange();
+        }
         private int AddStackableItem(ItemSO item, int quantity)
         {
             for (int i = 0; i < inventoryItems.Count; i++)
@@ -166,6 +173,7 @@ namespace Inventory.Model
         }
     }
 
+    
     [Serializable]
 
     public struct InventoryItem
