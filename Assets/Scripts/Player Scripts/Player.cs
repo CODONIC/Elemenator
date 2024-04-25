@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Inventory.Model;
 
-
 public class Player : MonoBehaviour
 {
     public int maxHealth = 100;
@@ -19,8 +18,7 @@ public class Player : MonoBehaviour
     public HealthBar healthBar;
     public GameObject gameOverScreen;
 
-  private InventorySO playerInventory;
-    
+    public InventoryDatabase inventoryDatabase;
 
     private void Awake()
     {
@@ -30,6 +28,7 @@ public class Player : MonoBehaviour
         // Initialize references on scene load
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
+
     private void OnDestroy()
     {
         // Unsubscribe from the sceneLoaded event to prevent memory leaks
@@ -38,8 +37,6 @@ public class Player : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Ensure references are initialized after scene load
-        // Example: GetComponent<PlayerHealth>().Initialize();
         // Ensure references are initialized after scene load
         healthBar = FindObjectOfType<HealthBar>();
         if (healthBar == null)
@@ -58,26 +55,25 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Player.cs
     void Start()
     {
+        // Find the InventoryDatabase object in the scene
+        inventoryDatabase = FindObjectOfType<InventoryDatabase>();
+        if (inventoryDatabase == null)
+        {
+            Debug.LogError("InventoryDatabase object not found in the scene!");
+            return;
+        }
         // Load player's health and position from saved data
-        PlayerData playerData = SaveManager.Instance.LoadGame();
+        PlayerData playerData = SaveManager.Instance.LoadGame(); // Removed inventoryDatabase parameter
+
         currentHealth = playerData.health;
         healthBar.SetMaxHealth(maxHealth);
         healthBar.SetHealth(currentHealth);
 
         // Load player's location
-    transform.position = playerData.position;
-
-    // Initialize player inventory if not already initialized
-        if (playerInventory == null)
-        {
-            playerInventory = ScriptableObject.CreateInstance<InventorySO>();
-            playerInventory.Initialize();
-        }
-
-        // Load inventory items
-        LoadInventory(playerData.inventoryItems);
+        transform.position = playerData.position;
 
         // Get the SpriteRenderer component attached to the player object
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -85,39 +81,6 @@ public class Player : MonoBehaviour
         // Store the original color of the sprite
         originalColor = spriteRenderer.color;
     }
-
-   private void LoadInventory(List<InventoryItem> inventoryItems)
-{
-    if (playerInventory != null)
-    {
-        playerInventory.Clear(); // Clear the inventory before loading new items
-
-        if (inventoryItems != null)
-        {
-            foreach (var item in inventoryItems)
-            {
-                // Check if the item is not empty before adding it
-                if (!item.IsEmpty && item.item != null)
-                {
-                    playerInventory.AddItem(item);
-                }
-                else
-                {
-                    // Skip loading empty slots
-                    Debug.LogWarning("Empty inventory slot found, skipping...");
-                }
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Inventory items list is null!");
-        }
-    }
-    else
-    {
-        Debug.LogError("Player inventory is not initialized!");
-    }
-}
 
 
 
@@ -140,9 +103,6 @@ public class Player : MonoBehaviour
             // Start the flash effect coroutine
             StartCoroutine(FlashSprite());
         }
-       
-        
-
     }
 
     IEnumerator FlashSprite()

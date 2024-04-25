@@ -1,6 +1,7 @@
 using Inventory.Model;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SaveManager : MonoBehaviour
 {
@@ -9,7 +10,6 @@ public class SaveManager : MonoBehaviour
 
     private void Awake()
     {
-        
         // Ensure there's only one instance of SaveManager
         if (Instance == null)
         {
@@ -23,8 +23,7 @@ public class SaveManager : MonoBehaviour
     }
 
     // Method to save the game state
-    // Method to save the game state
-    public void SaveGame(int playerHealth, Vector3 playerPosition, List<InventoryItem> inventoryItems)
+    public void SaveGame(int playerHealth, Vector3 playerPosition)
     {
         // Save player's health and position
         PlayerPrefs.SetInt("PlayerHealth", playerHealth);
@@ -32,21 +31,22 @@ public class SaveManager : MonoBehaviour
         PlayerPrefs.SetFloat("PlayerPositionY", playerPosition.y);
         PlayerPrefs.SetFloat("PlayerPositionZ", playerPosition.z);
 
-      // Save inventory data
-    for (int i = 0; i < inventoryItems.Count; i++)
-    {
-        // Save non-empty inventory slots
-        if (!inventoryItems[i].IsEmpty)
+        // Save inventory data
+        InventoryDatabase inventoryDatabase = FindObjectOfType<InventoryDatabase>();
+        if (inventoryDatabase != null)
         {
-            // Save item ID and quantity
-            PlayerPrefs.SetInt("InventoryItem_" + i + "_ID", inventoryItems[i].item.ID);
-            PlayerPrefs.SetInt("InventoryItem_" + i + "_Quantity", inventoryItems[i].quantity);
+            inventoryDatabase.SaveInventory();
+            Debug.Log("Game Saved!");
         }
-    }
+        else
+        {
+            Debug.LogWarning("No InventoryDatabase found in the scene!");
+        }
+
         PlayerPrefs.Save();
-        Debug.Log("Game Saved!");
     }
 
+    // Method to load the game state
     public PlayerData LoadGame()
     {
         // Load player health and position
@@ -56,49 +56,24 @@ public class SaveManager : MonoBehaviour
         float playerPositionZ = PlayerPrefs.GetFloat("PlayerPositionZ", 0f);
         Vector3 playerPosition = new Vector3(playerPositionX, playerPositionY, playerPositionZ);
 
-        // Load inventory items
-        List<InventoryItem> inventoryItems = new List<InventoryItem>();
-        for (int i = 0; i < maxInventorySlots; i++) // maxInventorySlots is the maximum number of inventory slots
-    {
-        // Check if there is saved data for this inventory slot
-        if (PlayerPrefs.HasKey("InventoryItem_" + i + "_ID"))
+        // Load inventory data
+        InventoryDatabase inventoryDatabase = FindObjectOfType<InventoryDatabase>();
+        if (inventoryDatabase != null)
         {
-            int itemID = PlayerPrefs.GetInt("InventoryItem_" + i + "_ID");
-            int quantity = PlayerPrefs.GetInt("InventoryItem_" + i + "_Quantity");
-
-            // Find the ItemSO with the matching ID
-            ItemSO item = FindItemByID(itemID);
-
-            // Add the item to the inventory
-            if (item != null)
-            {
-                inventoryItems.Add(new InventoryItem(item, quantity));
-            }
-            else
-            {
-                Debug.LogWarning("Item with ID " + itemID + " not found!");
-            }
-        }
-    }
-
-        Debug.Log("Game Loaded!");
-        return new PlayerData(playerHealth, playerPosition, inventoryItems);
-    }
-
- public void ClearInventory()
-    {
-        InventorySO inventorySO = Resources.Load<InventorySO>("InventorySO"); // Load the InventorySO scriptable object
-        if (inventorySO != null)
-        {
-            inventorySO.Clear(); // Call the Clear method of the InventorySO scriptable object
-            Debug.Log("Inventory cleared!");
+            inventoryDatabase.LoadInventory();
+            Debug.Log("Game Loaded!");
+            // Retrieve inventory items from the database
+            List<InventoryItem> inventoryItems = inventoryDatabase.inventoryData.inventoryItems;
+            return new PlayerData(playerHealth, playerPosition, inventoryItems);
         }
         else
         {
-            Debug.LogError("InventorySO not found!");
+            Debug.LogWarning("No InventoryDatabase found in the scene!");
+            return new PlayerData(playerHealth, playerPosition, new List<InventoryItem>());
         }
     }
 
+    // Method to delete a player preference
     public void DeletePlayerPreference(string key)
     {
         if (PlayerPrefs.HasKey(key))
@@ -109,6 +84,20 @@ public class SaveManager : MonoBehaviour
         else
         {
             Debug.LogWarning("Player preference with key: " + key + " not found!");
+        }
+    }
+
+    // Method to clear the inventory
+    public void ClearInventory()
+    {
+        InventoryDatabase inventoryDatabase = FindObjectOfType<InventoryDatabase>();
+        if (inventoryDatabase != null)
+        {
+            inventoryDatabase.ClearInventory();
+        }
+        else
+        {
+            Debug.LogWarning("No InventoryDatabase found in the scene!");
         }
     }
 }
@@ -127,4 +116,3 @@ public class PlayerData
         this.inventoryItems = inventoryItems;
     }
 }
-

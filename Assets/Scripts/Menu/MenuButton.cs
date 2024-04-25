@@ -8,7 +8,7 @@ public class MenuButton : MonoBehaviour
     public GameObject gamePanel;
 
     // Reference to the player's inventory
-    [SerializeField] private InventorySO inventoryData;
+    [SerializeField] public InventoryDatabase inventoryData;
     // Start is called before the first frame update
     void Start()
     {
@@ -80,6 +80,7 @@ public class MenuButton : MonoBehaviour
     }
 
     // Method to save the game state using SaveManager
+    // Method to save the game state using SaveManager
     public void SaveGame()
     {
         // Save player's health and position
@@ -94,7 +95,7 @@ public class MenuButton : MonoBehaviour
                 Vector3 playerPosition = player.transform.position;
 
                 // Save player's health and position
-                SaveManager.Instance.SaveGame(playerHealth, playerPosition, inventoryData.inventoryItems);
+                SaveManager.Instance.SaveGame(playerHealth, playerPosition);
             }
             else
             {
@@ -106,6 +107,7 @@ public class MenuButton : MonoBehaviour
             Debug.LogError("Player GameObject not found!");
         }
     }
+
 
     // Method to delete specific player preference
 }

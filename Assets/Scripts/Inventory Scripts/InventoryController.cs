@@ -26,7 +26,7 @@ namespace Inventory
         private void PrepareInventoryData()
         {
             inventoryData.Initialize();
-            inventoryData.OnInventoryUpdated += UpdateInventoryUI;
+            inventoryData.OnInventoryUpdated += UpdateInventoryUI; // Subscribe to the event here
             foreach (InventoryItem item in initialItems)
             {
                 if (item.IsEmpty)
@@ -40,8 +40,7 @@ namespace Inventory
             inventoryUI.ResetAllItems();
             foreach (var item in inventoryState)
             {
-                inventoryUI.UpdateData(item.Key, item.Value.item.ItemImage, 
-                    item.Value.quantity);
+                inventoryUI.UpdateData(item.Key, item.Value.item.ItemImage, item.Value.quantity);
             }
         }
 
@@ -81,10 +80,9 @@ namespace Inventory
                 inventoryUI.ResetSelection();
                 return;
             }
-            
+
             ItemSO item = inventoryItem.item;
-            inventoryUI.UpdateDescription(itemIndex, item.ItemImage,
-                item.Name, item.Description);
+            inventoryUI.UpdateDescription(itemIndex, item.ItemImage, item.Name, item.Description);
         }
 
         public void OnClick()
@@ -94,9 +92,7 @@ namespace Inventory
                 inventoryUI.Show();
                 foreach (var item in inventoryData.GetCurrentInventoryState())
                 {
-                    inventoryUI.UpdateData(item.Key,
-                        item.Value.item.ItemImage,
-                        item.Value.quantity);
+                    inventoryUI.UpdateData(item.Key, item.Value.item.ItemImage, item.Value.quantity);
                 }
             }
             else
