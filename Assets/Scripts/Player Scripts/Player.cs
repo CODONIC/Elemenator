@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     public HealthBar healthBar;
     public GameObject gameOverScreen;
 
-    public InventoryDatabase inventoryDatabase;
+    public InventorySO inventory;
 
     private void Awake()
     {
@@ -58,15 +58,9 @@ public class Player : MonoBehaviour
     // Player.cs
     void Start()
     {
-        // Find the InventoryDatabase object in the scene
-        inventoryDatabase = FindObjectOfType<InventoryDatabase>();
-        if (inventoryDatabase == null)
-        {
-            Debug.LogError("InventoryDatabase object not found in the scene!");
-            return;
-        }
+
         // Load player's health and position from saved data
-        PlayerData playerData = SaveManager.Instance.LoadGame(); // Removed inventoryDatabase parameter
+        PlayerData playerData = SaveManager.Instance.LoadGame(inventory); // Removed inventoryDatabase parameter
 
         currentHealth = playerData.health;
         healthBar.SetMaxHealth(maxHealth);

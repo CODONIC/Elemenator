@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Inventory.Model
@@ -8,10 +6,10 @@ namespace Inventory.Model
     [System.Serializable]
     public class ItemSO : ScriptableObject
     {
+        public int ID; // Unique identifier for the item
+
         [field: SerializeField]
         public bool IsStackable { get; set; }
-
-        public int ID => GetInstanceID();
 
         [field: SerializeField]
         public int MaxStackSize { get; set; } = 1;
@@ -27,4 +25,3 @@ namespace Inventory.Model
         public Sprite ItemImage { get; set; }
     }
 }
-

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7325cc8d2d6c44a46885f79d70673e1f, type: 3}
   m_Name: Oxygen
   m_EditorClassIdentifier: 
+  ID: 2
   <IsStackable>k__BackingField: 1
   <MaxStackSize>k__BackingField: 64
   <Name>k__BackingField: Oxygen

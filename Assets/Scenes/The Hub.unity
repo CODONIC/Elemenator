@@ -552,7 +552,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gamePanel: {fileID: 1292576945}
-  inventoryData: {fileID: 1127378630}
 --- !u!114 &112379740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24805,7 +24804,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &507275824
 RectTransform:
   m_ObjectHideFlags: 0
@@ -27100,7 +27099,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -47.948975, y: -50.855957}
+  m_AnchoredPosition: {x: -47.94873, y: -50.855957}
   m_SizeDelta: {x: 95.898, y: 101.7131}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &723538505
@@ -29766,7 +29765,6 @@ GameObject:
   - component: {fileID: 1127378619}
   - component: {fileID: 1127378628}
   - component: {fileID: 1127378627}
-  - component: {fileID: 1127378630}
   - component: {fileID: 1127378618}
   - component: {fileID: 1127378617}
   - component: {fileID: 1127378631}
@@ -29981,7 +29979,7 @@ MonoBehaviour:
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   healthBar: {fileID: 720425779}
   gameOverScreen: {fileID: 507275823}
-  inventoryDatabase: {fileID: 1127378630}
+  inventory: {fileID: 11400000, guid: af124d5a556f3c446841169de0685bfb, type: 2}
 --- !u!114 &1127378627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30026,20 +30024,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.01027321, y: -0.00000008257397}
   m_Size: {x: 0.63355213, y: 0.8000382}
   m_Direction: 0
---- !u!114 &1127378630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1127378614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bdd990b226a7be49b1e9f9564c0dd3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveFileName: inventory.json
-  inventoryData: {fileID: 11400000, guid: af124d5a556f3c446841169de0685bfb, type: 2}
 --- !u!114 &1127378631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30052,6 +30036,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cca0c2075587944e8640bc5fe1b339d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 11400000, guid: af124d5a556f3c446841169de0685bfb, type: 2}
 --- !u!1 &1153937880
 GameObject:
   m_ObjectHideFlags: 0
@@ -44276,7 +44261,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 53.87854}
+  m_AnchoredPosition: {x: 0, y: 53.878418}
   m_SizeDelta: {x: 0, y: 234.1671}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1905383085

@@ -11,8 +11,7 @@ public class ResetButton : MonoBehaviour
         SaveManager.Instance.DeletePlayerPreference("PlayerPositionY");
         SaveManager.Instance.DeletePlayerPreference("PlayerPositionZ");
         Debug.Log("Player position preferences deleted!");
-        // Clear the inventory items
-        SaveManager.Instance.ClearInventory();
+      
         Debug.Log("Inventory cleared!");
     }
 }

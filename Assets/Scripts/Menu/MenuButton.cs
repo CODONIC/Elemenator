@@ -7,8 +7,7 @@ public class MenuButton : MonoBehaviour
     // Reference to the game panel
     public GameObject gamePanel;
 
-    // Reference to the player's inventory
-    [SerializeField] public InventoryDatabase inventoryData;
+
     // Start is called before the first frame update
     void Start()
     {

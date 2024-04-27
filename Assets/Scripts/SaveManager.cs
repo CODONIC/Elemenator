@@ -1,5 +1,7 @@
 using Inventory.Model;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +9,9 @@ public class SaveManager : MonoBehaviour
 {
     // Singleton instance of SaveManager
     public static SaveManager Instance;
+
+    public InventorySO inventory;
+   
 
     private void Awake()
     {
@@ -31,23 +36,17 @@ public class SaveManager : MonoBehaviour
         PlayerPrefs.SetFloat("PlayerPositionY", playerPosition.y);
         PlayerPrefs.SetFloat("PlayerPositionZ", playerPosition.z);
 
-        // Save inventory data
-        InventoryDatabase inventoryDatabase = FindObjectOfType<InventoryDatabase>();
-        if (inventoryDatabase != null)
-        {
-            inventoryDatabase.SaveInventory();
+        inventory.Save();
+
+      
             Debug.Log("Game Saved!");
-        }
-        else
-        {
-            Debug.LogWarning("No InventoryDatabase found in the scene!");
-        }
+        
 
         PlayerPrefs.Save();
     }
 
     // Method to load the game state
-    public PlayerData LoadGame()
+    public PlayerData LoadGame(InventorySO inventory)
     {
         // Load player health and position
         int playerHealth = PlayerPrefs.GetInt("PlayerHealth", 100);
@@ -56,22 +55,16 @@ public class SaveManager : MonoBehaviour
         float playerPositionZ = PlayerPrefs.GetFloat("PlayerPositionZ", 0f);
         Vector3 playerPosition = new Vector3(playerPositionX, playerPositionY, playerPositionZ);
 
-        // Load inventory data
-        InventoryDatabase inventoryDatabase = FindObjectOfType<InventoryDatabase>();
-        if (inventoryDatabase != null)
-        {
-            inventoryDatabase.LoadInventory();
-            Debug.Log("Game Loaded!");
-            // Retrieve inventory items from the database
-            List<InventoryItem> inventoryItems = inventoryDatabase.inventoryData.inventoryItems;
-            return new PlayerData(playerHealth, playerPosition, inventoryItems);
-        }
-        else
-        {
-            Debug.LogWarning("No InventoryDatabase found in the scene!");
-            return new PlayerData(playerHealth, playerPosition, new List<InventoryItem>());
-        }
+        // Create a new PlayerData instance with loaded data
+        PlayerData playerData = new PlayerData(playerHealth, playerPosition);
+
+        inventory.Load();
+        Debug.Log("Game Loaded");
+        return playerData;
+
+
     }
+
 
     // Method to delete a player preference
     public void DeletePlayerPreference(string key)
@@ -87,19 +80,7 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    // Method to clear the inventory
-    public void ClearInventory()
-    {
-        InventoryDatabase inventoryDatabase = FindObjectOfType<InventoryDatabase>();
-        if (inventoryDatabase != null)
-        {
-            inventoryDatabase.ClearInventory();
-        }
-        else
-        {
-            Debug.LogWarning("No InventoryDatabase found in the scene!");
-        }
-    }
+    
 }
 
 [System.Serializable]
@@ -109,10 +90,10 @@ public class PlayerData
     public Vector3 position;
     public List<InventoryItem> inventoryItems;
 
-    public PlayerData(int health, Vector3 position, List<InventoryItem> inventoryItems)
+    public PlayerData(int health, Vector3 position)
     {
         this.health = health;
         this.position = position;
-        this.inventoryItems = inventoryItems;
+        
     }
 }

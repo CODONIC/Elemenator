@@ -12,53 +12,78 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a7b67542757ed44fb14502bd6e63ff9, type: 3}
   m_Name: PlayerInventory
   m_EditorClassIdentifier: 
+  savePath: C:\Users\Kris\Desktop\Save\Inventory.json
   inventoryItems:
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  - quantity: 0
+  - ID: -1
+    quantity: 0
     item: {fileID: 0}
-  <Size>k__BackingField: 24
+  size: 24
