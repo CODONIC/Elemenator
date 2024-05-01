@@ -1,6 +1,8 @@
+using Inventory.Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Inventory.UI
@@ -12,6 +14,9 @@ namespace Inventory.UI
 
         [SerializeField]
         private GameObject trashContent;
+
+        [SerializeField]
+        private Transform[] craftingSlots;
 
         [SerializeField]
         private RectTransform contentPanel;
@@ -43,6 +48,53 @@ namespace Inventory.UI
             Hide();
             mouseFollower.Toggle(false);
             itemDescription.ResetDescription();
+        }
+
+        public ItemSO GetCraftingSlotItem(int slotIndex)
+        {
+            // Implement logic to retrieve the item in the specified crafting slot index
+            return null;
+        }
+
+        public void AddItemToInventory(ItemSO item)
+        {
+            // Implement logic to add an item to the inventory
+        }
+
+        public void ClearCraftingSlots()
+        {
+            // Implement logic to clear the crafting slots
+        }
+
+        public void AddItemToCraftingSlot(int slotIndex, ItemSO item)
+        {
+            if (slotIndex < 1 || slotIndex > craftingSlots.Length)
+            {
+                Debug.LogError("Invalid crafting slot index: " + slotIndex);
+                return;
+            }
+
+            // Assuming slot indices start from 1
+            Transform craftingSlot = craftingSlots[slotIndex - 1];
+
+            if (craftingSlot != null)
+            {
+                // Set the item data for the crafting slot
+                UIInventoryItem uiItem = craftingSlot.GetComponentInChildren<UIInventoryItem>();
+                if (uiItem != null)
+                {
+                    uiItem.SetData(item.ItemImage, 1);
+                    // Assuming quantity is always 1 for crafted items
+                }
+                else
+                {
+                    Debug.LogError("UIInventoryItem component not found in crafting slot " + slotIndex);
+                }
+            }
+            else
+            {
+                Debug.LogError("Crafting slot " + slotIndex + " not found.");
+            }
         }
 
         public void InitializeInventoryUI(int inventorysize)

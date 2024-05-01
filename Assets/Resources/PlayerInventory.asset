@@ -14,6 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   savePath: C:\Users\Kris\Desktop\Save\Inventory.json
   inventoryItems:
+  - ID: 1
+    quantity: 2
+    item: {fileID: 11400000, guid: 31e6e0aad1b81d64e96b7d5249cc6415, type: 2}
+  - ID: 2
+    quantity: 1
+    item: {fileID: 11400000, guid: 61223faf36f53724ca042e9ac6dafe76, type: 2}
   - ID: -1
     quantity: 0
     item: {fileID: 0}
@@ -68,22 +74,4 @@ MonoBehaviour:
   - ID: -1
     quantity: 0
     item: {fileID: 0}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  size: 24
+  size: 20

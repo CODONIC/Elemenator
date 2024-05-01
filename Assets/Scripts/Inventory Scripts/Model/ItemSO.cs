@@ -8,20 +8,63 @@ namespace Inventory.Model
     {
         public int ID; // Unique identifier for the item
 
-        [field: SerializeField]
-        public bool IsStackable { get; set; }
+        [SerializeField]
+        private string itemImageBase64; // Serialized sprite as Base64 string
 
-        [field: SerializeField]
-        public int MaxStackSize { get; set; } = 1;
+        [SerializeField] // Exclude from serialization
+        public Sprite itemImage; // Direct field to store the sprite
 
-        [field: SerializeField]
-        public string Name { get; set; }
+        public bool IsStackable;
+        public int MaxStackSize = 1;
+        public string Name;
+        public string Description;
 
-        [field: SerializeField]
-        [field: TextArea]
-        public string Description { get; set; }
+        // Property to get the sprite
+        public Sprite ItemImage
+        {
+            get
+            {
+                if (itemImage != null)
+                    return itemImage;
 
-        [field: SerializeField]
-        public Sprite ItemImage { get; set; }
+                if (string.IsNullOrEmpty(itemImageBase64))
+                    return null;
+
+                return LoadSpriteFromBase64(itemImageBase64);
+            }
+        }
+
+        // Method to set the sprite
+        public void SetItemImage(Sprite sprite)
+        {
+            if (sprite == null)
+            {
+                itemImageBase64 = null;
+                itemImage = null;
+                return;
+            }
+
+            itemImage = sprite;
+
+            // Serialize the sprite as Base64 string
+            itemImageBase64 = SpriteToBase64(sprite);
+        }
+
+        // Convert Sprite to Base64 string
+        private string SpriteToBase64(Sprite sprite)
+        {
+            Texture2D texture = sprite.texture;
+            byte[] textureData = texture.EncodeToPNG();
+            return System.Convert.ToBase64String(textureData);
+        }
+
+        // Convert Base64 string to Sprite
+        private Sprite LoadSpriteFromBase64(string base64)
+        {
+            byte[] textureData = System.Convert.FromBase64String(base64);
+            Texture2D texture = new Texture2D(1, 1);
+            texture.LoadImage(textureData);
+            return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+        }
     }
 }

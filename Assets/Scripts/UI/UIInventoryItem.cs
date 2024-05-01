@@ -1,3 +1,4 @@
+using Inventory.Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,16 @@ namespace Inventory.UI
     public class UIInventoryItem : MonoBehaviour, IPointerClickHandler,
         IBeginDragHandler, IEndDragHandler, IDropHandler, IDragHandler
     {
+
+        // Add a property to hold the associated InventoryItem
+        public InventoryItem InventoryItem { get; private set; }
+
+        // Method to set the associated InventoryItem
+        public void SetInventoryItem(InventoryItem item)
+        {
+            InventoryItem = item;
+            // You might also want to update the UI to display information about this item
+        }
         [SerializeField]
         private Image itemImage;
         [SerializeField]
@@ -40,25 +51,42 @@ namespace Inventory.UI
 
         public void ResetData()
         {
-            itemImage.gameObject.SetActive(false);
-            empty = true;
+            if (itemImage != null)
+            {
+                itemImage.gameObject.SetActive(false);
+                empty = true;
+            }
         }
         public void Deselect()
         {
-            borderImage.enabled = false;
+            if (borderImage != null)
+            {
+                borderImage.enabled = false;
+            }
         }
 
         public void SetData(Sprite sprite, int quantity)
         {
-            itemImage.gameObject.SetActive(true);
-            itemImage.sprite = sprite;
-            quantityTxt.text = quantity + "";
+            if (itemImage != null)
+            {
+                itemImage.gameObject.SetActive(true);
+                itemImage.sprite = sprite;
+            }
+
+            if (quantityTxt != null)
+            {
+                quantityTxt.text = quantity.ToString();
+            }
+
             empty = false;
         }
 
         public void Select()
         {
-            borderImage.enabled = true;
+            if (borderImage != null)
+            {
+                borderImage.enabled = true;
+            }
         }
 
 

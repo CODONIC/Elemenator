@@ -1,4 +1,5 @@
 using Inventory.Model;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -87,6 +88,7 @@ public class SaveManager : MonoBehaviour
 public class PlayerData
 {
     public int health;
+    [JsonIgnore] // Exclude the position property from serialization
     public Vector3 position;
     public List<InventoryItem> inventoryItems;
 

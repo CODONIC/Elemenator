@@ -1,28 +1,52 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using Newtonsoft.Json;
+using System.Linq;
+using static UnityEditor.Progress;
+using UnityEditor;
 
 namespace Inventory.Model
 {
     [CreateAssetMenu]
     public class InventorySO : ScriptableObject, ISerializationCallbackReceiver
-    {  
+    {
         public string savePath;
         private ItemDatabaseObject database;
-      
-        
+
         public List<InventoryItem> inventoryItems = new List<InventoryItem>();
 
         [SerializeField]
-        private int size = 24;
+        private int size = 20;
 
         public event Action<Dictionary<int, InventoryItem>> OnInventoryUpdated;
 
         public int Size => size;
+
+        // Static reference to hold the single instance of InventorySO
+        private static InventorySO instance;
+
+
+        public static InventorySO Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    // Load or create the InventorySO instance
+                    instance = Resources.Load<InventorySO>("InventorySO");
+
+                    // If the instance doesn't exist, create a new one
+                    if (instance == null)
+                    {
+                        instance = CreateInstance<InventorySO>();
+                        instance.Initialize();
+                    }
+                }
+                return instance;
+            }
+        }
 
         private void OnEnable()
         {
@@ -31,26 +55,25 @@ namespace Inventory.Model
             {
                 Debug.LogError("Failed to load ItemDatabaseObject. Make sure it's placed in a 'Resources' folder.");
             }
+
+            // Ensure the instance is set when the scriptable object is enabled
+            instance = this;
         }
+
         public void Initialize()
         {
-            inventoryItems.Clear();
-
-            
-
-            // If the JSON file contains items, populate the inventory
-            if (inventoryItems != null && inventoryItems.Count > 0)
+            try
             {
-                
-                    inventoryItems = inventoryItems.ToList();
-                
+                Load(); // Try to load inventory data from the JSON file
+                Debug.Log("Inventory initialized from saved data.");
             }
-            else // If JSON file doesn't contain items, initialize the inventory as empty
+            catch (Exception ex)
             {
+                Debug.LogWarning("Failed to load inventory data from JSON file. Initializing with empty items. Error: " + ex.Message);
                 for (int i = 0; i < Size; i++)
                 {
                     inventoryItems.Add(InventoryItem.GetEmptyItem());
-                }
+                } // If loading fails, initialize with empty items
             }
         }
 
@@ -59,7 +82,7 @@ namespace Inventory.Model
         {
             try
             {
-                string saveFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Save");
+                string saveFolderPath = Path.Combine(Application.persistentDataPath, "Save");
 
                 if (!Directory.Exists(saveFolderPath))
                 {
@@ -72,9 +95,14 @@ namespace Inventory.Model
                 // Serialize the inventory data only
                 InventorySaveData saveData = new InventorySaveData
                 {
-                    inventoryItems = inventoryItems
+                    inventoryItems = inventoryItems.Select(item => new InventoryItemData
+                    {
+                        ID = item.ID,
+                        quantity = item.quantity,
+                        itemImagePath = item.item != null ? AssetDatabase.GetAssetPath(item.item) : null
+                    }).ToList()
                 };
-                string saveJson = JsonUtility.ToJson(saveData, true);
+                string saveJson = JsonConvert.SerializeObject(saveData, Formatting.Indented);
 
                 // Write the JSON data to the file
                 File.WriteAllText(filePath, saveJson);
@@ -87,13 +115,11 @@ namespace Inventory.Model
             }
         }
 
-
-
         public void Load()
         {
             try
             {
-                string saveFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Save");
+                string saveFolderPath = Path.Combine(Application.persistentDataPath, "Save");
                 if (!Directory.Exists(saveFolderPath))
                 {
                     Directory.CreateDirectory(saveFolderPath);
@@ -106,22 +132,33 @@ namespace Inventory.Model
                     string json = File.ReadAllText(filePath);
                     Debug.Log("Loaded JSON data: " + json);
 
-                    // Deserialize the JSON data into a list of InventoryItem objects
-                    List<InventoryItem> loadedItems = JsonUtility.FromJson <List<InventoryItem>>(json);
-                    Debug.Log("Loaded FROM JSON data: " + loadedItems);
+                    // Deserialize the JSON data into a list of InventoryItemData objects
+                    InventorySaveData saveData = JsonConvert.DeserializeObject<InventorySaveData>(json);
 
-                    if (loadedItems != null)
+                    if (saveData != null)
                     {
-                        Debug.Log("Loaded Items FROM JSON data: " + loadedItems);
                         // Clear the existing inventoryItems list
                         inventoryItems.Clear();
 
                         // Add the loaded items to the inventoryItems list
-                        inventoryItems.AddRange(loadedItems);
+                        foreach (var data in saveData.inventoryItems)
+                        {
+                            ItemSO item = database.GetItem[data.ID];
+                            if (item != null)
+                            {
+                                inventoryItems.Add(new InventoryItem
+                                {
+                                    ID = data.ID,
+                                    quantity = data.quantity,
+                                    item = item
+                                });
+                            }
+                        }
 
                         Debug.Log("Game loaded successfully.");
                         InformAboutChange();
                     }
+
                     else
                     {
                         Debug.LogError("Failed to deserialize JSON data into InventoryItem list.");
@@ -135,13 +172,11 @@ namespace Inventory.Model
             }
             catch (Exception ex)
             {
-                Debug.LogError("Error loading game: " + ex.Message);
+                Debug.LogError("Error loading data: " + ex.Message);
             }
         }
 
-
-
-        public int AddItem(ItemSO item, int quantity)
+        public void AddItem(ItemSO item, int quantity)
         {
             int itemId = item.ID;
 
@@ -155,13 +190,29 @@ namespace Inventory.Model
                     }
                     InformAboutChange();
                 }
-                return quantity;
             }
             else
             {
                 quantity = AddStackableItem(itemId, item, quantity);
                 InformAboutChange();
-                return quantity;
+            }
+
+            // Call SetItemImage to ensure the sprite image is set for the added item
+            SetItemImageForItem(item);
+        }
+
+        private void SetItemImageForItem(ItemSO item)
+        {
+            // Find the item in the inventory and set its sprite image
+            for (int i = 0; i < inventoryItems.Count; i++)
+            {
+                if (inventoryItems[i].item == item)
+                {
+                    // Call the appropriate method to set the sprite image for the item
+                    // For example, if your ItemSO has a method called SetItemImage, use it here
+                    // inventoryItems[i].item.SetItemImage(item.ItemImage);
+                    break;
+                }
             }
         }
 
@@ -174,16 +225,21 @@ namespace Inventory.Model
                 quantity = quantity
             };
 
+            // Look for the first available slot and add the item
             for (int i = 0; i < inventoryItems.Count; i++)
             {
-                if (inventoryItems[i].IsEmpty)
+                if (inventoryItems[i].IsEmpty || inventoryItems[i].ID == -1)
                 {
                     inventoryItems[i] = newItem;
                     return quantity;
                 }
             }
-            return 0;
+
+            // If no empty slots were found, add the item to a new slot
+            inventoryItems.Add(newItem);
+            return quantity;
         }
+
 
         private bool IsInventoryFull() => !inventoryItems.Any(item => item.IsEmpty);
 
@@ -195,11 +251,13 @@ namespace Inventory.Model
                 {
                     if (quantity >= inventoryItems[i].quantity)
                     {
+                        // Remove the entire item
                         inventoryItems[i] = InventoryItem.GetEmptyItem();
                         quantity -= inventoryItems[i].quantity;
                     }
                     else
                     {
+                        // Decrease the quantity of the item
                         inventoryItems[i] = inventoryItems[i].ChangeQuantity(inventoryItems[i].quantity - quantity);
                         break;
                     }
@@ -207,6 +265,7 @@ namespace Inventory.Model
             }
             InformAboutChange();
         }
+
 
         public void Clear()
         {
@@ -261,29 +320,49 @@ namespace Inventory.Model
 
         public InventoryItem GetItemAt(int itemIndex)
         {
-            return inventoryItems[itemIndex];
-        }
-
-        public void AddItem(InventoryItem item)
-        {
-            ItemSO itemToAdd;
-            if (database.GetItem.TryGetValue(item.ID, out itemToAdd))
+            // Check if the provided itemIndex is within the valid range
+            if (itemIndex >= 0 && itemIndex < inventoryItems.Count)
             {
-                AddItem(itemToAdd, item.quantity);
+                return inventoryItems[itemIndex];
             }
             else
             {
-                Debug.LogError("Item not found in the database with ID: " + item.ID);
+                // If the index is out of range, return an empty item
+                return InventoryItem.GetEmptyItem();
             }
         }
 
+
+        public void AddItem(InventoryItem item)
+        {
+            // Add the item to the inventory
+            AddItem(item.item, item.quantity);
+        }
+
+
+
+
         public void SwapItems(int itemIndex_1, int itemIndex_2)
         {
-            InventoryItem item1 = inventoryItems[itemIndex_1];
-            inventoryItems[itemIndex_1] = inventoryItems[itemIndex_2];
+            // Check if the indices are within the range of inventoryItems
+            if (itemIndex_1 < -1 || itemIndex_1 >= inventoryItems.Count ||
+                itemIndex_2 < -1 || itemIndex_2 >= inventoryItems.Count)
+            {
+               
+                return;
+            }
+
+            // If either slot is empty, treat it as an empty item
+            InventoryItem item1 = itemIndex_1 < 0 ? InventoryItem.GetEmptyItem() : inventoryItems[itemIndex_1];
+            InventoryItem item2 = itemIndex_2 < 0 ? InventoryItem.GetEmptyItem() : inventoryItems[itemIndex_2];
+
+            // Perform the swap
+            inventoryItems[itemIndex_1] = item2;
             inventoryItems[itemIndex_2] = item1;
+
             InformAboutChange();
         }
+
 
         private void InformAboutChange()
         {
@@ -292,7 +371,7 @@ namespace Inventory.Model
 
         public void OnBeforeSerialize()
         {
-           
+
         }
 
         public void OnAfterDeserialize()
@@ -300,8 +379,7 @@ namespace Inventory.Model
             // Ensure that the inventoryItems list has the correct capacity
             if (inventoryItems == null)
             {
-                inventoryItems = new List
-             <InventoryItem>();
+                inventoryItems = new List<InventoryItem>();
             }
             else
             {
@@ -309,8 +387,6 @@ namespace Inventory.Model
                 {
                     inventoryItems.RemoveRange(Size, inventoryItems.Count - Size);
                 }
-
-
 
                 // Ensure that all items up to the specified size are initialized
                 for (int i = inventoryItems.Count; i < Size; i++)
@@ -350,24 +426,28 @@ namespace Inventory.Model
             }
 
         }
-
     }
 
     [Serializable]
     public class InventorySaveData
     {
-        public List<InventoryItem> inventoryItems;
+        public List<InventoryItemData> inventoryItems;
     }
-    [Serializable]
-    public struct InventoryItem 
-    {
-        private ItemDatabaseObject database;
 
+    [Serializable]
+    public struct InventoryItemData
+    {
+        public int ID;
+        public int quantity;
+        public string itemImagePath;
+    }
+
+    [Serializable]
+    public struct InventoryItem
+    {
         public int ID;
         public int quantity;
         public ItemSO item;
-
-      
 
         public bool IsEmpty => item == null;
 
@@ -391,7 +471,4 @@ namespace Inventory.Model
             };
         }
     }
-
-
-
 }
