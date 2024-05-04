@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public int damageAmount = 10; // Damage amount to deal to the slime
+    public float damageAmount = 10.0f; // Damage amount to deal to the slime
+    public float knockbackForce = 5.0f; // Force to apply for knockback
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -17,6 +18,10 @@ public class PlayerAttack : MonoBehaviour
             {
                 // Deal damage to the slime
                 slimeController.TakeDamage(damageAmount);
+
+                // Apply knockback force to the enemy
+                Vector2 knockbackDirection = (other.transform.position - transform.position).normalized;
+                slimeController.ApplyKnockback(knockbackDirection, knockbackForce);
             }
         }
     }

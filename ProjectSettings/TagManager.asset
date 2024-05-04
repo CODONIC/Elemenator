@@ -11,6 +11,10 @@ TagManager:
   - Slime
   - Enemy
   - PlayerHitBox
+  - PlayerWeapon
+  - Wall
+  - GameOverScreen
+  - GameOverPanel
   layers:
   - Default
   - TransparentFX

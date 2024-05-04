@@ -39,6 +39,6 @@ public class Portal : MonoBehaviour
     public void TeleportPlayer()
     {
         // Load the desired scene
-        SceneManager.LoadScene("NEXT LEVEL");
+        SceneManager.LoadScene("Laboratory 2-1");
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class WeaponParent : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class WeaponParent : MonoBehaviour
 
     private void Start()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded; // Subscribe to the scene loaded event
+        FindJoystick();
         // Ensure both gauntlets start with their initial rotation
         leftGauntletAnimator.transform.rotation = Quaternion.identity;
         rightGauntletAnimator.transform.rotation = Quaternion.identity;
@@ -31,10 +34,38 @@ public class WeaponParent : MonoBehaviour
         // Start with left gauntlet attacking
         isLeftGauntletAttacking = true;
     }
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded; // Unsubscribe from the scene loaded event
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        FindJoystick(); // Call this method to find the joystick whenever a new scene is loaded
+    }
+
+    private void FindJoystick()
+    {
+        // Find and assign the Joystick reference if it's not set
+        if (joystick == null)
+        {
+            joystick = FindObjectOfType<FixedJoystick>();
+            if (joystick == null)
+            {
+                Debug.LogError("Joystick reference is not set and could not be found in the scene.");
+            }
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
+        // Check if the Joystick reference is valid before using it
+        if (joystick != null)
+        {
+            // Perform operations dependent on the Joystick
+            HandleWeaponRotation();
+        }
         // Call the method to handle weapon rotation based on joystick input
         HandleWeaponRotation();
 

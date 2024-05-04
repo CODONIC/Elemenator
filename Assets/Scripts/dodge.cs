@@ -6,11 +6,17 @@ public class dodge : MonoBehaviour
 {
     public PlayerMovement playerMovement; // Reference to the PlayerMovement script
     public float dodgeSpeed = 200f; // Increase this value to make the dodge faster
+<<<<<<< HEAD
     public float dodgeDuration = 1.0f; // Adjust this value to control the duration of the dodge
     public float dodgeCooldown = 2.5f; // Cooldown duration between dodges
 
 
 
+=======
+    public float dodgeDuration = 1.5f; // Adjust this value to control the duration of the dodge
+    public float dodgeCooldown = 0.5f; // Cooldown duration between dodges
+
+>>>>>>> 25a656219834cb8541e6bee1f35c6c925884548f
     private bool isDodging = false;
     private bool isOnCooldown = false;
 
@@ -39,6 +45,12 @@ public class dodge : MonoBehaviour
         yield return new WaitForSeconds(dodgeCooldown);
         isOnCooldown = false;
         Debug.Log("Cooldown ended");
+<<<<<<< HEAD
+=======
+
+        // Enable dodge button again after cooldown ends
+        GetComponent<Button>().interactable = true;
+>>>>>>> 25a656219834cb8541e6bee1f35c6c925884548f
     }
 
     void PerformDodge()
