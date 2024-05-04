@@ -12,23 +12,12 @@ namespace Inventory.UI
     public class UIInventoryItem : MonoBehaviour, IPointerClickHandler,
         IBeginDragHandler, IEndDragHandler, IDropHandler, IDragHandler
     {
-
         // Add a property to hold the associated InventoryItem
         public InventoryItem InventoryItem { get; private set; }
 
-        // Method to set the associated InventoryItem
-        public void SetInventoryItem(InventoryItem item)
-        {
-            InventoryItem = item;
-            // You might also want to update the UI to display information about this item
-        }
-        [SerializeField]
-        private Image itemImage;
-        [SerializeField]
-        private TMP_Text quantityTxt;
-
-        [SerializeField]
-        private Image borderImage;
+        [SerializeField] private Image itemImage;
+        [SerializeField] private TMP_Text quantityTxt;
+        [SerializeField] private Image borderImage;
 
         public event Action<UIInventoryItem> OnItemClicked,
             OnItemDroppedOn, OnItemBeginDrag, OnItemEndDrag,
@@ -36,17 +25,21 @@ namespace Inventory.UI
 
         private bool empty = true;
 
-        private int itemIndex = -1;
-
-        public void SetItemIndex(int index)
-        {
-            itemIndex = index;
-        }
-
-        public void Awake()
+        private void Awake()
         {
             ResetData();
             Deselect();
+        }
+
+        public void SetInventoryItem(InventoryItem item)
+        {
+            InventoryItem = item;
+            UpdateUI();
+        }
+
+        public void SetItemIndex(int index)
+        {
+            // You can add functionality here if needed
         }
 
         public void ResetData()
@@ -57,6 +50,7 @@ namespace Inventory.UI
                 empty = true;
             }
         }
+
         public void Deselect()
         {
             if (borderImage != null)
@@ -89,26 +83,31 @@ namespace Inventory.UI
             }
         }
 
+        public void UpdateUI()
+        {
+            // Implement UI update logic if needed
+        }
 
         public void OnPointerClick(PointerEventData pointerData)
         {
-
             if (pointerData.button == PointerEventData.InputButton.Right)
             {
                 OnRightMouseBtnClick?.Invoke(this);
             }
             else
             {
-                // Invoke item click event
                 OnItemClicked?.Invoke(this);
             }
         }
+
 
         public void OnBeginDrag(PointerEventData eventData)
         {
             if (empty)
                 return;
             OnItemBeginDrag?.Invoke(this);
+
+
         }
 
         public void OnEndDrag(PointerEventData eventData)
@@ -123,7 +122,7 @@ namespace Inventory.UI
 
         public void OnDrag(PointerEventData eventData)
         {
-
+            // You can add dragging logic here if needed
         }
     }
 }

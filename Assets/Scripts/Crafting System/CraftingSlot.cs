@@ -1,10 +1,11 @@
 using Inventory.Crafting;
+using Inventory.Model;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Inventory.UI
 {
-    public class CraftingSlot : MonoBehaviour, IDropHandler
+    public class CraftingSlot : MonoBehaviour
     {
         public int slotIndex;
         private CraftingSystem craftingSystem;
@@ -14,16 +15,13 @@ namespace Inventory.UI
             craftingSystem = FindObjectOfType<CraftingSystem>();
         }
 
-        public void OnDrop(PointerEventData eventData)
+        public void OnCraftingSlotTap()
         {
-            // Check if the dragged item is from the inventory
-            if (eventData.pointerDrag != null && eventData.pointerDrag.GetComponent<UIInventoryItem>() != null)
-            {
-                UIInventoryItem draggedItem = eventData.pointerDrag.GetComponent<UIInventoryItem>();
+            // Get the selected item from the inventory
+            InventoryItem selectedItem = InventorySO.Instance.GetItemAt(0); // Assuming index 0 for the selected item
 
-                // Pass the dragged item and the slot index to the crafting system for handling
-                craftingSystem.HandleCrafting(draggedItem, slotIndex);
-            }
+            // Pass the selected item and slot index to the crafting system for handling
+            craftingSystem.TransferItemToCraftingSlot(slotIndex, selectedItem);
         }
     }
 }

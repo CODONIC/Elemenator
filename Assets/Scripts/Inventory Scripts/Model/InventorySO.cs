@@ -70,12 +70,17 @@ namespace Inventory.Model
             catch (Exception ex)
             {
                 Debug.LogWarning("Failed to load inventory data from JSON file. Initializing with empty items. Error: " + ex.Message);
+                // Clear the existing inventoryItems list
+                inventoryItems.Clear();
+
+                // Initialize with empty items
                 for (int i = 0; i < Size; i++)
                 {
                     inventoryItems.Add(InventoryItem.GetEmptyItem());
-                } // If loading fails, initialize with empty items
+                }
             }
         }
+
 
 
         public void Save()
@@ -143,22 +148,33 @@ namespace Inventory.Model
                         // Add the loaded items to the inventoryItems list
                         foreach (var data in saveData.inventoryItems)
                         {
-                            ItemSO item = database.GetItem[data.ID];
-                            if (item != null)
+                            // If the ID is -1, add an empty item
+                            if (data.ID == -1)
                             {
-                                inventoryItems.Add(new InventoryItem
+                                inventoryItems.Add(InventoryItem.GetEmptyItem());
+                            }
+                            else
+                            {
+                                // Check if the item exists in the database
+                                if (database.GetItem.TryGetValue(data.ID, out ItemSO item))
                                 {
-                                    ID = data.ID,
-                                    quantity = data.quantity,
-                                    item = item
-                                });
+                                    inventoryItems.Add(new InventoryItem
+                                    {
+                                        ID = data.ID,
+                                        quantity = data.quantity,
+                                        item = item
+                                    });
+                                }
+                                else
+                                {
+                                    Debug.LogWarning($"Item with ID {data.ID} not found in the database. Skipping...");
+                                }
                             }
                         }
 
                         Debug.Log("Game loaded successfully.");
                         InformAboutChange();
                     }
-
                     else
                     {
                         Debug.LogError("Failed to deserialize JSON data into InventoryItem list.");
@@ -175,6 +191,7 @@ namespace Inventory.Model
                 Debug.LogError("Error loading data: " + ex.Message);
             }
         }
+
 
         public void AddItem(ItemSO item, int quantity)
         {
@@ -225,6 +242,13 @@ namespace Inventory.Model
                 quantity = quantity
             };
 
+            // Check if the inventory is completely empty
+            if (inventoryItems.All(item => item.ID == -1))
+            {
+                inventoryItems[0] = newItem; // Add the item to the first slot
+                return quantity;
+            }
+
             // Look for the first available slot and add the item
             for (int i = 0; i < inventoryItems.Count; i++)
             {
@@ -239,6 +263,7 @@ namespace Inventory.Model
             inventoryItems.Add(newItem);
             return quantity;
         }
+
 
 
         private bool IsInventoryFull() => !inventoryItems.Any(item => item.IsEmpty);
@@ -363,7 +388,28 @@ namespace Inventory.Model
             InformAboutChange();
         }
 
+        public void DeleteInventoryFile()
+        {
+            try
+            {
+                string saveFolderPath = Path.Combine(Application.persistentDataPath, "Save");
+                string filePath = Path.Combine(saveFolderPath, savePath);
 
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                    Debug.Log("Inventory JSON file deleted successfully." + filePath);
+                }
+                else
+                {
+                    Debug.Log("Inventory JSON file not found.");
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError("Error deleting inventory JSON file: " + ex.Message);
+            }
+        }
         private void InformAboutChange()
         {
             OnInventoryUpdated?.Invoke(GetCurrentInventoryState());
@@ -395,12 +441,15 @@ namespace Inventory.Model
                 }
             }
 
-            // Filter out items with invalid IDs (-1)
-            inventoryItems = inventoryItems.Where(item => item.ID >= 0).ToList();
-
             // Iterate over each item in the deserialized list and ensure it is valid
             for (int i = 0; i < inventoryItems.Count; i++)
             {
+                // Skip items with invalid IDs (-1)
+                if (inventoryItems[i].ID < 0)
+                {
+                    continue;
+                }
+
                 Debug.Log("Checking InventoryItem at index " + i + " with ID: " + inventoryItems[i].ID);
                 ItemSO item;
                 if (database.GetItem.TryGetValue(inventoryItems[i].ID, out item))
@@ -424,9 +473,11 @@ namespace Inventory.Model
                     inventoryItems[i] = InventoryItem.GetEmptyItem();
                 }
             }
-
         }
+
     }
+
+
 
     [Serializable]
     public class InventorySaveData
