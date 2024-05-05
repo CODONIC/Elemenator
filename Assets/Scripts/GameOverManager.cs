@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameOverManager : MonoBehaviour
 {
     public GameObject gameOverScreen;
+    public AudioSource gameOverAudio; // Reference to the AudioSource component
 
     // Reference to the MenuButton script
     public MenuButton menuButton;
@@ -25,6 +26,12 @@ public class GameOverManager : MonoBehaviour
     {
         // Show game over screen
         gameOverScreen.SetActive(true);
+
+        // Play game over audio
+        if (gameOverAudio != null)
+        {
+            gameOverAudio.Play();
+        }
 
         // Pause the game
         Time.timeScale = 0f;

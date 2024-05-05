@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Laboratory 2-1.unity
     guid: a5de99e36365913488c997553c445fff
+  - enabled: 1
+    path: Assets/Scenes/Unknown Island.unity
+    guid: 802caf9b1f4fa9a46ba761c6c3911a04
+  - enabled: 1
+    path: Assets/Scenes/IntroCutscene.unity
+    guid: 8ef9f6f06c1f38242aa26191439ad22e
   m_configObjects: {}

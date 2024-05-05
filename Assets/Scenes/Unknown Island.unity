@@ -9861,6 +9861,7 @@ MonoBehaviour:
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   healthBar: {fileID: 102686222}
   gameOverScreen: {fileID: 820174292}
+  inventory: {fileID: 0}
 --- !u!114 &1835411715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9873,6 +9874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cca0c2075587944e8640bc5fe1b339d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 0}
 --- !u!95 &1835411716
 Animator:
   serializedVersion: 5

@@ -1,27 +1,40 @@
-using Inventory.Crafting;
 using Inventory.Model;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Inventory.UI
+namespace Inventory.Crafting
 {
     public class CraftingSlot : MonoBehaviour
     {
-        public int slotIndex;
-        private CraftingSystem craftingSystem;
+        public Image iconImage;
+        private ItemSO currentItem;
 
-        private void Start()
+        public void SetCraftingItem(ItemSO item)
         {
-            craftingSystem = FindObjectOfType<CraftingSystem>();
+            currentItem = item;
+            if (item != null)
+            {
+                iconImage.sprite = item.ItemImage;
+                iconImage.enabled = true;
+            }
+            else
+            {
+                iconImage.sprite = null;
+                iconImage.enabled = false;
+            }
         }
 
-        public void OnCraftingSlotTap()
+        public void OnClick()
         {
-            // Get the selected item from the inventory
-            InventoryItem selectedItem = InventorySO.Instance.GetItemAt(0); // Assuming index 0 for the selected item
-
-            // Pass the selected item and slot index to the crafting system for handling
-            craftingSystem.TransferItemToCraftingSlot(slotIndex, selectedItem);
+            if (currentItem != null)
+            {
+                Debug.Log("Crafting slot clicked. Item: " + currentItem.Name);
+                // Implement crafting logic here
+            }
+            else
+            {
+                Debug.LogWarning("Crafting slot is empty.");
+            }
         }
     }
 }

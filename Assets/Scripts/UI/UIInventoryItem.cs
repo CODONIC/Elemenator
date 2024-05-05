@@ -97,8 +97,19 @@ namespace Inventory.UI
             else
             {
                 OnItemClicked?.Invoke(this);
+
+                if (InventoryItem.ID != -1)
+                {
+                    Debug.Log("Item clicked. InventoryItem: " + InventoryItem.ToString());
+                    Debug.Log("Item clicked. ID: " + InventoryItem.ID + ", Quantity: " + InventoryItem.quantity);
+                }
+                else
+                {
+                    Debug.LogWarning("Selected item is empty or invalid.");
+                }
             }
         }
+
 
 
         public void OnBeginDrag(PointerEventData eventData)
