@@ -18,4 +18,7 @@ MonoBehaviour:
   IsStackable: 1
   MaxStackSize: 64
   Name: Oxygen
-  Description: This is Oxygen
+  Description: A chemical element with atomic number 8 that constitutes 21 percent
+    of the Earth's atmosphere, that is capable of combining with all elements except
+    some noble gases, that is active in physiological processes of almost all known
+    organisms, and that is involved especially in combustion

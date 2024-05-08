@@ -2,26 +2,31 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    public float damageAmount = 10.0f; // Damage amount to deal to the slime
+    public float damageAmount = 10.0f; // Damage amount to deal to enemies
     public float knockbackForce = 5.0f; // Force to apply for knockback
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Check if the collided object is the slime
+        // Check if the collided object is an enemy (slime or firefly)
         if (other.CompareTag("Enemy"))
         {
-            // Retrieve the slime's SlimeController component
-            SlimeController slimeController = other.GetComponent<SlimeController>();
-
-            // Check if the slimeController is not null
-            if (slimeController != null)
+            if (other.TryGetComponent(out SlimeController slimeController))
             {
                 // Deal damage to the slime
                 slimeController.TakeDamage(damageAmount);
 
-                // Apply knockback force to the enemy
+                // Apply knockback force to the slime
                 Vector2 knockbackDirection = (other.transform.position - transform.position).normalized;
                 slimeController.ApplyKnockback(knockbackDirection, knockbackForce);
+            }
+            else if (other.TryGetComponent(out FireFlyController fireflyController))
+            {
+                // Deal damage to the firefly
+                fireflyController.TakeDamage(damageAmount);
+
+                // Apply knockback force to the firefly
+                Vector2 knockbackDirection = (other.transform.position - transform.position).normalized;
+                fireflyController.ApplyKnockback(knockbackDirection, knockbackForce);
             }
         }
     }

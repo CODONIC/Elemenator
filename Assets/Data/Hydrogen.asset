@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Hydrogen
   m_EditorClassIdentifier: 
   ID: 1
+  itemImageBase64: 
   itemImage: {fileID: 21300000, guid: e60c2673a8524b64cb6d1e7145a4620c, type: 3}
   IsStackable: 1
   MaxStackSize: 64
   Name: Hydrogen
-  Description: This is Hydrogen
+  Description: A nonmetallic gaseous chemical element with atomic number 1 that is
+    the simplest and lightest of the elements and that is used especially in the
+    processing of fossil fuels and the synthesis of ammonia
