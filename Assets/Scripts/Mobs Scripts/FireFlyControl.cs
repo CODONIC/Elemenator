@@ -4,24 +4,30 @@ using UnityEngine;
 
 public class FireFlyControl : MonoBehaviour
 {
-
     public float speed;
     public float stoppingDistance;
     public float retreatDistance;
     public float health = 50f;
-    public float dropChancePercentage = 100f;
-    public float flashDuration = 1.5f; // Duration of the flash effect
+
+    public float flashDuration = 1f; // Duration of the flash effect
     private SpriteRenderer spriteRenderer;
-    
+    public float showHealthContainerDistance;
+
     public GameObject fireflyHealthContainer;
-    public GameObject itemPrefab1;
-    public GameObject itemPrefab2;
 
     public float timeBtwShots;
     public float startTimeBtwShots;
 
     public GameObject projectile;
     public Transform player;
+
+    //LootTable
+    [Header("Loot")]
+    public List<LootItem> lootTable = new List<LootItem>();
+
+    private bool isChasing = true; // Flag to track whether the enemy is chasing the player
+    private bool isShooting = true; // Flag to track whether the enemy is shooting projectiles
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,25 +36,58 @@ public class FireFlyControl : MonoBehaviour
 
         timeBtwShots = startTimeBtwShots;
 
+        if (fireflyHealthContainer != null)
+        {
+            fireflyHealthContainer.SetActive(false);
+        }
+
+        // Get the SpriteRenderer component attached to the enemy object
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Vector2.Distance(transform.position, player.position) > stoppingDistance)
+        // Check if the player is in range to show the health container
+        if (Vector2.Distance(transform.position, player.position) <= showHealthContainerDistance)
+        {
+            // If the container is not already active, enable it
+            if (fireflyHealthContainer != null && !fireflyHealthContainer.activeSelf)
+            {
+                fireflyHealthContainer.SetActive(true);
+                isChasing = true; // Resume chasing when health container is activated
+            }
+        }
+        else
+        {
+            // If the container is active and the player is out of range, disable it
+            if (fireflyHealthContainer != null && fireflyHealthContainer.activeSelf)
+            {
+                fireflyHealthContainer.SetActive(false);
+                isChasing = false; // Stop chasing when health container is deactivated
+            }
+        }
+
+        // If not chasing, don't perform movement or shooting logic
+        if (!isChasing)
+            return;
+
+        // Perform chasing logic only if chasing flag is true
+        if (Vector2.Distance(transform.position, player.position) > stoppingDistance)
         {
             transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
-
-        }else if (Vector2.Distance(transform.position, player.position) < stoppingDistance && Vector2.Distance(transform.position, player.position) > retreatDistance)
+        }
+        else if (Vector2.Distance(transform.position, player.position) < stoppingDistance && Vector2.Distance(transform.position, player.position) > retreatDistance)
         {
             transform.position = this.transform.position;
-        } else if (Vector2.Distance(transform.position, player.position) < retreatDistance)
+        }
+        else if (Vector2.Distance(transform.position, player.position) < retreatDistance)
         {
             transform.position = Vector2.MoveTowards(transform.position, player.position, -speed * Time.deltaTime);
         }
 
-
-        if(timeBtwShots <= 0)
+        // Shoot at the player if time allows and if the enemy is still shooting
+        if (timeBtwShots <= 0 && isShooting)
         {
             Instantiate(projectile, transform.position, Quaternion.identity);
             timeBtwShots = startTimeBtwShots;
@@ -58,8 +97,6 @@ public class FireFlyControl : MonoBehaviour
             timeBtwShots -= Time.deltaTime;
         }
     }
-
-
 
     public void TakeDamage(float damage)
     {
@@ -101,8 +138,17 @@ public class FireFlyControl : MonoBehaviour
         // Check if the enemy is already dying
         if (!isDying && health <= 0)
         {
+            foreach (LootItem lootItem in lootTable)
+            {
+                if (Random.Range(0f, 100f) <= lootItem.dropChance)
+                {
+                    InstantiateLoot(lootItem.itemPrefab);
+                }
+            }
+
             // Set the flag to true to indicate that the enemy is dying
             isDying = true;
+            isShooting = false; // Stop shooting when dying
 
             // Trigger death animation if available
             Animator animator = GetComponent<Animator>();
@@ -115,33 +161,22 @@ public class FireFlyControl : MonoBehaviour
                 animator.speed = 0.5f; // Adjust this value as needed to slow down the animation
             }
 
-           
-
             // Destroy the game object after the animation duration
             StartCoroutine(DestroyAfterAnimation());
         }
     }
 
-
-
-
+    private void InstantiateLoot(GameObject loot)
+    {
+        if (loot)
+        {
+            GameObject droppedLoot = Instantiate(loot, transform.position, Quaternion.identity);
+            droppedLoot.GetComponent<SpriteRenderer>().color = Color.white;
+        }
+    }
 
     IEnumerator DestroyAfterAnimation()
     {
-        yield return new WaitForSeconds(1f);// Randomly determine if the item prefabs should drop
-        bool shouldDropItem1 = Random.Range(0f, 100f) < dropChancePercentage;
-        bool shouldDropItem2 = Random.Range(0f, 100f) < dropChancePercentage;
-
-        if (shouldDropItem1 && itemPrefab1 != null)
-        {
-            Instantiate(itemPrefab1, transform.position, Quaternion.identity);
-            Debug.Log("Item 1 dropped");
-        }
-        if (shouldDropItem2 && itemPrefab2 != null)
-        {
-            Instantiate(itemPrefab2, transform.position, Quaternion.identity);
-            Debug.Log("Item 2 dropped");
-        }
         Debug.Log("DestroyAfterAnimation coroutine started");
         Animator animator = GetComponent<Animator>();
         if (animator != null)
@@ -155,7 +190,6 @@ public class FireFlyControl : MonoBehaviour
                 yield return null;
             }
         }
-        
 
         Debug.Log("Destroying enemy object");
         // Animation has finished playing, destroy the game object

@@ -13,7 +13,7 @@ namespace Inventory.Model
     public class InventorySO : ScriptableObject, ISerializationCallbackReceiver
     {
         public string savePath;
-        private ItemDatabaseObject database;
+        public ItemDatabaseObject database;
 
         public List<InventoryItem> inventoryItems = new List<InventoryItem>();
 

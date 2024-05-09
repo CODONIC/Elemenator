@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2802554158303791398}
   - component: {fileID: 2802554158303791396}
   - component: {fileID: 2802554158303791397}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2802554158923037202}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2802554159143490764}
   - component: {fileID: 2802554159143490763}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: FireFlyHealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 2802554159271845477}
   - component: {fileID: 2802554159271845475}
   - component: {fileID: 2802554159271845476}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -291,7 +291,7 @@ GameObject:
   - component: {fileID: 2802554159389849945}
   - component: {fileID: 2802554159389849946}
   - component: {fileID: 2802554159389849947}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: FireFlyHealthContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -391,7 +391,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2802554159669465108}
   - component: {fileID: 2802554159669465107}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Detection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -441,11 +441,10 @@ GameObject:
   - component: {fileID: 2802554159853513812}
   - component: {fileID: 2802554159853513809}
   - component: {fileID: 2802554159853513808}
-  - component: {fileID: 2802554159853513810}
   - component: {fileID: 2802554159853513813}
   - component: {fileID: 2802554159853513814}
   - component: {fileID: 2802554159853513815}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: FireFly
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -546,47 +545,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9ff48491246bd54c8b599c9892cd776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 3
   stoppingDistance: 5
   retreatDistance: 4
-  health: 50
-  dropChancePercentage: 100
-  flashDuration: 1.5
+  health: 60
+  flashDuration: 1
+  showHealthContainerDistance: 10
   fireflyHealthContainer: {fileID: 2802554159389849948}
-  itemPrefab1: {fileID: 1761183013683063701, guid: a13ef016cd018c243896da777d0920a8, type: 3}
-  itemPrefab2: {fileID: 1761183013683063701, guid: ff01c29b1f5bf5f43b6818473d1a85be, type: 3}
   timeBtwShots: 0
   startTimeBtwShots: 2
   projectile: {fileID: 1913894436769388661, guid: 8dc9edd8cae43f34ea5682eada3b841c, type: 3}
   player: {fileID: 0}
---- !u!114 &2802554159853513810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2802554159853513816}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79f4337188c4a394993d5e367c869126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 3
-  health: 50
-  damage: 10
-  attackRange: 5
-  detectionRange: 10
-  delayAfterCollision: 1
-  dropChancePercentage: 75
-  flashDuration: 0.1
-  flashColor: {r: 1, g: 1, b: 1, a: 1}
-  fireballPrefab: {fileID: 1913894436769388661, guid: 8dc9edd8cae43f34ea5682eada3b841c, type: 3}
-  fireflyHealthContainer: {fileID: 2802554159389849948}
-  itemPrefab1: {fileID: 0}
-  itemPrefab2: {fileID: 0}
-  canMove: 0
-  fireballCooldown: 2
-  speed: 3
+  lootTable:
+  - itemPrefab: {fileID: 1761183013683063701, guid: ff01c29b1f5bf5f43b6818473d1a85be, type: 3}
+    dropChance: 75
+  - itemPrefab: {fileID: 1761183013683063701, guid: a13ef016cd018c243896da777d0920a8, type: 3}
+    dropChance: 50
 --- !u!50 &2802554159853513813
 Rigidbody2D:
   serializedVersion: 4
@@ -656,7 +630,7 @@ GameObject:
   - component: {fileID: 2802554159971162536}
   - component: {fileID: 2802554159971162534}
   - component: {fileID: 2802554159971162535}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

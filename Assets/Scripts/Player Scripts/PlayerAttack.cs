@@ -19,14 +19,14 @@ public class PlayerAttack : MonoBehaviour
                 Vector2 knockbackDirection = (other.transform.position - transform.position).normalized;
                 slimeController.ApplyKnockback(knockbackDirection, knockbackForce);
             }
-            else if (other.TryGetComponent(out FireFlyController fireflyController))
+            else if (other.TryGetComponent(out FireFlyControl fireflyController))
             {
                 // Deal damage to the firefly
                 fireflyController.TakeDamage(damageAmount);
 
                 // Apply knockback force to the firefly
                 Vector2 knockbackDirection = (other.transform.position - transform.position).normalized;
-                fireflyController.ApplyKnockback(knockbackDirection, knockbackForce);
+                
             }
         }
     }

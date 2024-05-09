@@ -5,12 +5,12 @@ public class FireFlyHealthBar : MonoBehaviour
 {
     public Slider healthSlider; // Reference to the UI Slider
 
-    private FireFlyController fireflyController; // Reference to the FireflyController script
+    private FireFlyControl fireflyController; // Reference to the FireflyController script
 
     void Start()
     {
         // Find and store a reference to the FireflyController script attached to the firefly
-        fireflyController = GetComponent<FireFlyController>();
+        fireflyController = GetComponent<FireFlyControl>();
 
         // Set the maximum value of the health slider to the initial health of the firefly
         healthSlider.maxValue = fireflyController.health;
@@ -20,7 +20,12 @@ public class FireFlyHealthBar : MonoBehaviour
 
     void Update()
     {
-        // Update the value of the health slider based on the current health of the firefly
-        healthSlider.value = fireflyController.health;
+        // Check if fireflyController is not null before using it
+        if (fireflyController != null)
+        {
+            // Update the value of the health slider based on the current health of the firefly
+            healthSlider.value = fireflyController.health;
+        }
     }
+
 }

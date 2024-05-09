@@ -13,19 +13,26 @@ public class FireProjectile : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-
-        target = new Vector2(player.position.x, player.position.y);
+        // Calculate the direction towards the player
+        Vector2 direction = (player.position - transform.position).normalized;
+        // Set the target position to a point in the direction towards the player
+        target = (Vector2)transform.position + direction * 25f; // Example: Move 100 units in the direction towards the player
     }
 
     private void Update()
     {
         transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
 
-        if (transform.position.x == target.x && transform.position.y == target.y)
+        // Define a threshold value for considering the projectile to have reached the target position
+        float threshold = 0.25f; // Adjust this value as needed
+
+        // Check if the distance between the projectile and its target position is less than the threshold
+        if (Vector2.Distance(transform.position, target) < threshold)
         {
             DestroyProjectile();
         }
     }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
