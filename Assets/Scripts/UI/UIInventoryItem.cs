@@ -14,7 +14,7 @@ namespace Inventory.UI
     {
         // Add a property to hold the associated InventoryItem
         public InventoryItem InventoryItem { get; private set; }
-
+        private int itemIndex;
         [SerializeField] private Image itemImage;
         [SerializeField] private TMP_Text quantityTxt;
         [SerializeField] private Image borderImage;
@@ -24,24 +24,35 @@ namespace Inventory.UI
             OnRightMouseBtnClick;
 
         private bool empty = true;
-
+        public ItemSO ItemSO { get; private set; }
         private void Awake()
         {
             ResetData();
             Deselect();
         }
 
-        public void SetInventoryItem(InventoryItem item)
+        public void SetInventoryItem(ItemSO item)
         {
-            InventoryItem = item;
+            ItemSO = item;
             UpdateUI();
         }
 
+       
         public void SetItemIndex(int index)
         {
-            // You can add functionality here if needed
+            itemIndex = index;
         }
 
+        public int GetItemIndex()
+        {
+            return itemIndex;
+        }
+        public InventoryItem GetInventoryItem()
+        {
+            // Here you should return the InventoryItem associated with this UIInventoryItem
+            // For example, if you have a reference to the InventoryItem within UIInventoryItem, return it.
+            return InventoryItem; // Placeholder, replace with the actual implementation
+        }
         public void ResetData()
         {
             if (itemImage != null)

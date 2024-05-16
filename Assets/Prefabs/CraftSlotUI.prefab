@@ -115,10 +115,10 @@ GameObject:
   - component: {fileID: 1939651801762809225}
   - component: {fileID: 1939651801762809231}
   - component: {fileID: 1939651801762809224}
+  - component: {fileID: 3338785412559409717}
   - component: {fileID: 4128075396776430921}
-  - component: {fileID: 6642788810998451810}
   m_Layer: 5
-  m_Name: ItemUI
+  m_Name: CraftSlotUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -183,6 +183,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3338785412559409717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939651801762809226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e22e813e3982bae498113064697a125a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4128075396776430921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,18 +210,6 @@ MonoBehaviour:
   itemImage: {fileID: 4784669849363674687}
   quantityTxt: {fileID: 5149788957820182213}
   borderImage: {fileID: 7339928541931394030}
---- !u!225 &6642788810998451810
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1939651801762809226}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &2405163505670592014
 GameObject:
   m_ObjectHideFlags: 0

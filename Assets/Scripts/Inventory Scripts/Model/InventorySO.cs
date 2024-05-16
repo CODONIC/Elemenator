@@ -4,7 +4,7 @@ using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
 using System.Linq;
-using static UnityEditor.Progress;
+
 using UnityEditor;
 
 namespace Inventory.Model
@@ -104,7 +104,7 @@ namespace Inventory.Model
                     {
                         ID = item.ID,
                         quantity = item.quantity,
-                        itemImagePath = item.item != null ? AssetDatabase.GetAssetPath(item.item) : null
+                        itemImagePath = item.item != null ? item.item.itemImagePath : null
                     }).ToList()
                 };
                 string saveJson = JsonConvert.SerializeObject(saveData, Formatting.Indented);

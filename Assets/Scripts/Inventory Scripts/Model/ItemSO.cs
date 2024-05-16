@@ -13,7 +13,7 @@ namespace Inventory.Model
 
         [SerializeField] // Exclude from serialization
         public Sprite itemImage; // Direct field to store the sprite
-
+        public string itemImagePath;
         public bool IsStackable;
         public int MaxStackSize = 1;
         public string Name;

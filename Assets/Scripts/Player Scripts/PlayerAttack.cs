@@ -28,6 +28,10 @@ public class PlayerAttack : MonoBehaviour
                 Vector2 knockbackDirection = (other.transform.position - transform.position).normalized;
                 
             }
+            else if (other.TryGetComponent(out AirFlyControl airflyController))
+            {
+                airflyController.TakeDamage(damageAmount);
+            }
         }
     }
 }

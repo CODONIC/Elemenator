@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a7b67542757ed44fb14502bd6e63ff9, type: 3}
   m_Name: PlayerInventory
   m_EditorClassIdentifier: 
-  savePath: C:\Users\Kris\Desktop\Save\Inventory.json
+  savePath: Inventory.json
+  database: {fileID: 11400000, guid: 2307296f7141c0c4a950808290d82e3f, type: 2}
   inventoryItems:
   - ID: -1
     quantity: 0

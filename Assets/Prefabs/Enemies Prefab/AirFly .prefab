@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 2802554159143490764}
   - component: {fileID: 2802554159143490763}
   m_Layer: 0
-  m_Name: FireFlyHealthBar
+  m_Name: AirFlyHealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -292,7 +292,7 @@ GameObject:
   - component: {fileID: 2802554159389849946}
   - component: {fileID: 2802554159389849947}
   m_Layer: 0
-  m_Name: FireFlyHealthContainer
+  m_Name: AirFlyHealthContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -439,13 +439,13 @@ GameObject:
   m_Component:
   - component: {fileID: 2802554159853513811}
   - component: {fileID: 2802554159853513812}
-  - component: {fileID: 2802554159853513809}
-  - component: {fileID: 2802554159853513808}
+  - component: {fileID: 4028095449955918572}
+  - component: {fileID: 6084942522386539690}
   - component: {fileID: 2802554159853513813}
   - component: {fileID: 2802554159853513814}
   - component: {fileID: 2802554159853513815}
   m_Layer: 0
-  m_Name: FireFly
+  m_Name: 'AirFly '
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -509,7 +509,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 9
-  m_Sprite: {fileID: 480411920, guid: 9eb980778cb4cc648b4601b632ccc5e7, type: 3}
+  m_Sprite: {fileID: -961166907, guid: 8c8351cc54e040341b95551d49e9b3e2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -520,7 +520,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2802554159853513809
+--- !u!114 &4028095449955918572
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -529,11 +529,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2802554159853513816}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f914f43b1e99bb3458d725501bbcf0ab, type: 3}
+  m_Script: {fileID: 11500000, guid: bd5ffa6ba709e4a4f94bb77fa2bd4664, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthSlider: {fileID: 2802554159143490763}
---- !u!114 &2802554159853513808
+--- !u!114 &6084942522386539690
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -542,25 +542,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 2802554159853513816}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9ff48491246bd54c8b599c9892cd776, type: 3}
+  m_Script: {fileID: 11500000, guid: aace1672dbfd1b2498b7de97875ae2ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
   stoppingDistance: 5
   retreatDistance: 4
-  health: 60
+  health: 40
   flashDuration: 1
   showHealthContainerDistance: 10
   fireflyHealthContainer: {fileID: 2802554159389849948}
   timeBtwShots: 0
   startTimeBtwShots: 2.5
-  projectile: {fileID: 1913894436769388661, guid: 8dc9edd8cae43f34ea5682eada3b841c, type: 3}
+  projectile: {fileID: 1913894436769388661, guid: d7df8efde2d2cef40a61ba763e363984, type: 3}
   player: {fileID: 0}
   lootTable:
-  - itemPrefab: {fileID: 1761183013683063701, guid: ff01c29b1f5bf5f43b6818473d1a85be, type: 3}
-    dropChance: 75
+  - itemPrefab: {fileID: 1761183013683063701, guid: 7f8259cf55d278e46b7b82748b00c947, type: 3}
+    dropChance: 62.4
   - itemPrefab: {fileID: 1761183013683063701, guid: a13ef016cd018c243896da777d0920a8, type: 3}
-    dropChance: 50
+    dropChance: 80.8
 --- !u!50 &2802554159853513813
 Rigidbody2D:
   serializedVersion: 4
@@ -608,7 +608,7 @@ Animator:
   m_GameObject: {fileID: 2802554159853513816}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a0cbee36c1f53014391ff1a06730cf7e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 37117e3fc08473245900c00c5f780016, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -654,8 +654,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -8.2, y: -219}
-  m_SizeDelta: {x: 228.97, y: 50}
+  m_AnchoredPosition: {x: -31, y: -215.7}
+  m_SizeDelta: {x: 110.93, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2802554159971162534
 CanvasRenderer:
@@ -685,7 +685,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Crystal Fire Fly
+  m_text: Air Fly
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -748,7 +748,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -37.604523, y: 0, z: 0.6193696, w: 0}
+  m_margin: {x: 0.045394853, y: 0, z: 0.6193696, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
