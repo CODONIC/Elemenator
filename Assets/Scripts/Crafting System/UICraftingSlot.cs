@@ -1,14 +1,17 @@
 using Inventory.Model;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 namespace Inventory.UI
 {
     public class UICraftingSlot : MonoBehaviour
     {
-        // List to hold items in the crafting slot
         public List<UIInventoryItem> craftingItems = new List<UIInventoryItem>();
+        
+        // Add references to UI components
+        [SerializeField] private Image craftingSlotImage;
+        [SerializeField] private Text craftingSlotQuantityText;
 
         public void OnCraftingSlotDropped(UIInventoryItem inventoryItem)
         {
@@ -27,8 +30,23 @@ namespace Inventory.UI
             // Update the UI of the crafting slot with the itemSO data
             if (itemSO != null)
             {
-                // Update the UI of the crafting slot with the item data
-                inventoryItem.SetData(itemSO.ItemImage, 1); // Assuming a quantity of 1 for now
+                // Assuming a quantity of 1 for now
+                SetCraftingSlotData(itemSO.ItemImage, 1);
+            }
+        }
+
+        private void SetCraftingSlotData(Sprite itemImage, int quantity)
+        {
+            // Implement the logic to set the image and quantity in the crafting slot UI
+            if (craftingSlotImage != null)
+            {
+                craftingSlotImage.sprite = itemImage;
+                craftingSlotImage.gameObject.SetActive(true);
+            }
+
+            if (craftingSlotQuantityText != null)
+            {
+                craftingSlotQuantityText.text = quantity.ToString();
             }
         }
     }

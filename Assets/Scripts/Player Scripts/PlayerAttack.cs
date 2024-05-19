@@ -32,6 +32,18 @@ public class PlayerAttack : MonoBehaviour
             {
                 airflyController.TakeDamage(damageAmount);
             }
+            else if (other.TryGetComponent(out ArachnidControl arachnidController))
+            {
+                arachnidController.TakeDamage(damageAmount);
+            }
+            else if (other.TryGetComponent(out AberrantControl aberrantController))
+            {
+                aberrantController.TakeDamage(damageAmount);
+            }
+            else if (other.TryGetComponent(out GolemnControl golemnController))
+            {
+                golemnController.TakeDamage(damageAmount);
+            }
         }
     }
 }
