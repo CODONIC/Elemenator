@@ -2126,6 +2126,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7162276634610307118}
+  - component: {fileID: 6160729304946218164}
   - component: {fileID: 1470363164380076966}
   - component: {fileID: 4052801246675701771}
   - component: {fileID: 8623302493783971350}
@@ -2162,6 +2163,30 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 501.36505, y: 860.14844}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6160729304946218164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8973059324619225936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8eeb36057bdbb64c89ab9200683a60d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  craftItems:
+  - craftName: Water
+    craftObject: {fileID: 0}
+    itemRecipe:
+    - name: Hydrogen
+      recipe:
+      - {fileID: 11400000, guid: 31e6e0aad1b81d64e96b7d5249cc6415, type: 2}
+      required: 2
+    - name: Oxygen
+      recipe:
+      - {fileID: 11400000, guid: 61223faf36f53724ca042e9ac6dafe76, type: 2}
+      required: 1
 --- !u!222 &1470363164380076966
 CanvasRenderer:
   m_ObjectHideFlags: 0

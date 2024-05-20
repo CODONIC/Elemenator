@@ -53,6 +53,9 @@ public class Player : MonoBehaviour
         {
             gameOverScreen.SetActive(false); // Ensure the game over screen is initially inactive
         }
+
+        // Reset the player's health to maximum when the scene is loaded
+        ResetHealth();
     }
 
     // Player.cs
@@ -78,7 +81,14 @@ public class Player : MonoBehaviour
 
 
 
-
+    public void ResetHealth()
+    {
+        currentHealth = maxHealth;
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(currentHealth);
+        }
+    }
 
     public void TakeDamage(int damage)
     {

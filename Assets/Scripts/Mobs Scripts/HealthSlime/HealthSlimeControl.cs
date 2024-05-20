@@ -2,27 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GolemnControl : MonoBehaviour
+public class HealthSlimeControl : MonoBehaviour
 {
     public float speed;
     public float stoppingDistance;
-    public float health = 200f;
+    public float health = 50f;
 
     public float showHealthContainerDistance;
-    public GameObject golemHealthContainer;
+    public GameObject healthSlimeHealthContainer;
 
     public float attackCooldown;
     private float nextAttackTime;
 
-    public int damage = 20;
+    public int damage = 5;
+    public int healthToGive = 20; // Amount of health to give to the player when killed
     public Transform player;
 
     // Animator component
     private Animator animator;
-
-    //LootTable
-    [Header("Loot")]
-    public List<LootItem> lootTable = new List<LootItem>();
 
     private bool isChasing = true; // Flag to track whether the enemy is chasing the player
     private bool isAttacking = false; // Flag to track whether the enemy is attacking
@@ -35,9 +32,9 @@ public class GolemnControl : MonoBehaviour
 
         nextAttackTime = Time.time;
 
-        if (golemHealthContainer != null)
+        if (healthSlimeHealthContainer != null)
         {
-            golemHealthContainer.SetActive(false);
+            healthSlimeHealthContainer.SetActive(false);
         }
     }
 
@@ -49,19 +46,18 @@ public class GolemnControl : MonoBehaviour
         // Check if the player is in range to show the health container
         if (Vector2.Distance(transform.position, player.position) <= showHealthContainerDistance)
         {
-            if (golemHealthContainer != null && !golemHealthContainer.activeSelf)
+            if (healthSlimeHealthContainer != null && !healthSlimeHealthContainer.activeSelf)
             {
-                golemHealthContainer.SetActive(true);
+                healthSlimeHealthContainer.SetActive(true);
                 isChasing = true; // Resume chasing when health container is activated
             }
         }
         else
         {
-            if (golemHealthContainer != null && golemHealthContainer.activeSelf)
+            if (healthSlimeHealthContainer != null && healthSlimeHealthContainer.activeSelf)
             {
-                golemHealthContainer.SetActive(false);
+                healthSlimeHealthContainer.SetActive(false);
                 isChasing = false; // Stop chasing when health container is deactivated
-                SetIdleState(); // Transition to idle state
             }
         }
 
@@ -114,7 +110,7 @@ public class GolemnControl : MonoBehaviour
 
     private void FlipSprite()
     {
-        // Check if the player is to the left or right of the Golem
+        // Check if the player is to the left or right of the slime
         if (player.position.x > transform.position.x)
         {
             // Player is to the left, so face left
@@ -125,14 +121,6 @@ public class GolemnControl : MonoBehaviour
             // Player is to the right, so face right
             GetComponent<SpriteRenderer>().flipX = true;
         }
-    }
-
-    private void SetIdleState()
-    {
-        isAttacking = false;
-        animator.SetBool("IsWalking", false);
-        animator.SetBool("IsAttacking", false);
-        animator.SetBool("IsIdle", true);
     }
 
     public void TakeDamage(float damage)
@@ -160,7 +148,7 @@ public class GolemnControl : MonoBehaviour
         }
         else if (!isChasing)
         {
-            SetIdleState(); // Ensure the Golem transitions to idle state when not chasing
+            animator.SetBool("IsIdle", true);
         }
     }
 
@@ -173,23 +161,14 @@ public class GolemnControl : MonoBehaviour
         isDying = true;
         animator.SetBool("IsDead", true);
 
-        foreach (LootItem lootItem in lootTable)
+        // Give health to the player
+        Player playerComponent = player.GetComponent<Player>();
+        if (playerComponent != null)
         {
-            if (Random.Range(0f, 100f) <= lootItem.dropChance)
-            {
-                InstantiateLoot(lootItem.itemPrefab);
-            }
+           // playerComponent.GiveHealth(healthToGive);
         }
 
         StartCoroutine(DestroyAfterAnimation());
-    }
-
-    private void InstantiateLoot(GameObject loot)
-    {
-        if (loot)
-        {
-            Instantiate(loot, transform.position, Quaternion.identity).GetComponent<SpriteRenderer>().color = Color.white;
-        }
     }
 
     private IEnumerator DestroyAfterAnimation()

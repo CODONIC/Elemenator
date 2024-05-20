@@ -5,8 +5,8 @@ using UnityEngine.UI;
 public class dodge : MonoBehaviour
 {
     public PlayerMovement playerMovement; // Reference to the PlayerMovement script
-    public float dodgeSpeed = 200f; // Increase this value to make the dodge faster
-    public float dodgeDuration = 1.5f; // Adjust this value to control the duration of the dodge
+    public float dodgeSpeed = 10f; // Increase this value to make the dodge faster
+    public float dodgeDuration = 0.5f; // Adjust this value to control the duration of the dodge
     public float dodgeCooldown = 0.5f; // Cooldown duration between dodges
 
     private bool isDodging = false;
@@ -64,15 +64,18 @@ public class dodge : MonoBehaviour
     IEnumerator Dodge(Vector3 direction)
     {
         isDodging = true;
-        Debug.Log("Dodge started");
+        Debug.Log("Dodge started"); 
 
-        // Apply dodge mechanics
-        Vector3 dodgeVelocity = direction.normalized * dodgeSpeed;
+        // Initial position
+        Vector3 startPosition = playerMovement.transform.position;
+        // Target position based on dodge direction and speed
+        Vector3 targetPosition = startPosition + direction.normalized * dodgeSpeed;
+
         float startTime = Time.time;
         while (Time.time - startTime < dodgeDuration)
         {
-            // Move the player by dodgeVelocity each frame
-            playerMovement.MoveCharacter(dodgeVelocity * Time.deltaTime);
+            // Smoothly interpolate the player's position to the target position
+            playerMovement.transform.position = Vector3.Lerp(startPosition, targetPosition, (Time.time - startTime) / dodgeDuration);
             yield return null;
         }
 

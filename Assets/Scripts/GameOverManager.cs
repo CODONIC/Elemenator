@@ -39,15 +39,29 @@ public class GameOverManager : MonoBehaviour
 
     public void RestartGame()
     {
-        // Reload the current scene (assuming your game has only one scene)
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
         // Resume time scale
         Time.timeScale = 1f;
+
+        // Reset the player's health
+        Player player = FindObjectOfType<Player>();
+        if (player != null)
+        {
+            player.ResetHealth();
+        }
+
+        // Reload the current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void GoToTitleScreen()
     {
+        // Reset the player's health
+        Player player = FindObjectOfType<Player>();
+        if (player != null)
+        {
+            player.ResetHealth();
+        }
+
         // Call GoToMainMenu() method from the MenuButton script
         if (menuButton != null)
         {
