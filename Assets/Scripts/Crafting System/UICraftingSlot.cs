@@ -1,53 +1,174 @@
-using Inventory.Model;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
+using System;
+using Inventory.Model;
+using Inventory.UI;
+using Unity.VisualScripting;
 
-namespace Inventory.UI
+namespace Crafting.UI
 {
-    public class UICraftingSlot : MonoBehaviour
+    public class UICraftingSlot : MonoBehaviour, IPointerClickHandler,
+        IBeginDragHandler, IEndDragHandler, IDropHandler, IDragHandler
     {
-        public List<UIInventoryItem> craftingItems = new List<UIInventoryItem>();
-        
-        // Add references to UI components
-        [SerializeField] private Image craftingSlotImage;
-        [SerializeField] private Text craftingSlotQuantityText;
+        public InventoryItem CraftingItem { get; private set; }
+        private int slotIndex;
+        [SerializeField] private Image itemImage;
+        [SerializeField] private TMP_Text quantityTxt;
+        [SerializeField] private Image borderImage;
 
-        public void OnCraftingSlotDropped(UIInventoryItem inventoryItem)
+        [SerializeField]
+        private InventorySO inventoryData;
+
+        public event Action<UICraftingSlot> OnSlotClicked,
+            OnSlotDroppedOn, OnSlotBeginDrag, OnSlotEndDrag,
+            OnRightMouseBtnClick;
+
+        private bool empty = true;
+        public ItemSO ItemSO { get; private set; }
+
+        private void Awake()
         {
-            // Add the dropped item to the crafting slot list
-            craftingItems.Add(inventoryItem);
-
-            // Update the crafting slot UI to display the dragged item
-            UpdateCraftingSlotUI(inventoryItem);
+            ResetData();
+            Deselect();
         }
 
-        private void UpdateCraftingSlotUI(UIInventoryItem inventoryItem)
+        public void SetCraftingItem(ItemSO item)
         {
-            // Access the ItemSO associated with the UIInventoryItem
-            ItemSO itemSO = inventoryItem.ItemSO;
+            ItemSO = item;
+            CraftingItem = new InventoryItem { ID = item.ID, item = item, quantity = 1 }; // Assuming a quantity of 1 for crafting
+            UpdateUI();
+        }
 
-            // Update the UI of the crafting slot with the itemSO data
-            if (itemSO != null)
+        public void SetSlotIndex(int index)
+        {
+            slotIndex = index;
+        }
+
+        public int GetSlotIndex()
+        {
+            return slotIndex;
+        }
+
+        public InventoryItem GetCraftingItem()
+        {
+            return CraftingItem;
+        }
+
+        public void ResetData()
+        {
+            if (itemImage != null)
             {
-                // Assuming a quantity of 1 for now
-                SetCraftingSlotData(itemSO.ItemImage, 1);
+                itemImage.gameObject.SetActive(false);
+                empty = true;
+            }
+            if (quantityTxt != null)
+            {
+                quantityTxt.text = string.Empty;
+            }
+            CraftingItem = InventoryItem.GetEmptyItem();
+        }
+
+        public void Deselect()
+        {
+            if (borderImage != null)
+            {
+                borderImage.enabled = false;
             }
         }
 
-        private void SetCraftingSlotData(Sprite itemImage, int quantity)
+        public void SetData(Sprite sprite, int quantity)
         {
-            // Implement the logic to set the image and quantity in the crafting slot UI
-            if (craftingSlotImage != null)
+            if (itemImage != null)
             {
-                craftingSlotImage.sprite = itemImage;
-                craftingSlotImage.gameObject.SetActive(true);
+                itemImage.gameObject.SetActive(true);
+                itemImage.sprite = sprite;
             }
 
-            if (craftingSlotQuantityText != null)
+            if (quantityTxt != null)
             {
-                craftingSlotQuantityText.text = quantity.ToString();
+                quantityTxt.text = quantity.ToString();
             }
+
+            empty = false;
+        }
+
+        public void Select()
+        {
+            if (borderImage != null)
+            {
+                borderImage.enabled = true;
+            }
+        }
+
+        public void UpdateUI()
+        {
+            if (ItemSO != null)
+            {
+
+                SetData(ItemSO.itemImage, CraftingItem.quantity);
+            }
+            else
+            {
+                ResetData();
+            }
+        }
+
+        public void OnPointerClick(PointerEventData pointerData)
+        {
+            if (pointerData.button == PointerEventData.InputButton.Right)
+            {
+                OnRightMouseBtnClick?.Invoke(this);
+            }
+            else
+            {
+                OnSlotClicked?.Invoke(this);
+
+                if (CraftingItem.ID != -1)
+                {
+                    Debug.Log("Slot clicked. CraftingItem: " + CraftingItem.ToString());
+                    Debug.Log("Slot clicked. ID: " + CraftingItem.ID + ", Quantity: " + CraftingItem.quantity);
+                }
+                else
+                {
+                    Debug.LogWarning("Selected slot is empty or invalid.");
+                }
+            }
+        }
+
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            if (empty)
+                return;
+            OnSlotBeginDrag?.Invoke(this);
+        }
+
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            OnSlotEndDrag?.Invoke(this);
+        }
+
+        public void OnDrop(PointerEventData eventData)
+        {
+            if (eventData.pointerDrag != null)
+            {
+                var inventoryItemUI = eventData.pointerDrag.GetComponent<UIInventoryItem>();
+                if (inventoryItemUI != null)
+                {
+                    ItemSO draggedItem = inventoryItemUI.ItemSO;
+                    if (draggedItem != null)
+                    {
+                        SetCraftingItem(draggedItem);
+                        OnSlotDroppedOn?.Invoke(this);
+                    }
+                }
+            }
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+            // You can add dragging logic here if needed
         }
     }
 }

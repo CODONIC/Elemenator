@@ -16,11 +16,14 @@ namespace Inventory.UI
         [SerializeField]
         private TMP_Text description;
 
+        
 
         public void Awake()
         {
             ResetDescription();
         }
+
+        
 
         public void ResetDescription()
         {

@@ -15,7 +15,7 @@ namespace Inventory.UI
         // Add a property to hold the associated InventoryItem
         public InventoryItem InventoryItem { get; private set; }
         private int itemIndex;
-        [SerializeField] private Image itemImage;
+         public Image itemImage;
         [SerializeField] private TMP_Text quantityTxt;
         [SerializeField] private Image borderImage;
 
@@ -24,6 +24,9 @@ namespace Inventory.UI
             OnRightMouseBtnClick;
 
         private bool empty = true;
+        public CraftPanel theCraftPanel;
+        // public UIInventoryItem 
+
         public ItemSO ItemSO { get; private set; }
         private void Awake()
         {
@@ -31,10 +34,17 @@ namespace Inventory.UI
             Deselect();
         }
 
+        private void Start()
+        {
+            theCraftPanel = FindObjectOfType<CraftPanel>();
+           
+        }
+
         public void SetInventoryItem(ItemSO item)
         {
             ItemSO = item;
             UpdateUI();
+            Debug.Log("SET INVENTORY ITEM");
         }
 
        
@@ -101,18 +111,29 @@ namespace Inventory.UI
 
         public void OnPointerClick(PointerEventData pointerData)
         {
+          
             if (pointerData.button == PointerEventData.InputButton.Right)
             {
                 OnRightMouseBtnClick?.Invoke(this);
             }
+
             else
             {
                 OnItemClicked?.Invoke(this);
 
                 if (InventoryItem.ID != -1)
                 {
-                    Debug.Log("Item clicked. InventoryItem: " + InventoryItem.ToString());
-                    Debug.Log("Item clicked. ID: " + InventoryItem.ID + ", Quantity: " + InventoryItem.quantity);
+                    if(!theCraftPanel.crafting)
+                    {
+                        Debug.Log("Item clicked. InventoryItem: " + InventoryItem.ToString());
+                        Debug.Log("Item clicked. ID: " + InventoryItem.ID + ", Quantity: " + InventoryItem.quantity);
+                    }
+                    else
+                    {
+                        theCraftPanel.PickItemForCraft(this.gameObject.GetComponent<UIInventoryItem>());
+                        Debug.Log("CRAFTING");
+                    }
+
                 }
                 else
                 {
@@ -120,6 +141,8 @@ namespace Inventory.UI
                 }
             }
         }
+            
+        
 
 
 

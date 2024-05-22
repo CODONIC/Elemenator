@@ -115,8 +115,7 @@ GameObject:
   - component: {fileID: 1939651801762809225}
   - component: {fileID: 1939651801762809231}
   - component: {fileID: 1939651801762809224}
-  - component: {fileID: 3338785412559409717}
-  - component: {fileID: 4128075396776430921}
+  - component: {fileID: 928994680996191981}
   m_Layer: 5
   m_Name: CraftSlotUI
   m_TagString: Untagged
@@ -183,22 +182,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3338785412559409717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1939651801762809226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e22e813e3982bae498113064697a125a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  craftingItems: []
-  craftingSlotImage: {fileID: 4784669849363674687}
-  craftingSlotQuantityText: {fileID: 5149788957820182213}
---- !u!114 &4128075396776430921
+--- !u!114 &928994680996191981
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -210,9 +194,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ae9e4fb76081bc4bb9dd1f6f6ef2b7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 4784669849363674687}
-  quantityTxt: {fileID: 5149788957820182213}
-  borderImage: {fileID: 7339928541931394030}
+  itemImage: {fileID: 0}
+  quantityTxt: {fileID: 0}
+  borderImage: {fileID: 0}
 --- !u!1 &2405163505670592014
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,10 +231,10 @@ RectTransform:
   m_Father: {fileID: 7666457443282975951}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75, y: -75}
-  m_SizeDelta: {x: 108, y: 108}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8509809433337432252
 CanvasRenderer:

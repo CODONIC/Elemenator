@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 580fa6c856a75124f9479a71fbe30b12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  craftButton: {fileID: 0}
   inventoryUI: {fileID: 0}
   inventoryData: {fileID: 11400000, guid: af124d5a556f3c446841169de0685bfb, type: 2}
   initialItems: []

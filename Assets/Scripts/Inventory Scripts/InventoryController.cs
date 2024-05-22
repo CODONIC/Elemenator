@@ -9,6 +9,7 @@ namespace Inventory
 {
     public class InventoryController : MonoBehaviour
     {
+        
         [SerializeField]
         private UIInventoryPage inventoryUI;
 
@@ -19,6 +20,7 @@ namespace Inventory
 
         private void Start()
         {
+           
             PrepareUI();
             PrepareInventoryData();
         }
@@ -54,10 +56,14 @@ namespace Inventory
             inventoryUI.OnItemDeleted += HandleDeleteSelectedItem;
         }
 
+
+
+
         private void HandleItemActionRequest(int itemIndex)
         {
-
+            
         }
+
 
         private void HandleDragging(int itemIndex)
         {
@@ -94,6 +100,7 @@ namespace Inventory
                 {
                     inventoryUI.UpdateData(item.Key, item.Value.item.ItemImage, item.Value.quantity);
                 }
+                
             }
             else
             {

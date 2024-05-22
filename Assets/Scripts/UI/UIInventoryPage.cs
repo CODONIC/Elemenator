@@ -17,8 +17,7 @@ namespace Inventory.UI
         private GameObject trashContent;
 
         [SerializeField]
-        private List<UICraftingSlot> craftingSlots;
-
+        public GameObject craftButton;
 
         [SerializeField]
         private RectTransform contentPanel;
@@ -33,6 +32,14 @@ namespace Inventory.UI
 
 
         List<UIInventoryItem> listofUIItems = new List<UIInventoryItem>();
+        public List<UIInventoryItem> listofCraftingSlots = new List<UIInventoryItem>();
+        // List to store UI for crafting slots
+
+        public List<UIInventoryItem> GetCraftingSlots()
+        {
+            return listofCraftingSlots;
+        }
+
 
         private int currentlyDraggedItemIndex = -1;
 
@@ -50,13 +57,14 @@ namespace Inventory.UI
             Hide();
             mouseFollower.Toggle(false);
             itemDescription.ResetDescription();
+            craftButton.SetActive(false);
         }
 
-        
 
-        public void InitializeInventoryUI(int inventorysize)
+
+        public void InitializeInventoryUI(int inventorySize)
         {
-            for (int i = 0; i < inventorysize; i++)
+            for (int i = 0; i < inventorySize; i++)
             {
                 UIInventoryItem uiItem = Instantiate(itemPrefab, Vector3.zero, Quaternion.identity);
                 uiItem.transform.SetParent(contentPanel);
@@ -66,30 +74,30 @@ namespace Inventory.UI
                 uiItem.OnItemBeginDrag += HandleBeginDrag;
                 uiItem.OnItemDroppedOn += HandleSwap;
                 uiItem.OnItemEndDrag += HandleEndDrag;
-                uiItem.OnRightMouseBtnClick += HandleShowItemActions;
-
-
             }
 
-            // Subscribe to the drop event for crafting slots
-            for (int i = 0; i < craftingSlots.Count; i++)
-            {
-                UICraftingSlot craftingSlot = craftingSlots[i];
-                craftingSlot.gameObject.AddComponent<CanvasGroup>(); // Ensure the GameObject has a CanvasGroup component
-                EventTrigger trigger = craftingSlot.gameObject.AddComponent<EventTrigger>();
-                EventTrigger.Entry entry = new EventTrigger.Entry { eventID = EventTriggerType.Drop };
-                entry.callback.AddListener((data) => { OnDrop((PointerEventData)data); });
-                trigger.triggers.Add(entry);
-            }
+           
         }
 
+        
 
-        public void UpdateData(int itemIndex,
-            Sprite itemImage, int itemQuantity)
+        public void UpdateData(int itemIndex, Sprite itemImage, int itemQuantity)
         {
-            if (listofUIItems.Count > itemIndex)
+            if (itemIndex < listofUIItems.Count)
             {
                 listofUIItems[itemIndex].SetData(itemImage, itemQuantity);
+            }
+            
+        }
+
+        private void HandleCraftingSlotSelection(UIInventoryItem inventoryItemUI)
+        {
+            int index = listofCraftingSlots.IndexOf(inventoryItemUI);
+            if (index != -1)
+            {
+                selectedItemIndex = index + listofUIItems.Count; // Adjust index to include inventory items
+                inventoryItemUI.Select();
+                OnDescriptionRequested?.Invoke(selectedItemIndex);
             }
         }
         private void HandleShowItemActions(UIInventoryItem inventoryItemUI)
@@ -101,19 +109,7 @@ namespace Inventory.UI
         {
             ResetDraggedItem();
         }
-        public void OnItemDroppedOntoCraftingSlot(UIInventoryItem inventoryItem, UICraftingSlot craftingSlot)
-        {
-            // Remove the item from the inventory
-            int itemIndex = inventoryItem.GetItemIndex();
-            // Handle the removal of the item from the inventory here...
-
-            // Update the inventory UI to reflect the removal of the item
-            // For example, if you have a method to reset the item data:
-            inventoryItem.ResetData();
-
-            // Notify the crafting slot that an item has been dropped onto it
-            craftingSlot.OnCraftingSlotDropped(inventoryItem);
-        }
+        
         private void HandleSwap(UIInventoryItem inventoryItemUI)
         {
             int index = listofUIItems.IndexOf(inventoryItemUI);
@@ -177,6 +173,8 @@ namespace Inventory.UI
                 trashContent.SetActive(true);
 
             ResetSelection();
+
+            craftButton.SetActive(true);
             Time.timeScale = 0;
         }
 
@@ -197,7 +195,7 @@ namespace Inventory.UI
         public void Hide()
         {
             gameObject.SetActive(false);
-
+            craftButton.SetActive(false);
             // Deactivate Trash Content game object
             if (trashContent != null)
                 trashContent.SetActive(false);
@@ -210,18 +208,15 @@ namespace Inventory.UI
             UIInventoryItem draggedItem = eventData.pointerDrag.GetComponent<UIInventoryItem>();
             if (draggedItem != null)
             {
-                // Check if the drop target is a crafting slot
-                UICraftingSlot craftingSlot = eventData.pointerEnter.GetComponent<UICraftingSlot>();
-                if (craftingSlot != null)
+                // Check if the dropped item is from the inventory
+                int draggedItemIndex = draggedItem.GetItemIndex();
+                if (draggedItemIndex != -1)
                 {
-                // Trigger the crafting action with the dragged item
-                craftingSlot.OnCraftingSlotDropped(draggedItem);
+                    // If it's from the inventory, swap the items between the inventory and crafting slots
+                    int selectedItemIndex = listofUIItems.FindIndex(item => item == draggedItem);
+                    OnSwapItems?.Invoke(selectedItemIndex, currentlyDraggedItemIndex);
 
-                    OnItemDeleted?.Invoke(selectedItemIndex);
-                    listofUIItems[selectedItemIndex].ResetData();
-                    selectedItemIndex = -1;
-                    itemDescription.ResetDescription();
-
+                    
                 }
             }
           }

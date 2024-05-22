@@ -75,4 +75,27 @@ MonoBehaviour:
   - ID: -1
     quantity: 0
     item: {fileID: 0}
-  size: 20
+  - ID: -1
+    quantity: 0
+    item: {fileID: 0}
+  - ID: -1
+    quantity: 0
+    item: {fileID: 0}
+  - ID: -1
+    quantity: 0
+    item: {fileID: 0}
+  - ID: -1
+    quantity: 0
+    item: {fileID: 0}
+  craftingSlots:
+  - ID: 0
+    quantity: 0
+    item: {fileID: 0}
+  - ID: 0
+    quantity: 0
+    item: {fileID: 0}
+  resultSlot:
+    ID: -1
+    quantity: 0
+    item: {fileID: 0}
+  size: 24
