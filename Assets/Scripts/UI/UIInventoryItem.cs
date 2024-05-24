@@ -12,10 +12,9 @@ namespace Inventory.UI
     public class UIInventoryItem : MonoBehaviour, IPointerClickHandler,
         IBeginDragHandler, IEndDragHandler, IDropHandler, IDragHandler
     {
-        // Add a property to hold the associated InventoryItem
         public InventoryItem InventoryItem { get; private set; }
         private int itemIndex;
-         public Image itemImage;
+        public Image itemImage;
         [SerializeField] private TMP_Text quantityTxt;
         [SerializeField] private Image borderImage;
 
@@ -25,9 +24,7 @@ namespace Inventory.UI
 
         private bool empty = true;
         public CraftPanel theCraftPanel;
-        // public UIInventoryItem 
 
-        public ItemSO ItemSO { get; private set; }
         private void Awake()
         {
             ResetData();
@@ -37,17 +34,8 @@ namespace Inventory.UI
         private void Start()
         {
             theCraftPanel = FindObjectOfType<CraftPanel>();
-           
         }
 
-        public void SetInventoryItem(ItemSO item)
-        {
-            ItemSO = item;
-            UpdateUI();
-            Debug.Log("SET INVENTORY ITEM");
-        }
-
-       
         public void SetItemIndex(int index)
         {
             itemIndex = index;
@@ -57,12 +45,7 @@ namespace Inventory.UI
         {
             return itemIndex;
         }
-        public InventoryItem GetInventoryItem()
-        {
-            // Here you should return the InventoryItem associated with this UIInventoryItem
-            // For example, if you have a reference to the InventoryItem within UIInventoryItem, return it.
-            return InventoryItem; // Placeholder, replace with the actual implementation
-        }
+
         public void ResetData()
         {
             if (itemImage != null)
@@ -80,21 +63,31 @@ namespace Inventory.UI
             }
         }
 
-        public void SetData(Sprite sprite, int quantity)
+        public void SetData(InventoryItem inventoryItem)
         {
-            if (itemImage != null)
+            InventoryItem = inventoryItem; // Set the InventoryItem property
+            if (inventoryItem.IsEmpty)
             {
-                itemImage.gameObject.SetActive(true);
-                itemImage.sprite = sprite;
+                ResetData(); // Reset UI elements if inventoryItem is empty
             }
-
-            if (quantityTxt != null)
+            else
             {
-                quantityTxt.text = quantity.ToString();
-            }
+                // Update UI elements with inventoryItem data
+                if (itemImage != null)
+                {
+                    itemImage.gameObject.SetActive(true);
+                    itemImage.sprite = inventoryItem.item.ItemImage;
+                }
 
-            empty = false;
+                if (quantityTxt != null)
+                {
+                    quantityTxt.text = inventoryItem.quantity.ToString();
+                }
+
+                empty = false;
+            }
         }
+
 
         public void Select()
         {
@@ -104,36 +97,29 @@ namespace Inventory.UI
             }
         }
 
-        public void UpdateUI()
-        {
-            // Implement UI update logic if needed
-        }
-
         public void OnPointerClick(PointerEventData pointerData)
         {
-          
             if (pointerData.button == PointerEventData.InputButton.Right)
             {
                 OnRightMouseBtnClick?.Invoke(this);
             }
-
             else
             {
                 OnItemClicked?.Invoke(this);
 
                 if (InventoryItem.ID != -1)
                 {
-                    if(!theCraftPanel.crafting)
+                    if (!theCraftPanel.crafting)
                     {
                         Debug.Log("Item clicked. InventoryItem: " + InventoryItem.ToString());
                         Debug.Log("Item clicked. ID: " + InventoryItem.ID + ", Quantity: " + InventoryItem.quantity);
+                        Debug.Log("Item clicked. ItemSO ID: " + GetItemSOID()); // Log the ItemSO ID
                     }
                     else
                     {
                         theCraftPanel.PickItemForCraft(this.gameObject.GetComponent<UIInventoryItem>());
                         Debug.Log("CRAFTING");
                     }
-
                 }
                 else
                 {
@@ -141,18 +127,24 @@ namespace Inventory.UI
                 }
             }
         }
-            
-        
 
-
+        private int GetItemSOID()
+        {
+            if (InventoryItem.IsEmpty  && InventoryItem.item != null)
+            {
+                return InventoryItem.item.ID;
+            }
+            else
+            {
+                return -1; // Return -1 if ItemSO is null or InventoryItem is null
+            }
+        }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
             if (empty)
                 return;
             OnItemBeginDrag?.Invoke(this);
-
-
         }
 
         public void OnEndDrag(PointerEventData eventData)

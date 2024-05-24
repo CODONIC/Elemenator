@@ -1,3 +1,4 @@
+using Inventory.Model;
 using Inventory.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,8 +22,13 @@ public class MouseFollower : MonoBehaviour
 
     public void SetData(Sprite sprite, int quantity)
     {
-        item.SetData(sprite, quantity);
+        InventoryItem inventoryItem = new InventoryItem();
+        inventoryItem.item = new ItemSO(); // Create a new ItemSO instance, or get it from somewhere
+        inventoryItem.item.SetItemImage(sprite); // Set the sprite to the ItemSO
+        inventoryItem.quantity = quantity; // Set the quantity
+        item.SetData(inventoryItem); // Pass the InventoryItem to UIInventoryItem's SetData method
     }
+
     private void Update()
     {
         Vector2 position;

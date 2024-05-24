@@ -5,6 +5,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.Linq;
 using UnityEditor;
+using Inventory.UI;
 
 namespace Inventory.Model
 {
@@ -369,10 +370,11 @@ namespace Inventory.Model
                 Debug.LogError("Error deleting inventory JSON file: " + ex.Message);
             }
         }
-
-        private void InformAboutChange()
+       
+        public void InformAboutChange()
         {
             OnInventoryUpdated?.Invoke(GetCurrentInventoryState());
+           
         }
 
         public void OnBeforeSerialize()

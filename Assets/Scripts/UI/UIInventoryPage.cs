@@ -32,13 +32,10 @@ namespace Inventory.UI
 
 
         List<UIInventoryItem> listofUIItems = new List<UIInventoryItem>();
-        public List<UIInventoryItem> listofCraftingSlots = new List<UIInventoryItem>();
+        
         // List to store UI for crafting slots
 
-        public List<UIInventoryItem> GetCraftingSlots()
-        {
-            return listofCraftingSlots;
-        }
+      
 
 
         private int currentlyDraggedItemIndex = -1;
@@ -79,27 +76,18 @@ namespace Inventory.UI
            
         }
 
-        
 
-        public void UpdateData(int itemIndex, Sprite itemImage, int itemQuantity)
+
+        public void UpdateData(int itemIndex, InventoryItem inventoryItem)
         {
             if (itemIndex < listofUIItems.Count)
             {
-                listofUIItems[itemIndex].SetData(itemImage, itemQuantity);
+                listofUIItems[itemIndex].SetData(inventoryItem);
             }
-            
         }
 
-        private void HandleCraftingSlotSelection(UIInventoryItem inventoryItemUI)
-        {
-            int index = listofCraftingSlots.IndexOf(inventoryItemUI);
-            if (index != -1)
-            {
-                selectedItemIndex = index + listofUIItems.Count; // Adjust index to include inventory items
-                inventoryItemUI.Select();
-                OnDescriptionRequested?.Invoke(selectedItemIndex);
-            }
-        }
+
+
         private void HandleShowItemActions(UIInventoryItem inventoryItemUI)
         {
 
