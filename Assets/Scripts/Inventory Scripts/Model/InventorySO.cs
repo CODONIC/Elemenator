@@ -16,8 +16,8 @@ namespace Inventory.Model
         public ItemDatabaseObject database;
 
         public List<InventoryItem> inventoryItems = new List<InventoryItem>();
-        public List<InventoryItem> craftingSlots = new List<InventoryItem>(); // List of crafting slots
-        public InventoryItem resultSlot = InventoryItem.GetEmptyItem();
+       
+      
 
         [SerializeField]
         private int size = 24;

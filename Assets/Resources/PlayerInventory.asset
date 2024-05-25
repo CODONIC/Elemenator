@@ -15,18 +15,18 @@ MonoBehaviour:
   savePath: Inventory.json
   database: {fileID: 11400000, guid: 2307296f7141c0c4a950808290d82e3f, type: 2}
   inventoryItems:
-  - ID: 1
-    quantity: 4
-    item: {fileID: 11400000, guid: 31e6e0aad1b81d64e96b7d5249cc6415, type: 2}
-  - ID: 3
-    quantity: 2
-    item: {fileID: 11400000, guid: a73bf1d825010184a838bcfada0ff7be, type: 2}
-  - ID: 2
-    quantity: 1
-    item: {fileID: 11400000, guid: 61223faf36f53724ca042e9ac6dafe76, type: 2}
   - ID: 0
     quantity: 2
     item: {fileID: 11400000, guid: fd67733694b26a340a601ad96562a1fd, type: 2}
+  - ID: 1
+    quantity: 6
+    item: {fileID: 11400000, guid: 31e6e0aad1b81d64e96b7d5249cc6415, type: 2}
+  - ID: 2
+    quantity: 3
+    item: {fileID: 11400000, guid: 61223faf36f53724ca042e9ac6dafe76, type: 2}
+  - ID: 3
+    quantity: 3
+    item: {fileID: 11400000, guid: a73bf1d825010184a838bcfada0ff7be, type: 2}
   - ID: -1
     quantity: 0
     item: {fileID: 0}
@@ -70,32 +70,6 @@ MonoBehaviour:
     quantity: 0
     item: {fileID: 0}
   - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  craftingSlots:
-  - ID: 0
-    quantity: 0
-    item: {fileID: 0}
-  - ID: 0
-    quantity: 0
-    item: {fileID: 0}
-  resultSlot:
-    ID: -1
     quantity: 0
     item: {fileID: 0}
   size: 24
