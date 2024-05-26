@@ -16,9 +16,9 @@ namespace Inventory.Model
         public ItemDatabaseObject database;
 
         public List<InventoryItem> inventoryItems = new List<InventoryItem>();
-       
-      
 
+
+       
         [SerializeField]
         private int size = 24;
 
@@ -457,6 +457,7 @@ namespace Inventory.Model
         public ItemSO item;
 
         public bool IsEmpty => item == null;
+
 
         public InventoryItem ChangeQuantity(int newQuantity)
         {

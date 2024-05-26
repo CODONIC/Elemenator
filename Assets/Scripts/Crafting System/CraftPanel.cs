@@ -96,6 +96,33 @@ public class CraftPanel : MonoBehaviour
             craftingSlotImages[slotIndex].gameObject.SetActive(true);
         }
     }
+
+    public void EquipItemFromInventory(int slotIndex)
+    {
+        // Check if the slot index is valid
+        if (slotIndex < 0 || slotIndex >= craftingSlots.Length)
+        {
+            Debug.LogError("Invalid slot index.");
+            return;
+        }
+
+        // Get the inventory item from the selected slot
+        InventoryItem inventoryItem = InventorySO.Instance.GetItemAt(slotIndex);
+
+        // Check if the inventory item is empty or null
+        if ( inventoryItem.IsEmpty)
+        {
+            Debug.LogWarning("Selected inventory slot is empty.");
+            return;
+        }
+
+        // Equip the inventory item into the crafting slot
+        craftingSlots[slotIndex].SetCraftData(CopyInventoryItem(inventoryItem));
+        UpdateCraftingSlotUI(slotIndex);
+
+        Debug.Log($"Item equipped into slot {slotIndex}: ID - {inventoryItem.ID}, Item - {inventoryItem.item.Name}, Quantity - {inventoryItem.quantity}");
+    }
+
     public void TogglePanel()
     {
         if (panelToToggle != null)
@@ -210,16 +237,5 @@ public class CraftPanel : MonoBehaviour
             Debug.LogWarning("Crafting failed. No matching recipe found.");
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 
 }

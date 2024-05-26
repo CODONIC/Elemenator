@@ -20,3 +20,4 @@ MonoBehaviour:
   MaxStackSize: 1
   Name: H20 (Water)
   Description: This is water, composed of 2 Hydrogen & 1 Oxygen
+  category: 3

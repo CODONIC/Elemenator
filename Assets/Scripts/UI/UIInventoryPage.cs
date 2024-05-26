@@ -20,6 +20,9 @@ namespace Inventory.UI
         public GameObject craftButton;
 
         [SerializeField]
+        public GameObject equipButton;
+
+        [SerializeField]
         private RectTransform contentPanel;
 
         [SerializeField]
@@ -55,6 +58,7 @@ namespace Inventory.UI
             mouseFollower.Toggle(false);
             itemDescription.ResetDescription();
             craftButton.SetActive(false);
+            equipButton.SetActive(false);
         }
 
 
@@ -163,6 +167,7 @@ namespace Inventory.UI
             ResetSelection();
 
             craftButton.SetActive(true);
+            equipButton.SetActive(true);
             Time.timeScale = 0;
         }
 
@@ -184,6 +189,7 @@ namespace Inventory.UI
         {
             gameObject.SetActive(false);
             craftButton.SetActive(false);
+            equipButton.SetActive(false);
             // Deactivate Trash Content game object
             if (trashContent != null)
                 trashContent.SetActive(false);

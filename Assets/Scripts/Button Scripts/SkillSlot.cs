@@ -1,36 +1,43 @@
-using Inventory.Model;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SkillSlot : MonoBehaviour
 {
-    public Image itemImage; // Reference to the UI Image component to display the item
-    public bool IsEmpty { get; private set; } = true;
-    private InventoryItem equippedItem;
+    public int index; // Index of this skill slot
+    public Image skillIcon; // Reference to the child image representing the skill icon
+    private bool isEquipped = false; // Flag to track if this slot is currently equipped with a skill
 
-    public void EquipItem(InventoryItem item)
+    // Method to equip a skill into this slot
+    public void EquipSkill(Sprite skillSprite)
     {
-        if ( item.IsEmpty)
+        if (!isEquipped)
         {
-            Debug.LogError("Trying to equip an empty or null item.");
-            return;
+            skillIcon.sprite = skillSprite; // Set the skill icon to the provided sprite
+            isEquipped = true;
         }
-
-        equippedItem = item;
-        itemImage.sprite = item.item.itemImage;
-        itemImage.gameObject.SetActive(true);
-        IsEmpty = false;
-
-        Debug.Log($"Equipped item: {item.item.Name}");
+        else
+        {
+            Debug.LogWarning("This slot is already equipped with a skill!");
+        }
     }
 
-    public void UnequipItem()
+    // Method to unequip the skill from this slot
+    public void UnequipSkill()
     {
-      
-        itemImage.sprite = null;
-        itemImage.gameObject.SetActive(false);
-        IsEmpty = true;
+        if (isEquipped)
+        {
+            skillIcon.sprite = null; // Remove the skill icon
+            isEquipped = false;
+        }
+        else
+        {
+            Debug.LogWarning("No skill is equipped in this slot!");
+        }
+    }
 
-        Debug.Log("Item unequipped.");
+    // Method to check if this slot is currently equipped with a skill
+    public bool IsEquipped()
+    {
+        return isEquipped;
     }
 }

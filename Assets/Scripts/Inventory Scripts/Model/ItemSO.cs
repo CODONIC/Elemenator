@@ -18,6 +18,7 @@ namespace Inventory.Model
         public int MaxStackSize = 1;
         public string Name;
         public string Description;
+        public ItemCategory category;
 
         // Property to get the sprite
         public Sprite ItemImage
@@ -49,6 +50,16 @@ namespace Inventory.Model
             // Serialize the sprite as Base64 string
             itemImageBase64 = SpriteToBase64(sprite);
         }
+        // Define the ItemCategory enum
+        public enum ItemCategory
+        {
+            Weapon,
+            Armor,
+            Consumable,
+            // Add more categories as needed, including Skill if applicable
+            Skill,
+        }
+
 
         // Convert Sprite to Base64 string
         private string SpriteToBase64(Sprite sprite)
