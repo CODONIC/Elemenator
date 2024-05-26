@@ -11,6 +11,7 @@ public class CraftPanel : MonoBehaviour
     public GameObject craftButton;
     public GameObject exitButton;
     public GameObject MixButton;
+    public GameObject equipButton;
 
     [SerializeField] private Animator Brewing;
     
@@ -115,6 +116,14 @@ public class CraftPanel : MonoBehaviour
             {
                 Debug.LogError("Craft button reference is null. Please assign the craft button to the script in the Unity editor.");
             }
+            if (equipButton != null)
+            {
+                equipButton.SetActive(false); // Hide the equip button
+            }
+            else
+            {
+                Debug.LogError("Equip button reference is null. Please assign the equip button to the script in the Unity editor.");
+            }
         }
         else
         {
@@ -137,6 +146,14 @@ public class CraftPanel : MonoBehaviour
         TogglePanel(); // Call TogglePanel to also disable the panel
 
         craftButton.SetActive(true);
+        if (equipButton != null)
+        {
+            equipButton.SetActive(true); // Show the equip button
+        }
+        else
+        {
+            Debug.LogError("Equip button reference is null. Please assign the equip button to the script in the Unity editor.");
+        }
     }
 
     public void OnCraftButtonClicked()
