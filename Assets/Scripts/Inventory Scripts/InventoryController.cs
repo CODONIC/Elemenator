@@ -9,15 +9,28 @@ namespace Inventory
 {
     public class InventoryController : MonoBehaviour
     {
-        
         [SerializeField]
-        private UIInventoryPage inventoryUI;
+        private UIInventoryPage inventoryUIPrefab;
+
+        [SerializeField]
+        private static UIInventoryPage inventoryUI;
 
         [SerializeField]
         private InventorySO inventoryData;
 
         public List<InventoryItem> initialItems = new List<InventoryItem>();
-
+        private void Awake()
+        {
+            if (inventoryUI == null)
+            {
+                inventoryUI = Instantiate(inventoryUIPrefab); // Instantiate from prefab if not set
+                DontDestroyOnLoad(inventoryUI.gameObject);
+            }
+            else
+            {
+                Destroy(gameObject); // Destroy duplicate instances of the controller
+            }
+        }
         private void Start()
         {
            

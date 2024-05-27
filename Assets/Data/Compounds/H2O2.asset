@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 16
   itemImageBase64: 
-  itemImage: {fileID: 0}
+  itemImage: {fileID: 21300000, guid: 0decbc4f6d2837140be38b3b543a8e23, type: 3}
   itemImagePath: 
   IsStackable: 0
   MaxStackSize: 1
@@ -24,3 +24,4 @@ MonoBehaviour:
     than water. It is used as an oxidizer, bleaching agent, and antiseptic, usually
     as a dilute solution in water for consumer use and in higher concentrations for
     industrial use."
+  category: 0

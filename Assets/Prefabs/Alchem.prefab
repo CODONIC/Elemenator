@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1283008302352732278}
   - component: {fileID: 255372043497488380}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: PickUPText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Crystal Fire Fly
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -156,6 +156,7 @@ GameObject:
   - component: {fileID: 4300048521537284098}
   - component: {fileID: 4300048521537284109}
   - component: {fileID: 4300048521537284223}
+  - component: {fileID: 1771324345}
   m_Layer: 0
   m_Name: Alchem
   m_TagString: Player
@@ -247,7 +248,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryData: {fileID: 11400000, guid: af124d5a556f3c446841169de0685bfb, type: 2}
-  collectedText: {fileID: 0}
+  collectedText: {fileID: 255372043497488380}
 --- !u!114 &4300048521537284217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,7 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 580fa6c856a75124f9479a71fbe30b12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryUI: {fileID: 0}
+  inventoryUIPrefab: {fileID: 0}
   inventoryData: {fileID: 11400000, guid: af124d5a556f3c446841169de0685bfb, type: 2}
   initialItems: []
 --- !u!114 &4300048521537284096
@@ -279,6 +280,14 @@ MonoBehaviour:
   moveSpeed: 7
   enemyTag: Enemy
   autoTargetRange: 10
+  audioSource: {fileID: 1771324345}
+  footstepSounds:
+  - {fileID: 8300000, guid: 466460905ac69c045917e808077a7d0d, type: 3}
+  - {fileID: 8300000, guid: 050cfe8acd48eb74193f1693b0818d85, type: 3}
+  - {fileID: 8300000, guid: 09db026e095cc63419c16e2a8ca10f2a, type: 3}
+  - {fileID: 8300000, guid: fb9ccb10a15376348bb4c97639afdb81, type: 3}
+  footstepInterval: 0.5
+  footstepVolume: 0.3
 --- !u!95 &4300048521537284099
 Animator:
   serializedVersion: 5
@@ -421,6 +430,102 @@ CapsuleCollider2D:
   m_Offset: {x: 0.01027321, y: -0.00000008257397}
   m_Size: {x: 0.63355213, y: 0.8000382}
   m_Direction: 0
+--- !u!82 &1771324345
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4300048521537284108}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &4300048522052437029
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,7 +1117,7 @@ GameObject:
   - component: {fileID: 7352709959330759778}
   - component: {fileID: 1613402721012714774}
   m_Layer: 0
-  m_Name: FireFlyHealthContainer
+  m_Name: PickUpCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1036,7 +1141,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -17.390736, y: 1.582777}
+  m_AnchoredPosition: {x: 0.14, y: 1.35}
   m_SizeDelta: {x: 1600, y: 720}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2079682883827471074

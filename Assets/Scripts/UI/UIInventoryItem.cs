@@ -103,13 +103,7 @@ namespace Inventory.UI
         {
             CraftItem = craftItem;
             empty = craftItem.IsEmpty;
-
-            // Check if the crafting index is 2
-            if (craftingIndex == 2)
-            {
-                // Update UI only if the crafting index matches
-                UpdateUI();
-            }
+            UpdateUI();
         }
 
 

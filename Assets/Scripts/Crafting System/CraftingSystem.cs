@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Inventory.Model
@@ -40,22 +41,35 @@ namespace Inventory.Model
 
         public CraftingResult Craft(InventoryItem[] inputItems)
         {
+            CraftingResult bestResult = null;
+            int maxIngredientsUsed = 0;
+
             foreach (var crafting in craftItems)
             {
                 foreach (var recipe in crafting.itemRecipe)
                 {
                     if (IsRecipeMatch(recipe.recipe, inputItems, out List<InventoryItem> usedIngredients))
                     {
-                        return new CraftingResult
+                        // Calculate the total number of ingredients used in this recipe
+                        int totalIngredientsUsed = usedIngredients.Sum(item => item.quantity);
+
+                        // Check if this recipe uses more ingredients than the previous best result
+                        if (totalIngredientsUsed > maxIngredientsUsed)
                         {
-                            CraftedItem = crafting.craftObject,
-                            UsedIngredients = usedIngredients
-                        };
+                            maxIngredientsUsed = totalIngredientsUsed;
+                            bestResult = new CraftingResult
+                            {
+                                CraftedItem = crafting.craftObject,
+                                UsedIngredients = usedIngredients
+                            };
+                        }
                     }
                 }
             }
-            return null; // No matching recipe found
+
+            return bestResult; // Return the best result found
         }
+
 
         private bool IsRecipeMatch(RecipeIngredient[] recipe, InventoryItem[] inputItems, out List<InventoryItem> usedIngredients)
         {

@@ -3,7 +3,7 @@ using Inventory.UI;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static Inventory.Model.CraftingSystem;
+using TMPro;
 
 public class CraftPanel : MonoBehaviour
 {
@@ -12,9 +12,9 @@ public class CraftPanel : MonoBehaviour
     public GameObject exitButton;
     public GameObject MixButton;
     public GameObject equipButton;
+    public TextMeshProUGUI craftingNotificationText;
 
     [SerializeField] private Animator Brewing;
-    
 
     public UIInventoryItem[] craftingSlots = new UIInventoryItem[2];
     public Image[] craftingSlotImages = new Image[2];
@@ -29,6 +29,12 @@ public class CraftPanel : MonoBehaviour
         {
             craftingSlots[i].SetCraftingIndex(i);
         }
+
+        // Initially hide the notification text
+        if (craftingNotificationText != null)
+        {
+            craftingNotificationText.gameObject.SetActive(false);
+        }
     }
 
     public void PickItemForCraft(UIInventoryItem thisItem)
@@ -37,32 +43,41 @@ public class CraftPanel : MonoBehaviour
         {
             if (craftingSlots[i].CraftItem.IsEmpty)
             {
-                craftingSlots[i].SetCraftData(CopyInventoryItem(thisItem.InventoryItem));
-                if (craftingSlots[i].CraftItem.item != null)
-                {
-                    craftingSlotImages[i].sprite = craftingSlots[i].CraftItem.item.itemImage;
-                    craftingSlotImages[i].gameObject.SetActive(true);
-                }
-                else
-                {
-                    craftingSlotImages[i].sprite = null;
-                    craftingSlotImages[i].gameObject.SetActive(false);
-                }
-
+                // If the slot is empty, set the item with quantity 1
+                InventoryItem newItem = CopyInventoryItem(thisItem.InventoryItem, 1);
+                craftingSlots[i].SetCraftData(newItem);
+                UpdateCraftingSlotUI(i);
                 Debug.Log($"CraftItem for slot {i} populated: ID - {craftingSlots[i].CraftItem.ID}, Item - {craftingSlots[i].CraftItem.item.Name}, Quantity - {craftingSlots[i].CraftItem.quantity}");
                 return;
             }
+            else if (craftingSlots[i].CraftItem.ID == thisItem.InventoryItem.ID)
+            {
+                // If the slot already contains this item, increment the quantity if it doesn't exceed the total quantity in the inventory
+                InventoryItem updatedItem = craftingSlots[i].CraftItem;
+                if (updatedItem.quantity < thisItem.InventoryItem.quantity)
+                {
+                    updatedItem.quantity++;
+                    craftingSlots[i].SetCraftData(updatedItem);
+                    UpdateCraftingSlotUI(i);
+                    Debug.Log($"CraftItem for slot {i} incremented: ID - {craftingSlots[i].CraftItem.ID}, Item - {craftingSlots[i].CraftItem.item.Name}, Quantity - {craftingSlots[i].CraftItem.quantity}");
+                }
+                else
+                {
+                    Debug.LogWarning("Cannot add more items. Reached the total quantity in the inventory.");
+                }
+                return;
+            }
         }
-        Debug.LogWarning("All crafting slots are already occupied.");
+        Debug.LogWarning("All crafting slots are already occupied or items don't match.");
     }
 
-    private InventoryItem CopyInventoryItem(InventoryItem original)
+    private InventoryItem CopyInventoryItem(InventoryItem original, int quantity)
     {
         return new InventoryItem
         {
             ID = original.ID,
             item = original.item,
-            quantity = original.quantity
+            quantity = quantity
         };
     }
 
@@ -110,14 +125,14 @@ public class CraftPanel : MonoBehaviour
         InventoryItem inventoryItem = InventorySO.Instance.GetItemAt(slotIndex);
 
         // Check if the inventory item is empty or null
-        if ( inventoryItem.IsEmpty)
+        if (inventoryItem.IsEmpty)
         {
             Debug.LogWarning("Selected inventory slot is empty.");
             return;
         }
 
         // Equip the inventory item into the crafting slot
-        craftingSlots[slotIndex].SetCraftData(CopyInventoryItem(inventoryItem));
+        craftingSlots[slotIndex].SetCraftData(CopyInventoryItem(inventoryItem, 1)); // Start with quantity 1
         UpdateCraftingSlotUI(slotIndex);
 
         Debug.Log($"Item equipped into slot {slotIndex}: ID - {inventoryItem.ID}, Item - {inventoryItem.item.Name}, Quantity - {inventoryItem.quantity}");
@@ -134,6 +149,7 @@ public class CraftPanel : MonoBehaviour
             if (!crafting)
             {
                 Reset(); // Call Reset when toggling off the panel
+                craftingNotificationText.gameObject.SetActive(false);
             }
             if (craftButton != null)
             {
@@ -173,6 +189,7 @@ public class CraftPanel : MonoBehaviour
         TogglePanel(); // Call TogglePanel to also disable the panel
 
         craftButton.SetActive(true);
+        craftingNotificationText.gameObject.SetActive(false);
         if (equipButton != null)
         {
             equipButton.SetActive(true); // Show the equip button
@@ -207,8 +224,15 @@ public class CraftPanel : MonoBehaviour
         if (craftingResult != null)
         {
             Debug.Log("Crafting successful! Crafted item: " + craftingResult.CraftedItem.Name);
-            // Play the mixing animation by name
 
+            if (craftingNotificationText != null)
+            {
+                craftingNotificationText.text = "Crafted item: " + craftingResult.CraftedItem.Name;
+                craftingNotificationText.gameObject.SetActive(true); // Show the notification text
+
+            }
+
+            // Play the mixing animation by name
             Animator brewingAnimator = Brewing.GetComponent<Animator>();
 
             // Check if the brewingAnimator is not null
@@ -235,7 +259,13 @@ public class CraftPanel : MonoBehaviour
         else
         {
             Debug.LogWarning("Crafting failed. No matching recipe found.");
+
+            if (craftingNotificationText != null)
+            {
+                craftingNotificationText.text = "Crafting failed. No matching recipe found.";
+                craftingNotificationText.gameObject.SetActive(true); // Show the notification text
+
+            }
         }
     }
-
 }
