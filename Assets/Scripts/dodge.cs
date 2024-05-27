@@ -9,6 +9,8 @@ public class dodge : MonoBehaviour
     public float dodgeDuration = 0.5f; // Adjust this value to control the duration of the dodge
     public float dodgeCooldown = 0.5f; // Cooldown duration between dodges
 
+    public AudioSource dashSound; // Reference to the AudioSource component for the dash sound effect
+
     private bool isDodging = false;
     private bool isOnCooldown = false;
 
@@ -25,6 +27,8 @@ public class dodge : MonoBehaviour
         if (!isDodging && !isOnCooldown)
         {
             Debug.Log("Performing dodge");
+            // Play the dash sound effect
+            dashSound.Play();
             PerformDodge();
             StartCoroutine(StartCooldown());
         }
@@ -64,7 +68,7 @@ public class dodge : MonoBehaviour
     IEnumerator Dodge(Vector3 direction)
     {
         isDodging = true;
-        Debug.Log("Dodge started"); 
+        Debug.Log("Dodge started");
 
         // Initial position
         Vector3 startPosition = playerMovement.transform.position;

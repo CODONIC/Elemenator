@@ -9,10 +9,16 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 5f; // Adjust this value to control the speed
     public string enemyTag = "Enemy"; // Tag of the enemy game objects
     public float autoTargetRange = 5f; // Range within which enemies will be automatically targeted
+    public AudioSource audioSource; // Reference to the AudioSource component for footstep sounds
+    public AudioClip[] footstepSounds; // Array to hold multiple footstep sound effects
+    public float footstepInterval = 0.5f; // Interval between footsteps
+    public float footstepVolume = 1f; // Default volume for footstep sounds
 
     private Animator animator;
     private GameObject nearestEnemy;
     private Vector3 lastJoystickInput; // Store the last joystick input
+    private bool isMoving = false; // Track if the player is moving
+    private float footstepTimer = 0f; // Timer to track the interval between footsteps
 
     private void Awake()
     {
@@ -45,6 +51,9 @@ public class PlayerMovement : MonoBehaviour
 
             // Auto-target enemies
             AutoTargetEnemies();
+
+            // Handle footstep sounds
+            HandleFootstepSounds();
         }
         else
         {
@@ -128,6 +137,38 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void HandleFootstepSounds()
+    {
+        if (isMoving)
+        {
+            footstepTimer += Time.deltaTime;
+            if (footstepTimer >= footstepInterval)
+            {
+                PlayRandomFootstep();
+                footstepTimer = 0f;
+            }
+        }
+        else
+        {
+            footstepTimer = 0f; // Reset the timer when not moving
+            audioSource.Stop(); // Stop the audio source immediately
+        }
+    }
+
+    private void PlayRandomFootstep()
+    {
+        if (footstepSounds.Length > 0 && audioSource != null)
+        {
+            int randomIndex = Random.Range(0, footstepSounds.Length);
+            audioSource.clip = footstepSounds[randomIndex];
+            audioSource.volume = footstepVolume;
+            audioSource.Play();
+        }
+        else
+        {
+            Debug.LogError("Footstep sounds array is empty or AudioSource is not assigned.");
+        }
+    }
 
     private void OnDestroy()
     {
@@ -160,8 +201,13 @@ public class PlayerMovement : MonoBehaviour
         // Move the character only if there's input and respecting collisions
         if (input != Vector3.zero)
         {
+            isMoving = true;
             Vector3 movement = input.normalized * moveSpeed * Time.deltaTime;
             transform.position += movement;
+        }
+        else
+        {
+            isMoving = false;
         }
     }
 
@@ -189,7 +235,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 direction = (transform.position - nearestEnemy.transform.position).normalized; // Reverse the direction
             return direction;
         }
-        else 
+        else
         {
             Debug.Log("No enemies, dash using joystick");
             // If no nearest enemy is found, use the last joystick input direction
@@ -197,5 +243,5 @@ public class PlayerMovement : MonoBehaviour
             return joystickInput;
         }
     }
-
 }
+    

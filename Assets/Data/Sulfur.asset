@@ -19,4 +19,7 @@ MonoBehaviour:
   IsStackable: 1
   MaxStackSize: 12
   Name: Sulphur
-  Description: 
+  Description: One of the most reactive of the elements. Pure sulfur is a tasteless,
+    odourless, brittle solid that is pale yellow in colour, a poor conductor of electricity,
+    and insoluble in water.
+  category: 0

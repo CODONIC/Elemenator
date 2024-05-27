@@ -18,5 +18,8 @@ MonoBehaviour:
   itemImagePath: 
   IsStackable: 1
   MaxStackSize: 10
-  Name: Merucry
-  Description: 
+  Name: Mercury
+  Description: It is a shiny, silver-white metal, historically referred to as quicksilver,
+    and is liquid at room temperature. It is used in older thermometers, fluorescent
+    light bulbs and some electrical switches.
+  category: 0

@@ -19,4 +19,8 @@ MonoBehaviour:
   IsStackable: 1
   MaxStackSize: 10
   Name: Neon
-  Description: 
+  Description: " An inert gas of Group 18 (noble gases) of the periodic table, used
+    in electric signs and fluorescent lamps. Colourless, odourless, tasteless, and
+    lighter than air, neon gas occurs in minute quantities in Earth\u2019s atmosphere
+    and trapped within the rocks of Earth\u2019s crust."
+  category: 0

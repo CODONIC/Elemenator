@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: Helium
   m_EditorClassIdentifier: 
   ID: 0
+  itemImageBase64: 
   itemImage: {fileID: 21300000, guid: fd8ed816336d6d44eb5f74bd5b8e567d, type: 3}
+  itemImagePath: 
   IsStackable: 1
   MaxStackSize: 64
   Name: Helium
-  Description: This is Helium
+  Description: "Helium is a colourless, odourless, insipid and non-toxic gas. It\u2019s
+    less soluble in water than any other gas. Helium was the first gas used for filling
+    balloons and dirigibles."
+  category: 0

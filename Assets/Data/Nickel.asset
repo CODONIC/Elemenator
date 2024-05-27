@@ -19,4 +19,8 @@ MonoBehaviour:
   IsStackable: 1
   MaxStackSize: 10
   Name: Nickel
-  Description: 
+  Description: Nickel is silvery white and takes on a high polish. It is hard, malleable,
+    ductile, somewhat ferromagnetic, and a fair conductor of heat and electricity.
+    It belongs to the iron-cobalt group of metals and is chiefly valuable for the
+    alloys it forms.
+  category: 0

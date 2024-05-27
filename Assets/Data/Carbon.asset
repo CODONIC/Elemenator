@@ -19,4 +19,8 @@ MonoBehaviour:
   IsStackable: 1
   MaxStackSize: 1
   Name: Carbon
-  Description: 
+  Description: ' The sixth most abundant element in the universe, has been known
+    since ancient times. Carbon is most commonly obtained from coal deposits, although
+    it usually must be processed into a form suitable for commercial use. Three naturally
+    occurring allotropes of carbon are known to exist: amorphous, graphite and diamond.'
+  category: 0

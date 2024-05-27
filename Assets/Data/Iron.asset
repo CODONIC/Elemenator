@@ -19,4 +19,7 @@ MonoBehaviour:
   IsStackable: 1
   MaxStackSize: 10
   Name: Iron
-  Description: 
+  Description: It is a lustrous, ductile, malleable, silver-grey in colour. It is
+    the tenth most abundant element in the universe. It is found in a major amount
+    at the core of the Earth in a molten form.
+  category: 0

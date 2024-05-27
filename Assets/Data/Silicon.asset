@@ -19,4 +19,8 @@ MonoBehaviour:
   IsStackable: 1
   MaxStackSize: 10
   Name: Silicon
-  Description: 
+  Description: " It is the most abundant electropositive element in The Earth\u2019s
+    crust. It\u2019s a metalloid with a marked metallic luster and very brittle. 
+    It's versatile in various electrical devices such as transistors, solar cells,
+    integrated circuits, and others."
+  category: 0

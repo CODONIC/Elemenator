@@ -19,4 +19,7 @@ MonoBehaviour:
   IsStackable: 1
   MaxStackSize: 10
   Name: Chlorine
-  Description: 
+  Description: The second lightest member of the halogen elements, or Group 17 (Group
+    VIIa) of the periodic table. Chlorine is a toxic, corrosive, greenish yellow
+    gas that is irritating to the eyes and to the respiratory system.
+  category: 0

@@ -19,5 +19,8 @@ MonoBehaviour:
   IsStackable: 0
   MaxStackSize: 1
   Name: H20 (Water)
-  Description: This is water, composed of 2 Hydrogen & 1 Oxygen
+  Description: 'Water (chemical formula: H2O) is a transparent fluid which forms
+    the world''s streams, lakes, oceans and rain, and is the major constituent of
+    the fluids of organisms. As a chemical compound, a water molecule contains one
+    oxygen and two hydrogen atoms that are connected by covalent bonds.'
   category: 3

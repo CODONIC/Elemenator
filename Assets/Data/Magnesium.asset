@@ -19,4 +19,8 @@ MonoBehaviour:
   IsStackable: 1
   MaxStackSize: 10
   Name: Magnesium
-  Description: 
+  Description: One of the alkaline-earth metals of Group 2 (IIa) of the periodic
+    table, and the lightest structural metal. Its compounds are widely used in construction
+    and medicine, and magnesium is one of the elements essential to all cellular
+    life.
+  category: 0
