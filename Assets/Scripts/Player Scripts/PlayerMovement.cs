@@ -1,75 +1,219 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
     public FixedJoystick joystick;
     public float moveSpeed = 5f; // Adjust this value to control the speed
+    public string enemyTag = "Enemy"; // Tag of the enemy game objects
+    public float autoTargetRange = 5f; // Range within which enemies will be automatically targeted
+    public AudioSource audioSource; // Reference to the AudioSource component for footstep sounds
+    public AudioClip[] footstepSounds; // Array to hold multiple footstep sound effects
+    public float footstepInterval = 0.5f; // Interval between footsteps
+    public float footstepVolume = 1f; // Default volume for footstep sounds
 
-   
     private Animator animator;
+    private GameObject nearestEnemy;
+    private Vector3 lastJoystickInput; // Store the last joystick input
+    private bool isMoving = false; // Track if the player is moving
+    private float footstepTimer = 0f; // Timer to track the interval between footsteps
+
+    private void Awake()
+    {
+        // Initialize references on scene load
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Ensure references are initialized after scene load
+        FindJoystick();
+        FindAnimator();
+    }
 
     void Start()
     {
-        animator = GetComponent<Animator>();
+        // Find and assign the Animator component
+        FindAnimator();
     }
 
     void Update()
     {
-        Vector3 joystickInput = new Vector3(joystick.Horizontal, joystick.Vertical, 0f);
+        // Check if the Joystick reference is valid before using it
+        if (joystick != null)
+        {
+            // Perform operations dependent on the Joystick
+            HandlePlayerRotation();
+            MoveCharacter(lastJoystickInput); // Move the player with the last joystick input
+            UpdateAnimation(lastJoystickInput);
 
-        MoveCharacter(joystickInput);
-        UpdateAnimation(joystickInput);
+            // Auto-target enemies
+            AutoTargetEnemies();
+
+            // Handle footstep sounds
+            HandleFootstepSounds();
+        }
+        else
+        {
+            Debug.LogWarning("Joystick reference is null. Ensure it's properly assigned in the Inspector.");
+        }
     }
 
-    public Vector3 GetFacingDirection()
+    private void HandlePlayerRotation()
     {
-        // Get the rotation of the player's sprite
-        Quaternion rotation = transform.rotation;
+        // Ensure that the joystick reference is not null
+        if (joystick == null)
+        {
+            Debug.LogError("Joystick reference is not set. Make sure to assign it in the Inspector.");
+            return;
+        }
 
-        // Calculate the facing direction based on the sprite's rotation
-        Vector3 facingDirection = Vector3.up; // Default facing direction is up (0, 1, 0)
+        // Get the direction of joystick input
+        Vector3 joystickInput = new Vector3(joystick.Horizontal, joystick.Vertical, 0f).normalized;
+        lastJoystickInput = joystickInput; // Store the last joystick input
+    }
 
-        // Determine the angle between the forward direction and each cardinal direction
-        float angleUp = Vector3.Angle(transform.up, Vector3.up);
-        float angleRight = Vector3.Angle(transform.right, Vector3.up);
-        float angleDown = Vector3.Angle(-transform.up, Vector3.up);
-        float angleLeft = Vector3.Angle(-transform.right, Vector3.up);
+    private void AutoTargetEnemies()
+    {
+        // Find all GameObjects with the tag "Enemy"
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
 
-        // Find the direction closest to the current rotation
-        float minAngle = Mathf.Min(angleUp, angleRight, angleDown, angleLeft);
-        if (minAngle == angleUp)
+        // Find the nearest enemy within auto-target range
+        nearestEnemy = null;
+        float nearestDistance = Mathf.Infinity;
+        foreach (GameObject enemy in enemies)
         {
-            // Facing up
-            facingDirection = Vector3.up;
+            float distance = Vector3.Distance(transform.position, enemy.transform.position);
+            if (distance <= autoTargetRange && distance < nearestDistance)
+            {
+                nearestEnemy = enemy;
+                nearestDistance = distance;
+            }
         }
-        else if (minAngle == angleRight)
+
+        // If a nearest enemy is found, calculate direction towards it and update facing direction
+        if (nearestEnemy != null)
         {
-            // Facing right
-            facingDirection = Vector3.right;
+            Vector3 directionToEnemy = (nearestEnemy.transform.position - transform.position).normalized;
+
+            // Determine the animation direction based on the direction vector to the enemy
+            if (Mathf.Abs(directionToEnemy.x) > Mathf.Abs(directionToEnemy.y))
+            {
+                if (directionToEnemy.x > 0)
+                {
+                    // Facing right
+                    animator.SetFloat("moveX", 1f);
+                    animator.SetFloat("moveY", 0f);
+                }
+                else
+                {
+                    // Facing left
+                    animator.SetFloat("moveX", -1f);
+                    animator.SetFloat("moveY", 0f);
+                }
+            }
+            else
+            {
+                if (directionToEnemy.y > 0)
+                {
+                    // Facing up
+                    animator.SetFloat("moveX", 0f);
+                    animator.SetFloat("moveY", 1f);
+                }
+                else
+                {
+                    // Facing down
+                    animator.SetFloat("moveX", 0f);
+                    animator.SetFloat("moveY", -1f);
+                }
+            }
         }
-        else if (minAngle == angleDown)
+        else
         {
-            // Facing down
-            facingDirection = Vector3.down;
+            // No enemy found, revert to using joystick input for rotation
+            HandlePlayerRotation();
         }
-        else if (minAngle == angleLeft)
+    }
+
+    private void HandleFootstepSounds()
+    {
+        if (isMoving)
         {
-            // Facing left
-            facingDirection = Vector3.left;
+            footstepTimer += Time.deltaTime;
+            if (footstepTimer >= footstepInterval)
+            {
+                PlayRandomFootstep();
+                footstepTimer = 0f;
+            }
         }
-        return facingDirection;
+        else
+        {
+            footstepTimer = 0f; // Reset the timer when not moving
+            audioSource.Stop(); // Stop the audio source immediately
+        }
+    }
+
+    private void PlayRandomFootstep()
+    {
+        if (footstepSounds.Length > 0 && audioSource != null)
+        {
+            int randomIndex = Random.Range(0, footstepSounds.Length);
+            audioSource.clip = footstepSounds[randomIndex];
+            audioSource.volume = footstepVolume;
+            audioSource.Play();
+        }
+        else
+        {
+            Debug.LogError("Footstep sounds array is empty or AudioSource is not assigned.");
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // Unsubscribe from the sceneLoaded event to prevent memory leaks
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void FindJoystick()
+    {
+        // Find and assign the FixedJoystick component
+        joystick = FindObjectOfType<FixedJoystick>();
+        if (joystick == null)
+        {
+            Debug.LogError("FixedJoystick reference not found in the scene!");
+        }
+    }
+
+    private void FindAnimator()
+    {
+        // Find and assign the Animator component
+        animator = GetComponent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogError("Animator component not found on the player GameObject!");
+        }
     }
 
     public void MoveCharacter(Vector3 input)
     {
-        Vector3 movement = input.normalized * moveSpeed * Time.deltaTime;
-        transform.position += movement;
+        // Move the character only if there's input and respecting collisions
+        if (input != Vector3.zero)
+        {
+            isMoving = true;
+            Vector3 movement = input.normalized * moveSpeed * Time.deltaTime;
+            transform.position += movement;
+        }
+        else
+        {
+            isMoving = false;
+        }
     }
-    
+
     void UpdateAnimation(Vector3 input)
     {
+        // Update the animation based on the input
         if (input != Vector3.zero)
         {
             animator.SetFloat("moveX", input.x);
@@ -82,5 +226,22 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-   
+    public Vector3 GetFacingDirection()
+    {
+        // Calculate the facing direction towards the nearest enemy
+        if (nearestEnemy != null)
+        {
+            Debug.Log("There are enemies, dash using enemy");
+            Vector3 direction = (transform.position - nearestEnemy.transform.position).normalized; // Reverse the direction
+            return direction;
+        }
+        else
+        {
+            Debug.Log("No enemies, dash using joystick");
+            // If no nearest enemy is found, use the last joystick input direction
+            Vector3 joystickInput = lastJoystickInput.normalized;
+            return joystickInput;
+        }
+    }
 }
+    

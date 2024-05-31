@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7325cc8d2d6c44a46885f79d70673e1f, type: 3}
+  m_Name: Oxygen
+  m_EditorClassIdentifier: 
+  ID: 2
+  itemImageBase64: 
+  itemImage: {fileID: 21300000, guid: 91bedaad05910e04c9bd04de4c8ba120, type: 3}
+  IsStackable: 1
+  MaxStackSize: 64
+  Name: Oxygen
+  Description: A chemical element with atomic number 8 that constitutes 21 percent
+    of the Earth's atmosphere, that is capable of combining with all elements except
+    some noble gases, that is active in physiological processes of almost all known
+    organisms, and that is involved especially in combustion

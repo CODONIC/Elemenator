@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7325cc8d2d6c44a46885f79d70673e1f, type: 3}
+  m_Name: H2O2
+  m_EditorClassIdentifier: 
+  ID: 14
+  itemImageBase64: 
+  itemImage: {fileID: 21300000, guid: 0decbc4f6d2837140be38b3b543a8e23, type: 3}
+  itemImagePath: 
+  IsStackable: 1
+  MaxStackSize: 20
+  Name: Hydrogen peroxide (H2O2)
+  Description: Hydrogen peroxide is a chemical compound with the formula H2O2. In
+    its pure form, it is a very pale blue liquid that is slightly more viscous than
+    water. It is used as an oxidizer, bleaching agent, and antiseptic, usually as
+    a dilute solution in water for consumer use and in higher concentrations for
+    industrial use.
+  category: 0

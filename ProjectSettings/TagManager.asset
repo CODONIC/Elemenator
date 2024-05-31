@@ -13,6 +13,8 @@ TagManager:
   - PlayerHitBox
   - PlayerWeapon
   - Wall
+  - GameOverScreen
+  - GameOverPanel
   layers:
   - Default
   - TransparentFX
@@ -22,8 +24,8 @@ TagManager:
   - UI
   - NPC
   - GameOver
-  - 
-  - 
+  - Enemy
+  - FireBall
   - 
   - 
   - 

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7325cc8d2d6c44a46885f79d70673e1f, type: 3}
+  m_Name: Hydrogen
+  m_EditorClassIdentifier: 
+  ID: 1
+  itemImageBase64: 
+  itemImage: {fileID: 21300000, guid: e60c2673a8524b64cb6d1e7145a4620c, type: 3}
+  IsStackable: 1
+  MaxStackSize: 64
+  Name: Hydrogen
+  Description: A nonmetallic gaseous chemical element with atomic number 1 that is
+    the simplest and lightest of the elements and that is used especially in the
+    processing of fossil fuels and the synthesis of ammonia

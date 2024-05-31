@@ -3,29 +3,28 @@ using System.Collections;
 
 public class SlimeController : MonoBehaviour
 {
-    public GameObject elementPrefab; // Reference to the element prefab to drop
-    public float dropChance = 0.5f; // Probability of dropping an element (0 to 1)
-
     public float moveSpeed = 3f;
-    public int health = 50;
+    public float health = 50f;
     public int damage = 10;
     public float attackRange = 1.5f;
     public float detectionRange = 5f;
-    public float delayAfterCollision = 1f; // Delay in seconds after colliding with player
+    public float delayAfterCollision = 1f;
+    public float dropChancePercentage = 75f;
 
-    public GameObject slimeHealthContainer; // Reference to the health bar GameObject
+    public GameObject slimeHealthContainer;
+    public GameObject itemPrefab1;
+    public GameObject itemPrefab2;// Reference to the prefab of the item to drop
+
     private Transform target;
-    public bool canMove; // Flag to control whether the slime can move
-    private Collider2D detectionCollider; // Reference to the detection range collider
+    public bool canMove;
+    private Collider2D detectionCollider;
 
-    private bool isHitAnimationPlaying = false; // Flag to track if hit animation is playing
-    private bool isJumpAnimationPaused = false; // Flag to track if jump animation is paused
+    private bool isHitAnimationPlaying = false;
 
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
-        // Find the detection collider in the child object named "Detection"
         Transform detectionTransform = transform.Find("Detection");
         if (detectionTransform != null)
         {
@@ -36,7 +35,7 @@ public class SlimeController : MonoBehaviour
             }
             else
             {
-                detectionCollider.isTrigger = true; // Ensure the collider is set as a trigger
+                detectionCollider.isTrigger = true;
             }
         }
         else
@@ -44,7 +43,6 @@ public class SlimeController : MonoBehaviour
             Debug.LogError("Detection transform not found!");
         }
 
-        // Disable the health bar initially
         if (slimeHealthContainer != null)
         {
             slimeHealthContainer.SetActive(false);
@@ -62,26 +60,31 @@ public class SlimeController : MonoBehaviour
             {
                 float distanceToPlayer = Vector2.Distance(transform.position, target.position);
 
-                // Check if the player is within detection range
                 if (distanceToPlayer <= detectionRange)
                 {
-                    // Player is within range, allow movement
                     canMove = true;
 
-                    // Enable the health bar
                     if (slimeHealthContainer != null)
                     {
                         slimeHealthContainer.SetActive(true);
                     }
 
-                    // Move towards the player
                     Vector2 direction = (target.position - transform.position).normalized;
+
+                    // Flip sprite if player is on the left side
+                    if (direction.x < 0)
+                    {
+                        FlipSprite(true);
+                    }
+                    else
+                    {
+                        FlipSprite(false);
+                    }
+
                     transform.Translate(direction * moveSpeed * Time.deltaTime);
 
-                    // Trigger jump animation
                     TriggerJumpAnimation(true);
 
-                    // Attack if in range
                     if (distanceToPlayer <= attackRange)
                     {
                         // Implement attack logic here
@@ -89,11 +92,9 @@ public class SlimeController : MonoBehaviour
                 }
                 else
                 {
-                    // Player is out of range, stop moving and stop jumping animation
                     canMove = false;
                     TriggerJumpAnimation(false);
 
-                    // Disable the health bar
                     if (slimeHealthContainer != null)
                     {
                         slimeHealthContainer.SetActive(false);
@@ -102,11 +103,9 @@ public class SlimeController : MonoBehaviour
             }
             else
             {
-                // Slime is delaying movement
                 delayTimer -= Time.deltaTime;
                 if (delayTimer <= 0)
                 {
-                    // Delay time is over, resume movement
                     isDelayingMovement = false;
                     canMove = true;
                 }
@@ -114,24 +113,43 @@ public class SlimeController : MonoBehaviour
         }
     }
 
+    void FlipSprite(bool faceLeft)
+    {
+        // Get the current local scale
+        Vector3 scale = transform.localScale;
+
+        // Set the x-scale based on whether the slime should face left
+        if (faceLeft)
+        {
+            scale.x = Mathf.Abs(scale.x) * -1f;
+        }
+        else
+        {
+            scale.x = Mathf.Abs(scale.x);
+        }
+
+        // Apply the new x-scale to the SpriteRenderer
+        GetComponent<SpriteRenderer>().flipX = (scale.x < 0);
+    }
+
+
+
 
     void TriggerHitAnimation(bool isHit)
     {
-        // Trigger hit animation if available
         Animator Hitanimator = GetComponent<Animator>();
         if (Hitanimator != null)
         {
-            Hitanimator.SetBool("IsHit", isHit); // Assuming you have a bool parameter named "IsHit" in your animator controller
+            Hitanimator.SetBool("IsHit", isHit);
         }
     }
 
     void TriggerJumpAnimation(bool isJumping)
     {
-        // Trigger jump animation if available
         Animator animator = GetComponent<Animator>();
         if (animator != null)
         {
-            animator.SetBool("IsJumping", isJumping); // Assuming you have a trigger parameter named "Jump" in your animator controller
+            animator.SetBool("IsJumping", isJumping);
         }
     }
 
@@ -139,45 +157,32 @@ public class SlimeController : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            // Get the player controller from the collided object
             Player playerController = collision.collider.GetComponentInParent<Player>();
-
-            // Check if the player controller exists
             if (playerController != null)
             {
-                // Apply damage to the player
                 playerController.TakeDamage(damage);
-
                 canMove = false;
                 StartDelayBeforeChase();
             }
         }
     }
 
-
     void OnTriggerEnter2D(Collider2D other)
     {
-       
-         if (other.CompareTag("PlayerWeapon") && !isHitAnimationPlaying)
+        if (other.CompareTag("PlayerWeapon") && !isHitAnimationPlaying)
         {
             Debug.Log("Player weapon hit detected. Triggering hit animation.");
             TriggerHitAnimation(true);
             isHitAnimationPlaying = true;
-            // Stop movement and start the delay before chase
             canMove = false;
             StartDelayBeforeChase();
-
-            // Reset hit animation after a delay
             StartCoroutine(ResetHitAnimation());
         }
-       
     }
-
-
 
     IEnumerator ResetHitAnimation()
     {
-        yield return new WaitForSeconds(0.5f); // Adjust this delay as needed
+        yield return new WaitForSeconds(0.5f);
         TriggerHitAnimation(false);
         isHitAnimationPlaying = false;
         ResumeJumpAnimation();
@@ -194,21 +199,18 @@ public class SlimeController : MonoBehaviour
         }
     }
 
-  
-
     void ResumeJumpAnimation()
     {
-        isJumpAnimationPaused = false;
         TriggerJumpAnimation(true);
     }
 
     IEnumerator DelayBeforeChase()
     {
-        yield return new WaitForSeconds(delayAfterCollision); // Wait for delay
-        canMove = true; // Enable movement again
+        yield return new WaitForSeconds(delayAfterCollision);
+        canMove = true;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
         if (health < 0)
@@ -220,13 +222,24 @@ public class SlimeController : MonoBehaviour
             Die();
         }
     }
+
     void StartDelayBeforeChase()
     {
         isDelayingMovement = true;
-        delayTimer = delayAfterCollision; // Set the delay time to 3 seconds
+        delayTimer = delayAfterCollision;
     }
+    private bool isDying = false;
     void Die()
     {
+        // Check if the slime is already dying
+        if (isDying)
+        {
+            return;
+        }
+
+        // Set the flag to true to indicate that the slime is dying
+        isDying = true;
+
         // Stop movement immediately
         canMove = false;
 
@@ -237,26 +250,43 @@ public class SlimeController : MonoBehaviour
             animator.SetBool("IsDead", true); // Assuming you have a bool parameter named "IsDead" in your animator controller
         }
 
-        if (Random.value <= dropChance)
+        // Randomly determine if the item prefabs should drop
+        bool shouldDropItem1 = Random.Range(0f, 100f) < dropChancePercentage;
+        bool shouldDropItem2 = Random.Range(0f, 100f) < dropChancePercentage;
+
+        // Instantiate the item prefabs at the slime's position if they should drop
+        if (shouldDropItem1 && itemPrefab1 != null)
         {
-            // Instantiate the element prefab at the enemy's position
-            Instantiate(elementPrefab, transform.position, Quaternion.identity);
+            Instantiate(itemPrefab1, transform.position, Quaternion.identity);
+        }
+        if (shouldDropItem2 && itemPrefab2 != null)
+        {
+            Instantiate(itemPrefab2, transform.position, Quaternion.identity);
         }
 
         // Destroy the game object after the animation duration
         StartCoroutine(DestroyAfterAnimation());
     }
 
+
+    public void ApplyKnockback(Vector2 direction, float force)
+    {
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.AddForce(direction * force, ForceMode2D.Impulse);
+        }
+    }
+
     IEnumerator DestroyAfterAnimation()
     {
-        // Wait for the duration of the death animation
         Animator animator = GetComponent<Animator>();
         if (animator != null)
         {
             yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         }
 
-        // Destroy the game object
         Destroy(gameObject);
     }
 }
