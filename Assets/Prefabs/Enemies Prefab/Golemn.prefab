@@ -639,7 +639,7 @@ MonoBehaviour:
   showHealthContainerDistance: 10
   golemHealthContainer: {fileID: 2053600007619727416}
   attackCooldown: 2.5
-  damage: 25
+  damage: 50
   player: {fileID: 0}
   lootTable: []
 --- !u!61 &2053600009233070315

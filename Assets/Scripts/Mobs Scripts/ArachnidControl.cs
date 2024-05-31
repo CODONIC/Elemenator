@@ -185,6 +185,7 @@ public class ArachnidControl : MonoBehaviour
             yield return null;
         }
 
+
         Destroy(gameObject);
     }
 }

@@ -7,7 +7,7 @@ using Inventory.Model;
 
 public class Player : MonoBehaviour
 {
-    public int maxHealth = 100;
+    public int maxHealth = 1000;
     public int currentHealth;
     public float flashDuration = 0.5f; // Duration of the flash effect
     public Color flashColor = Color.white; // Color to flash the sprite
@@ -80,7 +80,14 @@ public class Player : MonoBehaviour
     }
 
 
-
+    private void Update()
+    {
+        if (currentHealth <= 0 || currentHealth == 0)
+        {
+            currentHealth = 0;
+            Die();
+        }
+    }
     public void ResetHealth()
     {
         currentHealth = maxHealth;
@@ -97,7 +104,7 @@ public class Player : MonoBehaviour
 
         Debug.Log("Player Health: " + currentHealth);
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 || currentHealth == 0)
         {
             currentHealth = 0;
             Die();
@@ -131,7 +138,7 @@ public class Player : MonoBehaviour
         // Activate game over screen
         gameOverScreen.SetActive(true);
         // Call the GameOver method in the GameOverManager script
-
+        Time.timeScale = 0;
         // Optionally, you can perform other actions here such as disabling player controls or animations.
     }
 }

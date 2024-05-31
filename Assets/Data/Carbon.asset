@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7325cc8d2d6c44a46885f79d70673e1f, type: 3}
   m_Name: Carbon
   m_EditorClassIdentifier: 
-  ID: 6
+  ID: 3
   itemImageBase64: 
   itemImage: {fileID: 21300000, guid: 18b13e5fa7bc1d548a831560d1058164, type: 3}
   itemImagePath: 
   IsStackable: 1
-  MaxStackSize: 1
+  MaxStackSize: 20
   Name: Carbon
   Description: ' The sixth most abundant element in the universe, has been known
     since ancient times. Carbon is most commonly obtained from coal deposits, although

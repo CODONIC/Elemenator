@@ -349,7 +349,7 @@ MonoBehaviour:
   showHealthContainerDistance: 10
   arachnidHealthContainer: {fileID: 96149555237588870}
   attackCooldown: 2.5
-  damage: 15
+  damage: 25
   player: {fileID: 0}
   lootTable: []
 --- !u!61 &96149555125128321

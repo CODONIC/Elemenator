@@ -19,7 +19,7 @@ public class Item : MonoBehaviour
     // Start is called before the first frame update
 
     [SerializeField]
-    private float floatAmount = 1.5f;
+    private float floatAmount = 0.2f;
     private Vector3 initialPosition;
     private void Start()
     {

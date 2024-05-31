@@ -16,44 +16,44 @@ MonoBehaviour:
   database: {fileID: 11400000, guid: 2307296f7141c0c4a950808290d82e3f, type: 2}
   inventoryItems:
   - ID: 0
-    quantity: 2
+    quantity: 1
     item: {fileID: 11400000, guid: fd67733694b26a340a601ad96562a1fd, type: 2}
+  - ID: 2
+    quantity: 2
+    item: {fileID: 11400000, guid: 61223faf36f53724ca042e9ac6dafe76, type: 2}
+  - ID: 10
+    quantity: 1
+    item: {fileID: 11400000, guid: c1f6fe86f9045c54d97e3e33fdde0360, type: 2}
   - ID: 1
-    quantity: 8
+    quantity: 6
     item: {fileID: 11400000, guid: 31e6e0aad1b81d64e96b7d5249cc6415, type: 2}
-  - ID: 1
-    quantity: 0
-    item: {fileID: 11400000, guid: 31e6e0aad1b81d64e96b7d5249cc6415, type: 2}
-  - ID: 3
-    quantity: 3
-    item: {fileID: 11400000, guid: ae31115c3a53dae438424c29c31a9f78, type: 2}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
-  - ID: -1
-    quantity: 0
-    item: {fileID: 0}
+  - ID: 13
+    quantity: 1
+    item: {fileID: 11400000, guid: e428a9df726def84b987cb7661d47528, type: 2}
+  - ID: 9
+    quantity: 1
+    item: {fileID: 11400000, guid: 9a676f0419ee0294c8336323d436daa8, type: 2}
+  - ID: 7
+    quantity: 1
+    item: {fileID: 11400000, guid: 755747fa87e880643838b3f2450aacef, type: 2}
+  - ID: 8
+    quantity: 1
+    item: {fileID: 11400000, guid: 27e11817d6fdd814390583b348714995, type: 2}
+  - ID: 5
+    quantity: 1
+    item: {fileID: 11400000, guid: 050c5935eb8137b4387384bf71d122aa, type: 2}
+  - ID: 6
+    quantity: 1
+    item: {fileID: 11400000, guid: b5fa4164c1f1557419f4116f88f71ac2, type: 2}
+  - ID: 12
+    quantity: 1
+    item: {fileID: 11400000, guid: b1631eb6aa3464343992b0a1be52ba16, type: 2}
+  - ID: 14
+    quantity: 1
+    item: {fileID: 11400000, guid: 34af96e00dc646b4fa3d896beeaa6667, type: 2}
+  - ID: 4
+    quantity: 1
+    item: {fileID: 11400000, guid: e4dbfc06bcdc6db43b0760150fac83bd, type: 2}
   - ID: -1
     quantity: 0
     item: {fileID: 0}

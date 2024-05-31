@@ -227,7 +227,8 @@ public class CraftPanel : MonoBehaviour
 
             if (craftingNotificationText != null)
             {
-                craftingNotificationText.text = "Crafted item: " + craftingResult.CraftedItem.Name;
+                craftingNotificationText.text = "Crafted item: <color=purple>" + craftingResult.CraftedItem.Name + "</color>";
+
                 craftingNotificationText.gameObject.SetActive(true); // Show the notification text
 
             }

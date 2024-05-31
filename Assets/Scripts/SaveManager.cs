@@ -50,7 +50,7 @@ public class SaveManager : MonoBehaviour
     public PlayerData LoadGame(InventorySO inventory)
     {
         // Load player health and position
-        int playerHealth = PlayerPrefs.GetInt("PlayerHealth", 100);
+        int playerHealth = PlayerPrefs.GetInt("PlayerHealth", 1000);
         float playerPositionX = PlayerPrefs.GetFloat("PlayerPositionX", 0f);
         float playerPositionY = PlayerPrefs.GetFloat("PlayerPositionY", 0f);
         float playerPositionZ = PlayerPrefs.GetFloat("PlayerPositionZ", 0f);

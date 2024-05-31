@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7325cc8d2d6c44a46885f79d70673e1f, type: 3}
   m_Name: Mercury
   m_EditorClassIdentifier: 
-  ID: 5
+  ID: 8
   itemImageBase64: 
   itemImage: {fileID: 21300000, guid: 545f4692192cf1042aa8fd4e7a67e697, type: 3}
   itemImagePath: 

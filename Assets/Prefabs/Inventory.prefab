@@ -542,8 +542,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5449315274800744934}
   m_HandleRect: {fileID: 5449315274800744929}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.000004069
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1405,10 +1405,12 @@ MonoBehaviour:
   itemPrefab: {fileID: 4128075396776430921, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
   trashContent: {fileID: 0}
   craftButton: {fileID: 0}
+  equipButton: {fileID: 0}
   contentPanel: {fileID: 5449315274895466573}
   itemDescription: {fileID: 4202396952338176160}
   mouseFollower: {fileID: 0}
   confirmationDialogPanel: {fileID: 0}
+  craftPanel: {fileID: 0}
 --- !u!114 &5449315274947622865
 MonoBehaviour:
   m_ObjectHideFlags: 0

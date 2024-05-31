@@ -4,36 +4,43 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Inventory
 {
     public class InventoryController : MonoBehaviour
     {
         [SerializeField]
-        private UIInventoryPage inventoryUIPrefab;
-
-        [SerializeField]
-        private static UIInventoryPage inventoryUI;
+        private UIInventoryPage inventoryUI;
 
         [SerializeField]
         private InventorySO inventoryData;
 
         public List<InventoryItem> initialItems = new List<InventoryItem>();
+
         private void Awake()
         {
+            // Initialize references on scene load
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            // Ensure references are initialized after scene load
+            FindInventoryUI();
+        }
+
+        private void FindInventoryUI()
+        {
+            inventoryUI = FindObjectOfType<UIInventoryPage>(true);
             if (inventoryUI == null)
             {
-                inventoryUI = Instantiate(inventoryUIPrefab); // Instantiate from prefab if not set
-                DontDestroyOnLoad(inventoryUI.gameObject);
-            }
-            else
-            {
-                Destroy(gameObject); // Destroy duplicate instances of the controller
+                Debug.LogError("UIInventoryPage reference not found in the scene!");
             }
         }
+
         private void Start()
         {
-           
             PrepareUI();
             PrepareInventoryData();
         }
@@ -59,7 +66,6 @@ namespace Inventory
             }
         }
 
-
         private void PrepareUI()
         {
             inventoryUI.InitializeInventoryUI(inventoryData.Size);
@@ -70,14 +76,10 @@ namespace Inventory
             inventoryUI.OnItemDeleted += HandleDeleteSelectedItem;
         }
 
-
-
-
         private void HandleItemActionRequest(int itemIndex)
         {
-            
+            // Your logic here
         }
-
 
         private void HandleDragging(int itemIndex)
         {
@@ -114,14 +116,12 @@ namespace Inventory
                 {
                     inventoryUI.UpdateData(item.Key, item.Value);
                 }
-
             }
             else
             {
                 inventoryUI.Hide();
             }
         }
-
 
         public void HandleDeleteSelectedItem(int itemIndex)
         {

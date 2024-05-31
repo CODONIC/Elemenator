@@ -1,6 +1,5 @@
 using Inventory.Model;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -33,23 +32,17 @@ namespace Inventory.UI
 
         [SerializeField] private GameObject confirmationDialogPanel;
 
+        [SerializeField] private CraftPanel craftPanel;  // Add this line
 
         List<UIInventoryItem> listofUIItems = new List<UIInventoryItem>();
-        
-        // List to store UI for crafting slots
-
-      
-
 
         private int currentlyDraggedItemIndex = -1;
-
         private int selectedItemIndex = -1;
 
         public event Action<int> OnDescriptionRequested,
             OnItemActionRequested,
             OnStartDragging;
         public event Action<int, int> OnSwapItems;
-
         public event Action<int> OnItemDeleted;
 
         private void Awake()
@@ -60,8 +53,6 @@ namespace Inventory.UI
             craftButton.SetActive(false);
             equipButton.SetActive(false);
         }
-
-
 
         public void InitializeInventoryUI(int inventorySize)
         {
@@ -76,11 +67,7 @@ namespace Inventory.UI
                 uiItem.OnItemDroppedOn += HandleSwap;
                 uiItem.OnItemEndDrag += HandleEndDrag;
             }
-
-           
         }
-
-
 
         public void UpdateData(int itemIndex, InventoryItem inventoryItem)
         {
@@ -90,26 +77,19 @@ namespace Inventory.UI
             }
         }
 
-
-
-        private void HandleShowItemActions(UIInventoryItem inventoryItemUI)
-        {
-
-        }
+        private void HandleShowItemActions(UIInventoryItem inventoryItemUI) { }
 
         private void HandleEndDrag(UIInventoryItem inventoryItemUI)
         {
             ResetDraggedItem();
         }
-        
+
         private void HandleSwap(UIInventoryItem inventoryItemUI)
         {
             int index = listofUIItems.IndexOf(inventoryItemUI);
             if (index == -1)
             {
-
                 return;
-
             }
             OnSwapItems?.Invoke(currentlyDraggedItemIndex, index);
             HandleItemSelection(inventoryItemUI);
@@ -195,10 +175,17 @@ namespace Inventory.UI
                 trashContent.SetActive(false);
             ResetDraggedItem();
             Time.timeScale = 1;
+
+            // Deactivate the crafting panel if it's active
+            if (craftPanel != null && craftPanel.panelToToggle.activeSelf)
+            {
+                craftPanel.TogglePanel();
+            }
         }
-       public void OnDrop(PointerEventData eventData)
+
+        public void OnDrop(PointerEventData eventData)
         {
-    // Check if the dropped object is an inventory item
+            // Check if the dropped object is an inventory item
             UIInventoryItem draggedItem = eventData.pointerDrag.GetComponent<UIInventoryItem>();
             if (draggedItem != null)
             {
@@ -209,11 +196,9 @@ namespace Inventory.UI
                     // If it's from the inventory, swap the items between the inventory and crafting slots
                     int selectedItemIndex = listofUIItems.FindIndex(item => item == draggedItem);
                     OnSwapItems?.Invoke(selectedItemIndex, currentlyDraggedItemIndex);
-
-                    
                 }
             }
-          }
+        }
 
         internal void UpdateDescription(int itemIndex, Sprite itemImage, string name, string description)
         {
@@ -262,7 +247,5 @@ namespace Inventory.UI
         {
             confirmationDialogPanel.SetActive(false); // Deactivate the confirmation dialog panel if cancelled
         }
-
-
     }
 }

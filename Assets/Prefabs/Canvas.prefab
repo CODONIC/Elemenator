@@ -853,7 +853,7 @@ RectTransform:
   m_Children:
   - {fileID: 3789084128523696678}
   m_Father: {fileID: 6172471476595632054}
-  m_RootOrder: 19
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1183,7 +1183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8137458033666393163
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1205,7 +1205,7 @@ RectTransform:
   - {fileID: 6163283812737135809}
   - {fileID: 3773331192344145813}
   m_Father: {fileID: 6172471476595632054}
-  m_RootOrder: 18
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1241,7 +1241,7 @@ MonoBehaviour:
     itemRecipe:
     - name: 
       recipe:
-      - ID: 6
+      - ID: 3
         quantity: 1
         item: {fileID: 11400000, guid: ae31115c3a53dae438424c29c31a9f78, type: 2}
       - ID: 2
@@ -1252,7 +1252,7 @@ MonoBehaviour:
     itemRecipe:
     - name: 
       recipe:
-      - ID: 6
+      - ID: 3
         quantity: 1
         item: {fileID: 11400000, guid: ae31115c3a53dae438424c29c31a9f78, type: 2}
       - ID: 2
@@ -1266,7 +1266,7 @@ MonoBehaviour:
       - ID: 0
         quantity: 1
         item: {fileID: 11400000, guid: fd67733694b26a340a601ad96562a1fd, type: 2}
-      - ID: 17
+      - ID: 9
         quantity: 1
         item: {fileID: 11400000, guid: 9a676f0419ee0294c8336323d436daa8, type: 2}
   - craftName: HGO
@@ -1274,7 +1274,7 @@ MonoBehaviour:
     itemRecipe:
     - name: 
       recipe:
-      - ID: 5
+      - ID: 8
         quantity: 1
         item: {fileID: 11400000, guid: 27e11817d6fdd814390583b348714995, type: 2}
       - ID: 2
@@ -1291,6 +1291,105 @@ MonoBehaviour:
       - ID: 2
         quantity: 2
         item: {fileID: 11400000, guid: 61223faf36f53724ca042e9ac6dafe76, type: 2}
+  - craftName: Magnesium Chloride
+    craftObject: {fileID: 11400000, guid: 96ed72400e82085479f6e4a2d27c1368, type: 2}
+    itemRecipe:
+    - name: 
+      recipe:
+      - ID: 7
+        quantity: 1
+        item: {fileID: 11400000, guid: 755747fa87e880643838b3f2450aacef, type: 2}
+      - ID: 5
+        quantity: 2
+        item: {fileID: 11400000, guid: 050c5935eb8137b4387384bf71d122aa, type: 2}
+  - craftName: CH4(Methane)
+    craftObject: {fileID: 11400000, guid: f8b82c8de64418146a85ff0fd55acda4, type: 2}
+    itemRecipe:
+    - name: 
+      recipe:
+      - ID: 3
+        quantity: 1
+        item: {fileID: 11400000, guid: ae31115c3a53dae438424c29c31a9f78, type: 2}
+      - ID: 1
+        quantity: 4
+        item: {fileID: 11400000, guid: 31e6e0aad1b81d64e96b7d5249cc6415, type: 2}
+  - craftName: FeS2 (Iron Disulfide)
+    craftObject: {fileID: 11400000, guid: 7dff3d566f4d7934a93026db2d4cfe6d, type: 2}
+    itemRecipe:
+    - name: 
+      recipe:
+      - ID: 6
+        quantity: 1
+        item: {fileID: 11400000, guid: b5fa4164c1f1557419f4116f88f71ac2, type: 2}
+      - ID: 16
+        quantity: 2
+        item: {fileID: 11400000, guid: ff80a46a324d737468dd24a5a2049341, type: 2}
+  - craftName: H2CO3 (Carbonic Acid)
+    craftObject: {fileID: 11400000, guid: c95db91d013fc8c49beecc911ae1c089, type: 2}
+    itemRecipe:
+    - name: 
+      recipe:
+      - ID: 1
+        quantity: 2
+        item: {fileID: 11400000, guid: 31e6e0aad1b81d64e96b7d5249cc6415, type: 2}
+      - ID: 16
+        quantity: 3
+        item: {fileID: 11400000, guid: ff80a46a324d737468dd24a5a2049341, type: 2}
+  - craftName: HCl (Hydrochloric Acid)
+    craftObject: {fileID: 11400000, guid: cd892dc54771ef348b12585c55007dbd, type: 2}
+    itemRecipe:
+    - name: 
+      recipe:
+      - ID: 1
+        quantity: 1
+        item: {fileID: 11400000, guid: 31e6e0aad1b81d64e96b7d5249cc6415, type: 2}
+      - ID: 5
+        quantity: 1
+        item: {fileID: 11400000, guid: 050c5935eb8137b4387384bf71d122aa, type: 2}
+  - craftName: Mercury(I) Chloride or Calomel
+    craftObject: {fileID: 11400000, guid: 055a776502d53704b8d7665a82ed74d4, type: 2}
+    itemRecipe:
+    - name: 
+      recipe:
+      - ID: 8
+        quantity: 2
+        item: {fileID: 11400000, guid: 27e11817d6fdd814390583b348714995, type: 2}
+      - ID: 5
+        quantity: 2
+        item: {fileID: 11400000, guid: 050c5935eb8137b4387384bf71d122aa, type: 2}
+  - craftName: MgCl2 (Magnesium Chloride)
+    craftObject: {fileID: 11400000, guid: 96ed72400e82085479f6e4a2d27c1368, type: 2}
+    itemRecipe:
+    - name: 
+      recipe:
+      - ID: 7
+        quantity: 1
+        item: {fileID: 11400000, guid: 755747fa87e880643838b3f2450aacef, type: 2}
+      - ID: 5
+        quantity: 2
+        item: {fileID: 11400000, guid: 050c5935eb8137b4387384bf71d122aa, type: 2}
+  - craftName: PH3 (Phosphine)
+    craftObject: {fileID: 11400000, guid: 274784c2d4fd98947992bc708cb9429a, type: 2}
+    itemRecipe:
+    - name: 
+      recipe:
+      - ID: 11
+        quantity: 1
+        item: {fileID: 11400000, guid: a73bf1d825010184a838bcfada0ff7be, type: 2}
+      - ID: 1
+        quantity: 3
+        item: {fileID: 11400000, guid: 31e6e0aad1b81d64e96b7d5249cc6415, type: 2}
+  - craftName: SiS2 (Silicon Disulfide)
+    craftObject: {fileID: 11400000, guid: 21fc0d98ab67d944a95201f643bbb6d6, type: 2}
+    itemRecipe:
+    - name: 
+      recipe:
+      - ID: 12
+        quantity: 1
+        item: {fileID: 11400000, guid: b1631eb6aa3464343992b0a1be52ba16, type: 2}
+      - ID: 13
+        quantity: 2
+        item: {fileID: 11400000, guid: e428a9df726def84b987cb7661d47528, type: 2}
 --- !u!222 &665971578772209076
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1597,7 +1696,7 @@ RectTransform:
   m_Children:
   - {fileID: 4789346823065499115}
   m_Father: {fileID: 6172471476595632054}
-  m_RootOrder: 20
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1903,12 +2002,12 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 38
+    m_FontSize: 59
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
-    m_MaxSize: 40
-    m_Alignment: 3
+    m_MaxSize: 69
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -2810,7 +2909,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -511, y: -137}
+  m_AnchoredPosition: {x: -511, y: -110}
   m_SizeDelta: {x: -1083.2527, y: -357.4036}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6172471475644459817
@@ -2843,12 +2942,12 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 38
+    m_FontSize: 58
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
-    m_MaxSize: 40
-    m_Alignment: 4
+    m_MaxSize: 58
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -3218,13 +3317,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34
-  m_fontSizeBase: 34
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -3294,7 +3393,7 @@ RectTransform:
   - {fileID: 6172471475196658531}
   - {fileID: 6172471475644459818}
   m_Father: {fileID: 6172471476595632054}
-  m_RootOrder: 11
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -3573,7 +3672,7 @@ RectTransform:
   - {fileID: 6172471476088034676}
   - {fileID: 6172471475904122466}
   m_Father: {fileID: 6172471476595632054}
-  m_RootOrder: 15
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3652,7 +3751,7 @@ RectTransform:
   - {fileID: 6172471475686868845}
   - {fileID: 6172471475829844663}
   m_Father: {fileID: 6172471476595632054}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3757,7 +3856,7 @@ RectTransform:
   - {fileID: 6172471475687168606}
   - {fileID: 6172471476927739200}
   m_Father: {fileID: 6172471476595632054}
-  m_RootOrder: 17
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -4549,8 +4648,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -191, y: 83}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -231, y: 230}
+  m_SizeDelta: {x: 850.45, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6172471476055510642
 CanvasRenderer:
@@ -4607,14 +4706,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 150
+  m_fontSizeBase: 150
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -4711,7 +4810,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5529412}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
@@ -5064,7 +5163,7 @@ RectTransform:
   m_Children:
   - {fileID: 5711128461114029609}
   m_Father: {fileID: 6172471476595632054}
-  m_RootOrder: 16
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5619,8 +5718,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -201.9994, y: -161.99}
-  m_SizeDelta: {x: 259.9376, y: 61.988}
+  m_AnchoredPosition: {x: -280, y: -187}
+  m_SizeDelta: {x: 422.6906, y: 121.261}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6172471476418538947
 CanvasRenderer:
@@ -5868,7 +5967,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6172471476453116639
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5885,7 +5984,7 @@ RectTransform:
   - {fileID: 6172471477090655811}
   - {fileID: 6172471476418538950}
   m_Father: {fileID: 6172471476595632054}
-  m_RootOrder: 14
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -6204,7 +6303,7 @@ Transform:
   m_Children:
   - {fileID: 6172471475998081273}
   m_Father: {fileID: 6172471476595632054}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6172471476595632058
 GameObject:
@@ -6222,6 +6321,7 @@ GameObject:
   - component: {fileID: 6172471476595632052}
   - component: {fileID: 6172471476595632053}
   - component: {fileID: 1633344289}
+  - component: {fileID: 2286543519890412443}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -6252,16 +6352,16 @@ RectTransform:
   - {fileID: 5906279216099116667}
   - {fileID: 6172471477206790823}
   - {fileID: 6172471476604780038}
-  - {fileID: 6172471475686241721}
   - {fileID: 6172471476526076642}
   - {fileID: 6172471475771389507}
-  - {fileID: 6172471476453116639}
   - {fileID: 6172471475695470685}
   - {fileID: 6172471476100094645}
   - {fileID: 6172471475803518368}
   - {fileID: 8137458033666393163}
   - {fileID: 8447287155997895040}
   - {fileID: 9195161607123273649}
+  - {fileID: 6172471475686241721}
+  - {fileID: 6172471476453116639}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6394,6 +6494,7 @@ MonoBehaviour:
   exitButton: {fileID: 1012822141}
   MixButton: {fileID: 2067440025}
   equipButton: {fileID: 1331756059630056193}
+  craftingNotificationText: {fileID: 4114596059762850318}
   Brewing: {fileID: 3302593381896814022}
   craftingSlots:
   - {fileID: 1069424618581579491}
@@ -6403,6 +6504,21 @@ MonoBehaviour:
   - {fileID: 8532152921879809179}
   craftingSystem: {fileID: 5583056577724146259}
   crafting: 0
+--- !u!114 &2286543519890412443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6172471476595632058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 580fa6c856a75124f9479a71fbe30b12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryUI: {fileID: 3889197974324214458}
+  inventoryData: {fileID: 11400000, guid: af124d5a556f3c446841169de0685bfb, type: 2}
+  initialItems: []
 --- !u!1 &6172471476598627363
 GameObject:
   m_ObjectHideFlags: 0
@@ -6629,7 +6745,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2286543519890412443}
         m_TargetAssemblyTypeName: Inventory.InventoryController, Assembly-CSharp
         m_MethodName: OnClick
         m_Mode: 1
@@ -6790,7 +6906,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5529412}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
@@ -7227,13 +7343,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34
-  m_fontSizeBase: 34
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -7306,8 +7422,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 202.9682, y: -164.98816}
-  m_SizeDelta: {x: 261.9364, y: 67.9764}
+  m_AnchoredPosition: {x: 346, y: -187}
+  m_SizeDelta: {x: 422.6906, y: 121.261}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6172471477090655808
 CanvasRenderer:
@@ -7489,9 +7605,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 1000
   m_WholeNumbers: 1
-  m_Value: 100
+  m_Value: 1000
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -8238,8 +8354,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -622.4803, y: -386.19107}
-  m_SizeDelta: {x: 593.1683, y: 50}
+  m_AnchoredPosition: {x: -896.5444, y: -386.19107}
+  m_SizeDelta: {x: 1141.2966, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4350873964810649825
 CanvasRenderer:
@@ -8278,8 +8394,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -8296,15 +8412,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_fontStyle: 1
+  m_HorizontalAlignment: 8
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -8497,6 +8613,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3156998840285800415, guid: 196e818ad2de38a499cd4f66047765e8, type: 3}
+      propertyPath: craftPanel
+      value: 
+      objectReference: {fileID: 1633344289}
     - target: {fileID: 3156998840285800415, guid: 196e818ad2de38a499cd4f66047765e8, type: 3}
       propertyPath: craftButton
       value: 
@@ -9267,19 +9387,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1285167890663367955, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1285167890663367955, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1285167890663367955, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 42.056503
       objectReference: {fileID: 0}
     - target: {fileID: 1285167890663367955, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -39.913902
       objectReference: {fileID: 0}
     - target: {fileID: 1939651801762809225, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_Pivot.x
@@ -9383,27 +9503,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8755252795877370019, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8755252795877370019, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8755252795877370019, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 108
       objectReference: {fileID: 0}
     - target: {fileID: 8755252795877370019, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 108
       objectReference: {fileID: 0}
     - target: {fileID: 8755252795877370019, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 8755252795877370019, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
@@ -9443,19 +9563,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1285167890663367955, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1285167890663367955, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1285167890663367955, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 42.056503
       objectReference: {fileID: 0}
     - target: {fileID: 1285167890663367955, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -39.913902
       objectReference: {fileID: 0}
     - target: {fileID: 1939651801762809225, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_Pivot.x
@@ -9555,27 +9675,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8755252795877370019, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8755252795877370019, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8755252795877370019, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 108
       objectReference: {fileID: 0}
     - target: {fileID: 8755252795877370019, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 108
       objectReference: {fileID: 0}
     - target: {fileID: 8755252795877370019, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 8755252795877370019, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6aacc3043ebb8d0449de5fb6268f8b1e, type: 3}

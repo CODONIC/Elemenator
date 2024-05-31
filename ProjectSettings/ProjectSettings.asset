@@ -16,7 +16,7 @@ PlayerSettings:
   productName: Elemenator
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
-  m_SplashScreenBackgroundColor: {r: 0.8160377, g: 1, b: 0.8499975, a: 1}
+  m_SplashScreenBackgroundColor: {r: 0.9619743, g: 0.4764151, b: 1, a: 1}
   m_ShowUnitySplashScreen: 1
   m_ShowUnitySplashLogo: 1
   m_SplashScreenOverlayOpacity: 1

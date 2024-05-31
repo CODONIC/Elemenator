@@ -146,7 +146,6 @@ GameObject:
   - component: {fileID: 4300048521537284102}
   - component: {fileID: 4300048521537284097}
   - component: {fileID: 4300048521537284222}
-  - component: {fileID: 4300048521537284217}
   - component: {fileID: 4300048521537284096}
   - component: {fileID: 4300048521537284099}
   - component: {fileID: 4300048521537284221}
@@ -249,21 +248,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryData: {fileID: 11400000, guid: af124d5a556f3c446841169de0685bfb, type: 2}
   collectedText: {fileID: 255372043497488380}
---- !u!114 &4300048521537284217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4300048521537284108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 580fa6c856a75124f9479a71fbe30b12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventoryUIPrefab: {fileID: 0}
-  inventoryData: {fileID: 11400000, guid: af124d5a556f3c446841169de0685bfb, type: 2}
-  initialItems: []
 --- !u!114 &4300048521537284096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,7 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f6dc8db7b0cba94691db04517f71347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 1000
   currentHealth: 0
   flashDuration: 0.5
   flashColor: {r: 1, g: 0, b: 0, a: 1}

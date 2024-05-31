@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 11
-  damage: 4
+  damage: 20
 --- !u!212 &1913894436769388660
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -139,7 +139,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.2, y: 3.2}
+    oldSize: {x: 5.3333335, y: 5.3333335}
     newSize: {x: 4.4375, y: 2.21875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

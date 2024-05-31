@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7325cc8d2d6c44a46885f79d70673e1f, type: 3}
   m_Name: CO2
   m_EditorClassIdentifier: 
-  ID: 13
+  ID: 17
   itemImageBase64: 
-  itemImage: {fileID: 0}
+  itemImage: {fileID: 21300000, guid: cc16341c0d0b26b478220f5f30fd3d41, type: 3}
   itemImagePath: 
-  IsStackable: 0
-  MaxStackSize: 1
+  IsStackable: 1
+  MaxStackSize: 20
   Name: Carbon dioxide (CO2)
-  Description: 
+  Description: It is a colorless, odorless gas at room temperature. In its solid
+    form, it is known as dry ice.
+  category: 0
